@@ -15,9 +15,9 @@ def on_container_open(
     __ret: any,
     __func: BoundFunction,
 ) -> None:
-    if (str(obj).find("VendingMachine")) == -1:
-        pc = get_pc()
-        CurrentCom = pc.pawn.InvManager.GetCurrentCommDeck()
+    pc = get_pc()
+    CurrentCom = pc.pawn.InvManager.GetCurrentCommDeck()
+    if (str(obj).find("VendingMachine")) == -1 and CurrentCom != None:
         ComName = CurrentCom.ItemName
         if (str(ComName).find("Scavenger")) > -1 or (str(ComName).find("Catalyst")) > -1:
             OldAwesomeLevel = int(obj.GetAwesomeLevel())
@@ -40,9 +40,9 @@ def on_enemy_spawn(
     __ret: any,
     __func: BoundFunction,
 ) -> None:
-    if obj.Class.Name != "WillowPlayerPawn":
-        pc = get_pc()
-        CurrentCom = pc.pawn.InvManager.GetCurrentCommDeck()
+    pc = get_pc()
+    CurrentCom = pc.pawn.InvManager.GetCurrentCommDeck()
+    if obj.Class.Name != "WillowPlayerPawn" and CurrentCom != None:
         ComName = CurrentCom.ItemName
         if (str(ComName).find("Scavenger")) > -1 or (str(ComName).find("Catalyst")) > -1:
             OldAwesomeLevel = int(obj.GetAwesomeLevel())
