@@ -44,9 +44,9 @@
 
 [project]
 name = "FOV Mod"
-version = "1.0.0"
+version = "1.1.0"
 authors = [{ name = "Miner Of Worlds" }]
-description = "Changes FOV"
+description = "Fixes FOV issues and allows you to change your FOV"
 
 [tool.sdkmod]
 name = "FOV Mod"

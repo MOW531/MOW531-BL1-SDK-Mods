@@ -16,12 +16,15 @@ def set_fov(option:BaseOption, value:float):
 
         pc.CharacterClass.FOV = FOV
 
-        Vehicle = (str(pc.pawn.objectarchetype).find("DLC3_Cheetah_Paw"))
+        Vehicle = (str(pc.pawn.objectarchetype).find("Vehicle"))
 
-        if Vehicle > -1:
-            pc.Pawn.AfterburnerMaxFOV = (FOV + 10)
-        else:
-            pc.Pawn.AfterburnerMaxFOV = (FOV + 20)
+        if Vehicle != -1:
+            Cheetah_Paw = (str(pc.pawn.objectarchetype).find("DLC3_Cheetah_Paw"))
+
+            if Cheetah_Paw > -1:
+                 pc.Pawn.AfterburnerMaxFOV = (FOV + 10)
+            else:
+                  pc.Pawn.AfterburnerMaxFOV = (FOV + 20)
 
 
 def set_revolver_pistol_fov(option:BaseOption, value:float):
@@ -174,7 +177,46 @@ def on_player_loaded(
     pc = get_pc()
     pc.DesiredFOVBaseValue = FOV
     pc.DesiredFOV = FOV
-  #  print("On-Load Worked.")
+    MordacaiMelee = unrealsdk.find_object("InterpTrackFloatProp", "weap_camera_animations.Melee.melee_mordacai:InterpGroup_2.InterpTrackFloatProp_0")
+    MordacaiMelee.PropertyName = "a"
+    LilithMelee = unrealsdk.find_object("InterpTrackFloatProp", "weap_camera_animations.Melee.melee_lilith:InterpGroup_3.InterpTrackFloatProp_0")
+    LilithMelee.PropertyName = "a"
+
+    Sprint = unrealsdk.find_object("SkillDefinition", "gd_skills_common.Basic.DoubleTime")
+    Sprint.SkillEffectDefinitions[5].ModifierType = 2
+    Sprint.SkillEffectDefinitions[5].BaseModifierValue.BaseValueConstant = 0
+    SprintLimit = unrealsdk.find_object("AttributeExpressionEvaluator", "gd_skills_common.Basic.DoubleTime:ExpressionTree_4.AttributeExpressionEvaluator_25")
+    SprintLimit.Expression.ConstantOperand2 = 0.1
+
+@hook(
+    hook_func="WillowGame.WillowPlayerController:BeginSprint",
+    hook_type=Type.POST,
+)
+def on_player_begin_sprint(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
+    pc = get_pc()
+    if pc.pawn.bIsSprinting == 1:
+        pc.DesiredFOVBaseValue = FOV + 10
+        pc.DesiredFOV = FOV + 10
+
+
+@hook(
+    hook_func="WillowGame.WillowPlayerController:EndSprint",
+    hook_type=Type.POST,
+)
+def on_player_end_sprint(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
+    pc = get_pc()
+    pc.DesiredFOVBaseValue = FOV
+    pc.DesiredFOV = FOV
 
 @hook(
     hook_func="WillowGame.WillowVehicle:DriverLeave",
@@ -250,13 +292,15 @@ def on_player_enter_car(
     pc = get_pc()
     pc.CharacterClass.FOV = FOV
 
-    Vehicle = (str(pc.pawn.objectarchetype).find("DLC3_Cheetah_Paw"))
+    Vehicle = (str(pc.pawn.objectarchetype).find("Vehicle"))
 
     if Vehicle > -1:
-        pc.Pawn.AfterburnerMaxFOV = (FOV + 10)
-    else:
-        pc.Pawn.AfterburnerMaxFOV = (FOV + 20)
-  #  print("Entering car Worked.")
+        Cheetah_Paw = (str(pc.pawn.objectarchetype).find("DLC3_Cheetah_Paw"))
+
+        if Cheetah_Paw > -1:
+            pc.Pawn.AfterburnerMaxFOV = (FOV + 10)
+        else:
+            pc.Pawn.AfterburnerMaxFOV = (FOV + 20)
 
 @hook(
     hook_func="WillowGame.WillowPawn:WeaponChanged",
