@@ -7,50 +7,70 @@ from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
 WeaponChanged = True
+currentweapon = None
 
-def NextWeapon(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction):
+@hook(
+    hook_func="WillowGame.WillowPlayerController:NextWeapon",
+    hook_type=Type.PRE,
+)
+def NextWeapon(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
     global currentweapon
     global WeaponChanged
-    if WeaponChanged == True:
-        WeaponChanged = False
-        currentweapon = get_pc().pawn.weapon.quickselectslot
-    MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
-    currentweapon = currentweapon + 1
-    if currentweapon > MaxWeapons:
-        currentweapon = 1
-   # print(currentweapon)
-    get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
+    if get_pc().pawn.weapon != None:
+        if WeaponChanged == True:
+            WeaponChanged = False
+            currentweapon = get_pc().pawn.weapon.quickselectslot
+        MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
+        currentweapon = currentweapon + 1
+        if currentweapon > MaxWeapons:
+            currentweapon = 1
+    # print(currentweapon)
+        get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
     return Block
 
-remove_hook("WillowGame.WillowPlayerController:NextWeapon", Type.PRE, "NextWeapon")
-add_hook("WillowGame.WillowPlayerController:NextWeapon", Type.PRE, "NextWeapon", NextWeapon)
-
-def PrevWeapon(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction):
+@hook(
+    hook_func="WillowGame.WillowPlayerController:PrevWeapon",
+    hook_type=Type.PRE,
+)
+def PrevWeapon(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
     global currentweapon
     global WeaponChanged
-    if WeaponChanged == True:
-        WeaponChanged = False
-        currentweapon = get_pc().pawn.weapon.quickselectslot
-    MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
-    currentweapon = currentweapon - 1
-    if currentweapon < 1:
-        currentweapon = MaxWeapons
-   # print(currentweapon)
-    get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
+    if get_pc().pawn.weapon != None:
+        if WeaponChanged == True:
+            WeaponChanged = False
+            currentweapon = get_pc().pawn.weapon.quickselectslot
+        MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
+        currentweapon = currentweapon - 1
+        if currentweapon < 1:
+            currentweapon = MaxWeapons
+    # print(currentweapon)
+        get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
 
     return Block
 
-remove_hook("WillowGame.WillowPlayerController:PrevWeapon", Type.PRE, "PrevWeapon")
-add_hook("WillowGame.WillowPlayerController:PrevWeapon", Type.PRE, "PrevWeapon", PrevWeapon)
-
-def ChangedWeapon(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction):
+@hook(
+    hook_func="WillowGame.WillowInventoryManager:ChangedWeapon",
+    hook_type=Type.PRE,
+)
+def ChangedWeapon(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
    # print("ChangedWeapon")
     global WeaponChanged
     WeaponChanged = True
-
-remove_hook("WillowGame.WillowInventoryManager:ChangedWeapon", Type.PRE, "ChangedWeapon")
-add_hook("WillowGame.WillowInventoryManager:ChangedWeapon", Type.PRE, "ChangedWeapon", ChangedWeapon)
-
 
 
 # Gets populated from `build_mod` below
@@ -63,7 +83,7 @@ build_mod(
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
     keybinds=[],
-    hooks=[],
+    hooks=[NextWeapon, PrevWeapon, ChangedWeapon],
     commands=[],
     # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/ScrollWheelFix.json"),
