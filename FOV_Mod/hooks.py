@@ -186,7 +186,7 @@ def on_player_loaded(
     Sprint.SkillEffectDefinitions[5].ModifierType = 2
     Sprint.SkillEffectDefinitions[5].BaseModifierValue.BaseValueConstant = 0
     SprintLimit = unrealsdk.find_object("AttributeExpressionEvaluator", "gd_skills_common.Basic.DoubleTime:ExpressionTree_4.AttributeExpressionEvaluator_25")
-    SprintLimit.Expression.ConstantOperand2 = 0.1
+    SprintLimit.Expression.ConstantOperand2 = 0.00001
 
 @hook(
     hook_func="WillowGame.WillowPlayerController:BeginSprint",
@@ -200,8 +200,8 @@ def on_player_begin_sprint(
 ) -> None:
     pc = get_pc()
     if pc.pawn.bIsSprinting == 1:
-        pc.DesiredFOVBaseValue = FOV + 10
-        pc.DesiredFOV = FOV + 10
+        pc.DesiredFOVBaseValue = FOV + 15
+        pc.DesiredFOV = FOV + 15
 
 
 @hook(
@@ -312,46 +312,47 @@ def on_player_weapon_action(
     __ret: any,
     __func: BoundFunction,
 ) -> None:
-    pc = get_pc()
-    weapon = str(pc.pawn.weapon.definitiondata)
+    if obj == get_pc().pawn:
+        pc = get_pc()
+        weapon = str(pc.pawn.weapon.definitiondata)
 
-    revolver_pistol = weapon.find("WeaponType_revolver_pistol")
-    repeater_pistol = weapon.find("WeaponType_repeater_pistol")
-    machine_pistol = weapon.find("WeaponType_machine_pistol")
-    assault_shotgun = weapon.find("WeaponType_assault_shotgun")
-    combat_shotgun = weapon.find("WeaponType_combat_shotgun")
-    combat_rifle = weapon.find("WeaponType_combat_rifle")
-    grenade_launcher = weapon.find("WeaponType_grenade_launcher")
-    rocket_launcher = weapon.find("WeaponType_rocket_launcher")
-    sniper_rifle = weapon.find("WeaponType_sniper_rifle'")
-    sniper_rifle_semiauto = weapon.find("WeaponType_sniper_rifle_semiauto'")
-    support_machinegun = weapon.find("WeaponType_support_machinegun")
-    patrol_smg = weapon.find("WeaponType_patrol_smg")
+        revolver_pistol = weapon.find("WeaponType_revolver_pistol")
+        repeater_pistol = weapon.find("WeaponType_repeater_pistol")
+        machine_pistol = weapon.find("WeaponType_machine_pistol")
+        assault_shotgun = weapon.find("WeaponType_assault_shotgun")
+        combat_shotgun = weapon.find("WeaponType_combat_shotgun")
+        combat_rifle = weapon.find("WeaponType_combat_rifle")
+        grenade_launcher = weapon.find("WeaponType_grenade_launcher")
+        rocket_launcher = weapon.find("WeaponType_rocket_launcher")
+        sniper_rifle = weapon.find("WeaponType_sniper_rifle'")
+        sniper_rifle_semiauto = weapon.find("WeaponType_sniper_rifle_semiauto'")
+        support_machinegun = weapon.find("WeaponType_support_machinegun")
+        patrol_smg = weapon.find("WeaponType_patrol_smg")
 
 
-    if (revolver_pistol > -1):
-        pc.foregroundFOV = Revolver_pistol_FOV
-    elif (repeater_pistol > -1):
-        pc.foregroundFOV = Repeater_pistol_FOV
-    elif (machine_pistol > -1):
-        pc.foregroundFOV = Machine_pistol_FOV
-    elif (assault_shotgun > -1):
-        pc.foregroundFOV = Assault_shotgun_FOV
-    elif (combat_shotgun > -1):
-        pc.foregroundFOV = Combat_shotgun_FOV
-    elif (combat_rifle > -1):
-        pc.foregroundFOV = Combat_rifle_FOV
-    elif (grenade_launcher > -1):
-        pc.foregroundFOV = Grenade_launcher_FOV
-    elif (rocket_launcher > -1):
-        pc.foregroundFOV = Rocket_launcher_FOV
-    elif (sniper_rifle > -1):
-        pc.foregroundFOV = Sniper_rifle_FOV
-    elif (sniper_rifle_semiauto > -1):
-        pc.foregroundFOV = Sniper_rifle_semiauto_FOV
-    elif (support_machinegun > -1):
-        pc.foregroundFOV = Support_machinegun_FOV
-    elif (patrol_smg > -1):
-        pc.foregroundFOV = Patrol_smg_FOV
-    else:
-        pc.foregroundFOV = Alien_FOV
+        if (revolver_pistol > -1):
+            pc.foregroundFOV = Revolver_pistol_FOV
+        elif (repeater_pistol > -1):
+            pc.foregroundFOV = Repeater_pistol_FOV
+        elif (machine_pistol > -1):
+            pc.foregroundFOV = Machine_pistol_FOV
+        elif (assault_shotgun > -1):
+            pc.foregroundFOV = Assault_shotgun_FOV
+        elif (combat_shotgun > -1):
+            pc.foregroundFOV = Combat_shotgun_FOV
+        elif (combat_rifle > -1):
+            pc.foregroundFOV = Combat_rifle_FOV
+        elif (grenade_launcher > -1):
+            pc.foregroundFOV = Grenade_launcher_FOV
+        elif (rocket_launcher > -1):
+            pc.foregroundFOV = Rocket_launcher_FOV
+        elif (sniper_rifle > -1):
+            pc.foregroundFOV = Sniper_rifle_FOV
+        elif (sniper_rifle_semiauto > -1):
+            pc.foregroundFOV = Sniper_rifle_semiauto_FOV
+        elif (support_machinegun > -1):
+            pc.foregroundFOV = Support_machinegun_FOV
+        elif (patrol_smg > -1):
+            pc.foregroundFOV = Patrol_smg_FOV
+        else:
+            pc.foregroundFOV = Alien_FOV
