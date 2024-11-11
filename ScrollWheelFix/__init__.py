@@ -8,6 +8,16 @@ from mods_base.options import BaseOption, BoolOption
 
 WeaponChanged = True
 currentweapon = None
+EquippedWeapons = []
+
+def GetEquippedWeapons():
+    global EquippedWeapons
+    EquippedWeapons.clear()
+    for items in get_pc().pawn.Children:
+        if str(items.Class) == "Class'WillowGame.WillowWeapon'":
+            if items.quickselectslot > 0:
+                EquippedWeapons.append(int(items.quickselectslot))
+    EquippedWeapons.sort()
 
 @hook(
     hook_func="WillowGame.WillowPlayerController:NextWeapon",
@@ -19,18 +29,18 @@ def NextWeapon(
     __ret: any,
     __func: BoundFunction,
 ) -> None:
+    global EquippedWeapons
     global currentweapon
     global WeaponChanged
     if get_pc().pawn.weapon != None:
+        GetEquippedWeapons()
         if WeaponChanged == True:
             WeaponChanged = False
-            currentweapon = get_pc().pawn.weapon.quickselectslot
-        MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
+            currentweapon = int(EquippedWeapons.index(int(get_pc().pawn.weapon.quickselectslot))) + 1
         currentweapon = currentweapon + 1
-        if currentweapon > MaxWeapons:
+        if currentweapon > len(EquippedWeapons):
             currentweapon = 1
-    # print(currentweapon)
-        get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
+        get_pc().pawn.invmanager.EquipWeaponFromSlot(EquippedWeapons[currentweapon - 1])
     return Block
 
 @hook(
@@ -38,23 +48,24 @@ def NextWeapon(
     hook_type=Type.PRE,
 )
 def PrevWeapon(
+
     obj: UObject,
     __args: WrappedStruct,
     __ret: any,
     __func: BoundFunction,
 ) -> None:
+    global EquippedWeapons
     global currentweapon
     global WeaponChanged
     if get_pc().pawn.weapon != None:
+        GetEquippedWeapons()
         if WeaponChanged == True:
             WeaponChanged = False
-            currentweapon = get_pc().pawn.weapon.quickselectslot
-        MaxWeapons = get_pc().pawn.invmanager.GetWeaponReadyMax()
+            currentweapon = int(EquippedWeapons.index(int(get_pc().pawn.weapon.quickselectslot))) + 1
         currentweapon = currentweapon - 1
         if currentweapon < 1:
-            currentweapon = MaxWeapons
-    # print(currentweapon)
-        get_pc().pawn.invmanager.EquipWeaponFromSlot(currentweapon)
+            currentweapon = len(EquippedWeapons)
+        get_pc().pawn.invmanager.EquipWeaponFromSlot(EquippedWeapons[currentweapon - 1])
 
     return Block
 

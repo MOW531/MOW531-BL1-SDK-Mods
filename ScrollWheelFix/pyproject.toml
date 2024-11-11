@@ -44,7 +44,7 @@
 
 [project]
 name = "Scroll Wheel Fix"
-version = "1.0.0"
+version = "2.0.0"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Fixes weapons being out of order when switching with the scroll wheel."
 
