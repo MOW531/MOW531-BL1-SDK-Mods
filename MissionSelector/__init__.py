@@ -15,6 +15,10 @@ def GetMissionList():
     for missions in unrealsdk.find_all("MissionTracker")[1].MissionList:
         MissionList.append(missions)
 
+def notify():
+    get_pc().myHUD.GetHUDMovie().AddCriticalText(0, "Mission selected: " + MissionList[ActiveMission].MissionName, 1.5, get_pc().myHUD.WhiteColor, get_pc().myHUD.WPRI)
+    unrealsdk.find_all("WillowUIScene")[0].PlaySound(unrealsdk.find_object("SoundCue","Interface.User_Interface.UI_SelectCue"))
+
 @keybind(identifier="Next Mission", key="F2", event_filter=EInputEvent.IE_Pressed)
 def NextMission():
     global ActiveMission
@@ -27,7 +31,7 @@ def NextMission():
             ActiveMission = 0
         get_pc().SetActiveMission(MissionList[ActiveMission])
         unrealsdk.find_all("MissionTracker")[1].ActiveMission = MissionList[ActiveMission]
-
+        notify()
 
 @keybind(identifier="Previous Mission", key="F1", event_filter=EInputEvent.IE_Pressed)
 def PrevMission():
@@ -41,6 +45,8 @@ def PrevMission():
             ActiveMission = len(MissionList) - 1
         get_pc().SetActiveMission(MissionList[ActiveMission])
         unrealsdk.find_all("MissionTracker")[1].ActiveMission = MissionList[ActiveMission]
+        notify()
+
 
 
 
