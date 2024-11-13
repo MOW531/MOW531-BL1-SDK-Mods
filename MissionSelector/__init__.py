@@ -15,7 +15,7 @@ def GetMissionList():
     for missions in unrealsdk.find_all("MissionTracker")[1].MissionList:
         MissionList.append(missions)
 
-@keybind(identifier="Next Mission", key="F2", event_filter=None)
+@keybind(identifier="Next Mission", key="F2", event_filter=EInputEvent.IE_Pressed)
 def NextMission():
     global ActiveMission
     global MissionList
@@ -29,7 +29,7 @@ def NextMission():
         unrealsdk.find_all("MissionTracker")[1].ActiveMission = MissionList[ActiveMission]
 
 
-@keybind(identifier="Previous Mission", key="F1", event_filter=None)
+@keybind(identifier="Previous Mission", key="F1", event_filter=EInputEvent.IE_Pressed)
 def PrevMission():
     global ActiveMission
     global MissionList
