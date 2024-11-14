@@ -135,7 +135,9 @@ def NextMission():
         if ActiveMission > len(MissionList) - 1:
             ActiveMission = 0
         get_pc().SetActiveMission(MissionList[ActiveMission])
-        unrealsdk.find_all("MissionTracker")[1].ActiveMission = MissionList[ActiveMission]
+        for MissionTrackers in unrealsdk.find_all("MissionTracker"):
+            MissionTrackers.ActiveMission = MissionList[ActiveMission]
+        unrealsdk.find_all("WillowWaypoint")[0].ResolveWaypointsFromScript()
         notify()
 
 @keybind(identifier="Previous Mission", key="F1", event_filter=EInputEvent.IE_Pressed)
@@ -151,7 +153,9 @@ def PrevMission():
         if ActiveMission < 0:
             ActiveMission = len(MissionList) - 1
         get_pc().SetActiveMission(MissionList[ActiveMission])
-        unrealsdk.find_all("MissionTracker")[1].ActiveMission = MissionList[ActiveMission]
+        for MissionTrackers in unrealsdk.find_all("MissionTracker"):
+            MissionTrackers.ActiveMission = MissionList[ActiveMission]
+        unrealsdk.find_all("WillowWaypoint")[0].ResolveWaypointsFromScript()
         notify()
 
 
