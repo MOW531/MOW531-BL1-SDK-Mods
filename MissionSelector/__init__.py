@@ -8,6 +8,32 @@ from mods_base.options import BaseOption, BoolOption
 
 MissionList = []
 ActiveMission = None
+current_obj = None
+ActiveMissionLevel = None
+TextColor = "#FFFFFF"
+
+bTextColor = BoolOption("Text Color", True)
+
+def obj (definition:str, object:str):
+    global current_obj
+    unrealsdk.load_package(object)
+    current_obj = unrealsdk.find_object(definition, object)
+    return unrealsdk.find_object(definition, object)
+
+def GetTextColor():
+    global TextColor
+    global ActiveMissionLevel
+    playerlevel = get_pc().pawn.GetExpLevel()
+    if ActiveMissionLevel >= playerlevel + 5:
+        TextColor = "#ea0e0e"
+    elif ActiveMissionLevel >= playerlevel + 3:
+        TextColor = "#fc9c0c"
+    elif ActiveMissionLevel >= playerlevel + 1:
+        TextColor = "#fcca01"
+    elif ActiveMissionLevel >= playerlevel + -2:
+        TextColor = "#14b766"
+    else:
+        TextColor = "#a2a2a2"
 
 def GetMissionList():
     global MissionList
@@ -15,8 +41,76 @@ def GetMissionList():
     for missions in unrealsdk.find_all("MissionTracker")[1].MissionList:
         MissionList.append(missions)
 
+def GetMissionLevel():
+    global ActiveMissionLevel
+    mission_region = unrealsdk.find_all("MissionTracker")[1].ActiveMission.GameStageRegion
+    DLCID = unrealsdk.find_all("MissionTracker")[1].ActiveMission.DlcPackageId
+    # Base Game
+    if DLCID == 0:
+        for acts in obj("GlobalsDefinition","gd_globals.General.Globals").RegionBalanceData[get_pc().GetCurrentPlaythrough()].BalanceDefinitions:
+            for regions in acts.BalanceByRegion:
+                if regions.Region == mission_region:
+                    for overrides in regions.MissionOverrides:
+                        if get_pc().IsMissionInStatus(overrides.Mission, 4) is True:
+                            ActiveMissionLevel = overrides.GameStage.BaseValueConstant
+                            GetTextColor()
+                            return
+                        ActiveMissionLevel = int(regions.DefaultGameStage.BaseValueConstant)
+    # DLC 1
+    elif DLCID == 1:
+        for acts in obj("GlobalsDefinition","dlc1_PackageDefinition.CustomGlobals").RegionBalanceData[get_pc().GetCurrentPlaythrough()].BalanceDefinitions:
+            for regions in acts.BalanceByRegion:
+                if regions.Region == mission_region:
+                    for overrides in regions.MissionOverrides:
+                        if get_pc().IsMissionInStatus(overrides.Mission, 4) is True:
+                            ActiveMissionLevel = overrides.GameStage.BaseValueConstant
+                            GetTextColor()
+                            return
+                        ActiveMissionLevel = int(regions.DefaultGameStage.BaseValueConstant)
+    # DLC 2
+    elif DLCID == 2:
+        for acts in obj("GlobalsDefinition","dlc2_packagedefinition.CustomGlobals").RegionBalanceData[get_pc().GetCurrentPlaythrough()].BalanceDefinitions:
+            for regions in acts.BalanceByRegion:
+                if regions.Region == mission_region:
+                    for overrides in regions.MissionOverrides:
+                        if get_pc().IsMissionInStatus(overrides.Mission, 4) is True:
+                            ActiveMissionLevel = overrides.GameStage.BaseValueConstant
+                            GetTextColor()
+                            return
+                        ActiveMissionLevel = int(regions.DefaultGameStage.BaseValueConstant)
+    # DLC 3
+    elif DLCID == 4:
+        for acts in obj("GlobalsDefinition","dlc3_PackageDefinition.CustomGlobals").RegionBalanceData[get_pc().GetCurrentPlaythrough()].BalanceDefinitions:
+            for regions in acts.BalanceByRegion:
+                if regions.Region == mission_region:
+                    for overrides in regions.MissionOverrides:
+                        if get_pc().IsMissionInStatus(overrides.Mission, 4) is True:
+                            ActiveMissionLevel = overrides.GameStage.BaseValueConstant
+                            GetTextColor()
+                            return
+                        ActiveMissionLevel = int(regions.DefaultGameStage.BaseValueConstant)
+    # DLC 4
+    elif DLCID == 8:
+        for acts in obj("GlobalsDefinition","dlc4_PackageDefinition.CustomGlobals").RegionBalanceData[get_pc().GetCurrentPlaythrough()].BalanceDefinitions:
+            for regions in acts.BalanceByRegion:
+                if regions.Region == mission_region:
+                    for overrides in regions.MissionOverrides:
+                        if get_pc().IsMissionInStatus(overrides.Mission, 4) is True:
+                            ActiveMissionLevel = overrides.GameStage.BaseValueConstant
+                            GetTextColor()
+                            return
+                        ActiveMissionLevel = int(regions.DefaultGameStage.BaseValueConstant)
+
+    GetTextColor()
+
+
 def notify():
-    get_pc().myHUD.GetHUDMovie().AddCriticalText(0, "Mission selected: " + MissionList[ActiveMission].MissionName, 1.5, get_pc().myHUD.WhiteColor, get_pc().myHUD.WPRI)
+    global TextColor
+    if bTextColor.value is True:
+        GetMissionLevel()
+    else:
+        TextColor = "#FFFFFF"
+    get_pc().myHUD.GetHUDMovie().AddCriticalText(0, 'Mission selected: "<font color = \"' + TextColor + '\">' + MissionList[ActiveMission].MissionName + '</font>"', 1.5, get_pc().myHUD.WhiteColor, get_pc().myHUD.WPRI)
     unrealsdk.find_all("WillowUIScene")[0].PlaySound(unrealsdk.find_object("SoundCue","Interface.User_Interface.UI_SelectCue"))
 
 @keybind(identifier="Next Mission", key="F2", event_filter=EInputEvent.IE_Pressed)
@@ -59,6 +153,7 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
+    options=[bTextColor],
     keybinds=[NextMission, PrevMission],
     hooks=[],
     commands=[],
