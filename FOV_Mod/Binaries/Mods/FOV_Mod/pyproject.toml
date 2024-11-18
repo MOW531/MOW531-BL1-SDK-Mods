@@ -44,7 +44,7 @@
 
 [project]
 name = "FOV Mod"
-version = "2.0.0"
+version = "2.1.0"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Fixes FOV issues and allows you to change your FOV"
 

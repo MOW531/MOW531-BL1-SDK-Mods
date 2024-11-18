@@ -4,8 +4,8 @@ from mods_base import SETTINGS_DIR, build_mod, EInputEvent, keybind
 from unrealsdk import logging
 from mods_base.options import BaseOption, SliderOption
 
-from .world_fov import SetFOV, WorldFOV
-from .weapon_fov import SetWeaponFOV, RevolverFOV, RepeaterFOV, MachinePistolFOV, assaultshotgunFOV, combatshotgunFOV, combatrifleFOV, grenadelauncherFOV, rocketlauncherFOV, sniperrifleFOV, sniperriflesemiautoFOV, supportmachinegunFOV, patrolsmgFOV, alienFOV
+from .world_fov import SpawningProcessComplete, DriverEnter, DriverLeave, WorldFOV
+from .weapon_fov import WeaponActionComplete, RevolverFOV, RepeaterFOV, MachinePistolFOV, assaultshotgunFOV, combatshotgunFOV, combatrifleFOV, grenadelauncherFOV, rocketlauncherFOV, sniperrifleFOV, sniperriflesemiautoFOV, supportmachinegunFOV, patrolsmgFOV, alienFOV
 
 current_obj = None
 
@@ -59,7 +59,7 @@ build_mod(
     # deregister_same_settings=True,      # This is True by default
     options=[WorldFOV, RevolverFOV, RepeaterFOV, MachinePistolFOV, assaultshotgunFOV, combatshotgunFOV, combatrifleFOV, grenadelauncherFOV, rocketlauncherFOV, sniperrifleFOV, sniperriflesemiautoFOV, supportmachinegunFOV, patrolsmgFOV, alienFOV],
     keybinds=[],
-    hooks=[SetFOV, SetWeaponFOV],
+    hooks=[SpawningProcessComplete, DriverEnter, DriverLeave, WeaponActionComplete],
     commands=[],
     # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/FOV.json"),
