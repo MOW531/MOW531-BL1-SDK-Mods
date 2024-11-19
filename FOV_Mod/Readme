@@ -1,0 +1,8 @@
+Allows you to change your field of view for both the world and each weapon type.
+
+Vanilla jump has the FOV lower back to the set World FOV when in the air.
+For multiplayer, all players need to set their world FOV to that of the host.
+
+Notes for modders, this mod changes:
+	InitialDuration of gd_skills_common.Basic.Melee
+	Where gd_skills_common.Basic.DoubleTime is in the BasicSkills list
