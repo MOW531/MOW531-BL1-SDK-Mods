@@ -1,4 +1,5 @@
 Allows you to change your field of view for both the world and each weapon type.
+Also fixes a bunch of FOV issues and sprint issues to make the game feel more modern, similar to BL2.
 
 Vanilla jump has the FOV lower back to the set World FOV when in the air.
 For multiplayer, all players need to set their world FOV to that of the host.
