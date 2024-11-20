@@ -1,0 +1,59 @@
+What the SDK version fixes:
+
+Driver prefix being called Thunder
+Draco's title and Rarity (Not retroactive)
+Penetrator Rarity
+Plague being called Crux
+Executioner being called Invader
+Assault Shotguns not spawning with fire acc
+Revenge not increasing launcher damage
+Rapid Reload increasing recoil instead of reducing it
+Bitch's critical damage bonus
+Vengeance's chance to ignore shields
+Reaper's melee damage bonus
+Destroyer now shows burst fire on the item card
+Sentinel now shows zoom level on the item card
+Corrosive pistols require the correct 15 tech instead of 16 for 4x
+Clipper's melee damage bonus
+Invader now shows burst fire on the item card
+Dove no longer consumes ammo with the double prefix
+Revolvers now show critical damage bonus
+Reaver's Edge now shows zoom level on the item card
+Bone Shredder now spawns with its material (Not retroactive)
+Avenger now shows ammo regen on the item card
+Kyros' Power deals the proper damage type
+Shows hidden stats by lowering the font size on item cards
+Catalyst shield recharge rate now works
+Unbreakable now works in berserk
+Athena's Wisdom shows critical damage bonus on item card
+Peace keeper COM Material 2 now increases shield recharge rate instead of decreasing
+Support MGs now appear in vendors
+Girl Power now works in phasewalk and when killing an enemy without a weapon
+Hunter class mod increased action skill cooldown rate now works
+Resilience reduces shock damage received
+Quick Charge regens the listed amount
+Evil acc on launchers now works as intended
+Noble prefix can now be rolled on repeaters
+Tank class mod now increases recharge rate instead of decreasing
+Ranger class mod now increases team accuracy recovery instead of decreasing
+Proficiency no longer affects the displayed level of weapons when equipped
+Crit bonuses now work on non-crit weapons
+Twisted prefix will now spawn on twister SMGs
+Possible fix for enemy shield scaling
+Gunslinger now boosts Hair Trigger instead of Loaded
+Badass Drifters can now spawn
+Terrible prefix on combat shotguns no longer prevents other prefixes from rolling
+Jagged prefix on combat shotguns is now called Jagged instead of Fanged
+Wee Wee's Super Booster now displays it's health boost and health regen effects on the card
+Fixed misaligned inventory UI
+Fixed sniper proficiency not selecting when you hover over it
+Fixed infantry Lance not dropping their assault shotgun
+The melee acc for Assault Shotguns now increases melee damage
+Explosive barrels and fuel tanks now spawn after gamestage 52 (Credit to RedxYeti who made the fix and allowed me to add it)
+Rocket damage no longer gets blocked by meshes
+Fixed rightside 5 on coms not having the proper bonuses
+Fixed the incremental number on right side com parts
+Added material for the Eridian Warrior com
+Lance Mines can now spawn after gamestage 60
+Knoxx DLC vendors can now sell grenades above gamestage 50
+Claptrap DLC vendors can now sell grenades above gamestage 50
