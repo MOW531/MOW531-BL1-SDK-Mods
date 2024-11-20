@@ -1,0 +1,3 @@
+Fixes diagonal sprint, Mordecai and Lilith melee zoom, FOV resetting, and the use key also being a reload key.
+
+Also lowers how much FOV increases when you sprint so that high FOVs still look good and FOV stays increased when you jump like in the rest of the series.
