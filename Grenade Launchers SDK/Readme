@@ -1,1 +1,13 @@
-Adds grenade launchers to the games loot pool
+1.1.0
+
+Fixed the Mad prefix name and priority
+Fixed the Sticky prefix name
+Fixed the Onslaught not being able to spawn
+Fixed the Blitz acc not giving the proper bonuses/debuffs
+Fixed splash damage sometimes being absorbed
+Fixed the Rainmaker child grenades dealing 0 damage
+Fixed grenade launchers not being affected by launcher skills
+
+1.0.0
+
+Added grenade launchers to the games loot pool
