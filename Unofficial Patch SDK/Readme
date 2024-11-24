@@ -32,7 +32,6 @@ Destroyer now shows burst fire on the item card
 Sentinel now shows zoom level on the item card
 Corrosive pistols require the correct 15 tech instead of 16 for 4x
 Clipper's melee damage bonus
-Invader now shows burst fire on the item card
 Dove no longer consumes ammo with the double prefix
 Revolvers now show critical damage bonus
 Reaver's Edge now shows zoom level on the item card
@@ -40,7 +39,6 @@ Bone Shredder now spawns with its material (Not retroactive)
 Avenger now shows ammo regen on the item card
 Kyros' Power deals the proper damage type
 Shows hidden stats by lowering the font size on item cards
-Catalyst shield recharge rate now works
 Unbreakable now works in berserk
 Athena's Wisdom shows critical damage bonus on item card
 Peace keeper COM Material 2 now increases shield recharge rate instead of decreasing
@@ -48,7 +46,6 @@ Support MGs now appear in vendors
 Girl Power now works in phasewalk and when killing an enemy without a weapon
 Hunter class mod increased action skill cooldown rate now works
 Resilience reduces shock damage received
-Quick Charge regens the listed amount
 Evil acc on launchers now works as intended
 Noble prefix can now be rolled on repeaters
 Tank class mod now increases recharge rate instead of decreasing
