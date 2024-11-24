@@ -1,5 +1,22 @@
 What the SDK version fixes:
 
+1.1.0
+
+Adjusted skill descriptions to be more consistent
+Invader now shows burst fire on the item card
+Rocket Launchers now deal rocket damage
+Catalyst shield recharge rate now works
+Girl Power now regens at 1.5% per point (The listed amount is off due to rounding)
+Quick Charge now regens at 1.5% per point (The listed amount is off due to rounding)
+Badass Drifters spawn rates are now balanced like other Badass enemies
+
+
+# Changes to the UP
+Unforgiven no longer shows the crit bonus twice
+Revenge no longer increases grenade damage
+
+1.0.0
+
 Driver prefix being called Thunder
 Draco's title and Rarity (Not retroactive)
 Penetrator Rarity
@@ -31,6 +48,7 @@ Support MGs now appear in vendors
 Girl Power now works in phasewalk and when killing an enemy without a weapon
 Hunter class mod increased action skill cooldown rate now works
 Resilience reduces shock damage received
+Quick Charge regens the listed amount
 Evil acc on launchers now works as intended
 Noble prefix can now be rolled on repeaters
 Tank class mod now increases recharge rate instead of decreasing
