@@ -1,0 +1,12 @@
+Adjusted skill descriptions to be more consistent
+Invader now shows burst fire on the item card
+Rocket Launchers now deal rocket damage
+Catalyst shield recharge rate now works
+Girl Power now regens at 1.5% per point (The listed amount is off due to rounding)
+Quick Charge now regens at 1.5% per point (The listed amount is off due to rounding)
+Badass Drifters spawn rates are now balanced like other Badass enemies
+
+
+# Changes to the UP
+Unforgiven no longer shows the crit bonus twice
+Revenge no longer increases grenade damage

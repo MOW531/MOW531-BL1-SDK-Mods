@@ -1,4 +1,17 @@
+Difference between the UPK and SDK versions:
+
+The SDK version has some more fixes (see the changes after 1.0.0) and has better compatibility with other mods, but it currently lacks the animation fixes that the UPK version has.
+
+
+
 What the SDK version fixes:
+
+
+1.1.1
+
+Fixed some weapons getting too high of a crit boost with the crit fix
+Removed the Riot prefix from grip2 on combat shotguns. Now it's only granted if the gun meets the stat requirements
+Removed the Terrible prefix from the generic prefix list on combat shotguns. Now it's only granted if the gun has acc4
 
 1.1.0
 
@@ -43,7 +56,7 @@ Unbreakable now works in berserk
 Athena's Wisdom shows critical damage bonus on item card
 Peace keeper COM Material 2 now increases shield recharge rate instead of decreasing
 Support MGs now appear in vendors
-Girl Power now works in phasewalk and when killing an enemy without a weapon
+Girl Power now works in Phasewalk and when killing an enemy without a weapon
 Hunter class mod increased action skill cooldown rate now works
 Resilience reduces shock damage received
 Evil acc on launchers now works as intended
@@ -71,3 +84,8 @@ Added material for the Eridian Warrior com
 Lance Mines can now spawn after gamestage 60
 Knoxx DLC vendors can now sell grenades above gamestage 50
 Claptrap DLC vendors can now sell grenades above gamestage 50
+
+
+Credits:
+SleepMaster﻿ (https://next.nexusmods.com/profile/SleepMaster/about-me?gameId=360) for directing me to a list of vanilla bugs on his Vault Hunter's Challenges mod﻿ (https://www.nexusmods.com/borderlands/mods/48) and for showing how to fix the sniper proficiency bug.
+ZetaDæmon for explaining why somethings were broken.

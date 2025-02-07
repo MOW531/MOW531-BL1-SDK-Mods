@@ -1,0 +1,3 @@
+BadTextModLoader loads and runs commands from text files in its mod folder to make things slightly more convenient for me.
+There are two types of commands, set and rset. set commands only run once and are for objects that are going to stay in memory. rset commands run on every level transition and are for objects that get garbage collected. Comes with text versions of my Unofficial Patch and Grenade Launcher mods if you need examples.
+There's no option to choose which mods are enabled.

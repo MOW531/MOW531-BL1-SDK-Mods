@@ -1,0 +1,202 @@
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.Title_Damage1_Driver").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Dahl1_Penetrator").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_assault_shotgun.Title.TitleM_Maliwan1_Plague").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Hyperion1_Executioner").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Acc1_Jagged").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Barrel_Sticky").ObjectFlags |= 0x4000
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.Title_Damage1_Driver").PartName = "Driver"
+set obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco").Rarity.BaseValueAttribute = (obj("InventoryAttributeDefinition","gd_Balance_Inventory.Rarity_Weapon.WeaponPartRarity6_Legendary"))
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Dahl1_Penetrator").Rarity.BaseValueAttribute = (obj("InventoryAttributeDefinition","gd_Balance_Inventory.Rarity_Weapon.WeaponPartRarity6_Legendary"))
+set obj("WeaponNamePartDefinition","gd_weap_assault_shotgun.Title.TitleM_Maliwan1_Plague").PartName = "Plague"
+set obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Hyperion1_Executioner").PartName = "Executioner"
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[0].ConstantOperand2 = 0
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Corrosive")
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions.append(current_obj.Expressions[0])
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Explosive")
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions.append(current_obj.Expressions[0])
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Incendiary")
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions.append(current_obj.Expressions[0])
+set obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Shock")
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions.append(obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").Expressions[1])
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.Weapon.WeaponDamageNormalized")
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions[(len(current_obj.Expressions)) - 1].ConstantOperand2 = 2
+set obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").Expressions[1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.Weapon.WeaponDamageNormalized")
+set obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Acc1_Jagged").PartName = "Jagged"
+set obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").PartName = "Mad"
+set obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").Priority = 3
+set obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Barrel_Sticky").PartName = "Sticky"
+
+
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.UniqueParts.TheClipper_acc5_Incendiary").ObjectFlags |= 0x4000
+set obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_SMG_BoneShredder").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.SemiAutoSniper.acc2_KyrosPower").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").ObjectFlags |= 0x4000
+set obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_patrol_smg.Barrel.barrel5_Hyperion_Bitch").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.Barrel.barrel5_Vladof_Vengence").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.acc.acc1_Hyperion_Reaper").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_repeater_pistol.acc.acc5_Corrosive").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.TheDove_barrel4").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_rocket_launcher.acc.acc2_Evil").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_assault_shotgun.acc.acc1_Spiked").ObjectFlags |= 0x4000
+set obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").ObjectFlags |= 0x4000
+set obj("WeaponPartDefinition","gd_weap_grenade_launcher.acc.acc2_Blitz").ObjectFlags |= 0x4000
+
+
+set obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").TitleList.append(obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco"))
+set obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.BaseValueScaleConstant = 1
+set obj("WeaponPartDefinition","gd_weap_patrol_smg.Barrel.barrel5_Hyperion_Bitch").ExternalAttributeEffects[2].ModifierType = 1
+set obj("WeaponPartDefinition","gd_weap_patrol_smg.Barrel.barrel5_Hyperion_Bitch").ExternalAttributeEffects[2].BaseModifierValue.BaseValueConstant = 1.5
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.Barrel.barrel5_Vladof_Vengence").ExternalAttributeEffects.append(current_obj.WeaponAttributeEffects[4])
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.acc.acc1_Hyperion_Reaper").ExternalAttributeEffects.append(current_obj.WeaponAttributeEffects[0])
+set obj("WeaponPartDefinition","gd_weap_repeater_pistol.acc.acc5_Corrosive").TechAbilities[4].RequiredTechLevel = 15
+set obj("WeaponPartDefinition","gd_weap_machine_pistol.UniqueParts.TheClipper_acc5_Incendiary").ExternalAttributeEffects.append(current_obj.WeaponAttributeEffects[1])
+set obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.TheDove_barrel4").WeaponAttributeEffects[0].ModifierType = 0
+set obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.TheDove_barrel4").WeaponAttributeEffects[0].BaseModifierValue.BaseValueConstant = -10000
+set obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_SMG_BoneShredder").MaterialPartData.WeightedParts[0].Part = obj("WeaponPartDefinition","gd_weap_patrol_smg.UniqueParts.BoneShredder_Material")
+set obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.SemiAutoSniper.acc2_KyrosPower").CustomDamageTypeDefinition = obj("WillowDamageTypeDefinition","gd_Explosive.DamageType.DmgType_Explosive")
+set obj("WeaponPartDefinition","gd_weap_rocket_launcher.acc.acc2_Evil").WeaponAttributeEffects.append(current_obj.ExternalAttributeEffects[2])
+set obj("WeaponPartDefinition","gd_weap_rocket_launcher.acc.acc2_Evil").WeaponAttributeEffects.append(current_obj.ExternalAttributeEffects[1])
+set obj("WeaponPartDefinition","gd_weap_assault_shotgun.acc.acc1_Spiked").ExternalAttributeEffects[0].ModifierType = 1
+set obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts.append(current_obj.WeightedParts[10])
+set obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts[(len(current_obj.WeightedParts)) - 1].Part = obj("WeaponPartDefinition","gd_weap_grenade_launcher.Barrel.barrel3_Dahl_Onslaught")
+set obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts[(len(current_obj.WeightedParts)) - 1].Manufacturers[1].Manufacturer = obj("ManufacturerDefinition","gd_manufacturers.Manufacturers.Dahl")
+set obj("WeaponPartDefinition","gd_weap_grenade_launcher.acc.acc2_Blitz").WeaponAttributeEffects.append(current_obj.ExternalAttributeEffects[2])
+set obj("WeaponPartDefinition","gd_weap_grenade_launcher.acc.acc2_Blitz").WeaponAttributeEffects.append(current_obj.ExternalAttributeEffects[1])
+
+
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").ObjectFlags |= 0x4000
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").ObjectFlags |= 0x4000
+set obj("SkillDefinition","gd_Skills2_Brick.Tank.Unbreakable").ObjectFlags |= 0x4000
+set obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").ObjectFlags |= 0x4000
+set obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").ObjectFlags |= 0x4000
+set obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ObjectFlags |= 0x4000
+
+
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").SkillEffectDefinitions.append(current_obj.SkillEffectDefinitions[1])
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").SkillEffectDefinitions[(len(current_obj.SkillEffectDefinitions)) - 1].AttributeToModify = obj("AttributeDefinition","d_attributes.DamageSourceModifiers.InstigatedGrenadeDamageModifier")
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").SkillEffectDefinitions[1].BaseModifierValue.BaseValueConstant = -0.06
+set obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").SkillEffectDefinitions[1].PerGradeUpgrade.BaseValueConstant = -0.06
+set obj("SkillDefinition","gd_Skills2_Brick.Tank.Unbreakable").bAvailableBerserk = True
+set obj("SkillDefinition","gd_Skills2_Brick.Tank.Unbreakable").bAvailableDuringActionSkill = True
+set obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").bAvailableAlways = True
+set obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").SkillEffectDefinitions.append(current_obj.SkillEffectDefinitions[5])
+set obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").SkillEffectDefinitions[(len(current_obj.SkillEffectDefinitions)) - 1].AttributeToModify = obj("AttributeDefinition","d_attributes.DamageTypeModifers.ShockPassiveDamageModifier")
+set obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ValueFormula.Level.BaseValueAttribute = obj("AttributeDefinition","gd_skills2_Roland.SkillGradeModifiers.SkillGradeModifier_Roland_QuickCharge")
+set obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ValueFormula.Multiplier.BaseValueAttribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldMaxValue")
+
+
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside3").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside4").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside5").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Mordecai_Anshin").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Hunter").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Ranger").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Gunslinger").ObjectFlags |= 0x4000
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").ObjectFlags |= 0x4000
+
+
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside3").PartNumberAddend = 30
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside4").PartNumberAddend = 40
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside5").AttributeSlotUpgrades[1].GradeIncrease = 3
+set obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside5").AttributeSlotUpgrades[2].GradeIncrease = 3
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Mordecai_Anshin").AttributeSlotEffects[1].BaseModifierValue.BaseValueConstant = 0.2
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Mordecai_Anshin").AttributeSlotEffects[1].PerGradeUpgrade.BaseValueConstant = 0.04
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Hunter").AttributeSlotEffects[2].BaseModifierValue.BaseValueConstant = 0.2
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Hunter").AttributeSlotEffects[2].PerGradeUpgrade.BaseValueConstant = 0.04
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Hunter").AttributeSlotEffects[2].AttributeToModify = obj("AttributeDefinition","d_attributes.ActiveSkillCooldownResource.ActiveSkillCooldownConsumptionRate")
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Ranger").AttributeSlotEffects[2].BaseModifierValue.BaseValueConstant = 0.3
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Ranger").AttributeSlotEffects[2].PerGradeUpgrade.BaseValueConstant = 0.06
+set obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Gunslinger").AttributeSlotEffects[4].AttributeToModify = obj("AttributeDefinition","gd_skills2_Mordecai.SkillGradeModifiers.SkillGradeModifier_Mordecai_BloodRage")
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").AttributeSlotEffects[1].BaseModifierValue.BaseValueConstant = 0.2
+set obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").AttributeSlotEffects[1].PerGradeUpgrade.BaseValueConstant = 0.04
+
+
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Helix").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_Leviathan").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Mongol").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Nidhogg").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Rhino").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_mini").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Impact").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Leviathan").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Impact").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Rebounder").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Rainmaker_Children").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_SandS_Rainmaker").ObjectFlags |= 0x4000
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Sticky").ObjectFlags |= 0x4000
+
+
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Helix").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_Leviathan").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Mongol").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Nidhogg").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Rhino").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_mini").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Impact").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Leviathan").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Impact").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Rebounder").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Rainmaker_Children").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_SandS_Rainmaker").bUseAccurateCollision = False
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Sticky").bUseAccurateCollision = False
+
+
+set obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_SandS_Rainmaker").DefaultBehaviorSet.OnExplode[1].ChildProjectileBaseValues.append(obj("ProjectileDefinition","gd_grenades.Longbow.HandGrenade_LongBow").DefaultBehaviorSet.OnExplode[2].ChildProjectileBaseValues[0])
+
+
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Pistol_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Shotgun_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Sniper_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_SMG_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_RocketLauncer_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Eridan_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_CombatRifle_LevelBonus").ObjectFlags |= 0x4000
+set obj("AttributeDefinition","d_attributes.Inventory.ShieldItemLevel").ObjectFlags |= 0x4000
+set obj("AttributePresentationDefinition","gd_AttributePresentation.Skills_Mordecai.AttrPresent_SkillGradeModifier_Mordecai_BloodRage").ObjectFlags |= 0x4000
+
+
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Pistol_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Pistol_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Shotgun_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Shotgun_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Sniper_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Sniper_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_SMG_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_SMG_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_RocketLauncer_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_RocketLauncer_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Eridan_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Eridan_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_CombatRifle_LevelBonus").ValueResolverChain.append(obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Gear_LevelBonus").ValueResolverChain[0])
+set obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_CombatRifle_LevelBonus").ValueResolverChain.pop(0)
+set obj("AttributeDefinition","d_attributes.Inventory.ShieldItemLevel").ContextResolverChain[0].InventoryDefinition = None
+set obj("AttributePresentationDefinition","gd_AttributePresentation.Skills_Mordecai.AttrPresent_SkillGradeModifier_Mordecai_BloodRage").Description = "Hair Trigger Skill"
+
+
+rset obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_FeaturedItem_WeaponMachine").BalancedItems.append(current_obj.BalancedItems[5])
+rset obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_FeaturedItem_WeaponMachine").BalancedItems[(len(current_obj.BalancedItems)) - 1].InvBalanceDefinition = obj("InventoryBalanceDefinition","gd_itemgrades.Weapons.ItemGrade_Weapon_SupportMachineGun")
+rset obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_Weapons_flatChance").BalancedItems.append(current_obj.BalancedItems[5])
+rset obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_Weapons_flatChance").BalancedItems[(len(current_obj.BalancedItems)) - 1].InvBalanceDefinition = obj("InventoryBalanceDefinition","gd_itemgrades.Weapons.ItemGrade_Weapon_SupportMachineGun")
+rset obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons").BalancedItems[1].bDropOnDeath = True
+rset obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons_Badass").BalancedItems[0].bDropOnDeath = True
+rset obj("ItemPoolDefinition","dlc3_gd_itempools.CrimsonLance.Infantry_Weapons_Badass_enhance").BalancedItems[0].bDropOnDeath = True
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[9])
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[(len(current_obj.Grades)) - 1].GameStageRequirement.MinGameStage = 53
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[(len(current_obj.Grades)) - 1].GameStageRequirement.MaxGameStage = 100
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Explosive").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Incendiary").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Shock").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
+rset obj("InteractiveObjectBalanceDefinition","gd_balance_objects.FuelTanks.ObjectGrade_ExplodingFuelTank").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
+rset obj("InteractiveObjectBalanceDefinition","dlc3_gd_explosives.SeaMine.BalanceDef_SeaMine").Grades[5].GameStageRequirement.MaxGameStage = 100
