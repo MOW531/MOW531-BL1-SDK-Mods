@@ -1,3 +1,6 @@
+Requires Custom UI SDK (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Custom%20UI%20SDK)
+
+
 Difference between the UPK and SDK versions:
 
 The SDK version has some more fixes (see the changes after 1.0.0) and has better compatibility with other mods, but it currently lacks the animation fixes that the UPK version has.
