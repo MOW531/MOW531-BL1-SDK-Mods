@@ -1,7 +1,10 @@
 Adds the Recharge Delay stat to the third line on the shield item card.
 Includes the Confirmation Remover.
 
-As far as I and RedxYeti﻿ could tell, shields are hard coded to only calculate the first two lines, so the arrow for delay doesn't appear when you compare shields.
+1.1.0
+
+The third arrow for delay now works
+
 ﻿
 Credits:
 Freepik﻿ (https://www.flaticon.com/authors/freepik) for the recycle icon﻿. (https://www.flaticon.com/free-icon/recycle-symbol-of-three-arrows_52066)
