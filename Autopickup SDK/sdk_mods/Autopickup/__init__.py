@@ -10,6 +10,9 @@ from mods_base import build_mod
 from unrealsdk import logging
 import os
 
+
+bAutoLoot = BoolOption("BL3 Auto-Loot", True)
+
 bPatched = False
 current_obj = None
 
@@ -65,6 +68,74 @@ def on_startgame(
 
 
 
+
+# This part was made by RedxYeti
+InteractiveObjects = {}
+
+
+@hook("WillowGame.WillowPickup:SpawnPickupParticles", Type.POST)
+def SpawnPickupParticles(obj: UObject,__args: WrappedStruct,__ret: any,__func: BoundFunction,) -> None:
+    global bAutoLoot
+    if bAutoLoot.value is True:
+        global InteractiveObjects
+        if obj.Inventory and obj.Inventory.Class.Name == "WillowUsableItem":
+            if obj.Base:
+                BaseIO = obj.Base
+                if BaseIO in InteractiveObjects.keys() and InteractiveObjects[BaseIO] and obj.bPickupable and obj.Inventory.CanBeUsedBy(InteractiveObjects[BaseIO].Pawn):
+                    InteractiveObjects[BaseIO].TouchedPickupable(obj)
+                    
+            else:
+                try:
+                    obj.Components[1].SetCylinderSize(350, 350)
+                except:
+                    return
+        return
+
+@hook("WillowGame.WillowInteractiveObject:UsedBy", Type.POST)
+def UsedBy(obj: UObject,__args: WrappedStruct,__ret: any,__func: BoundFunction,) -> None:
+    global bAutoLoot
+    if bAutoLoot.value is True:
+        global InteractiveObjects
+        InteractiveObjects[obj] = __args.User.Controller
+        return
+
+
+@hook("WillowGame.WillowPlayerController:TouchedPickupable", Type.POST)
+def TouchedPickupable(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction):
+    global bAutoLoot
+    if bAutoLoot.value is True:
+        CurrentPickupable = obj.GetCurrentPickupable()
+
+        if not CurrentPickupable or not obj.Pawn:
+            return
+        
+        ClassName = CurrentPickupable.Inventory.Class.Name
+        if ClassName == "WillowWeapon" or ClassName == "WillowEquipAbleItem":
+            return
+        
+        obj.UpdateAmmoCounts(True)
+        if not obj.HasRoomInInventoryFor(CurrentPickupable) or not obj.WorldInfo.Game.PickupQuery(obj.Pawn, CurrentPickupable):
+            return
+        
+        if obj.ShouldUseCoopRange(CurrentPickupable):
+            obj.CloneAndGiveToCoopPawns(CurrentPickupable, False)
+
+        obj.ClientSpawnPickupableMesh(CurrentPickupable)
+        CurrentPickupable.GiveTo(obj.Pawn, False)
+        obj.CurrentTouchedPickupable = None
+        obj.CurrentSeenPickupable = None
+        obj.UpdateAmmoCounts(True)
+        return
+
+
+
+
+
+
+
+
+
+
 # Gets populated from `build_mod` below
 __version__: str
 __version_info__: tuple[int, ...]
@@ -74,8 +145,9 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
+    options=[bAutoLoot],
     keybinds=[],
-    hooks=[on_startgame],
+    hooks=[on_startgame, SpawnPickupParticles, UsedBy, TouchedPickupable],
     commands=[],
     # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/AutoPickupSDK.json"),

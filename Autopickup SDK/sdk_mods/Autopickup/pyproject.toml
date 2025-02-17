@@ -44,9 +44,9 @@
 
 [project]
 name = "Auto-Pickup"
-version = "1.0.0"
-authors = [{ name = "Miner Of Worlds" }]
-description = "Adds enables auto-pickup for dropped loot"
+version = "1.1.0"
+authors = [{ name = "Miner Of Worlds and RedxYeti" }]
+description = "Adds Auto-Pickup to BL1."
 
 [tool.sdkmod]
 name = "Auto-Pickup"

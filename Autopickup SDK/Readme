@@ -1,1 +1,4 @@
-Adds auto-pickup to money, ammo, and health ONLY from enemies, not from containers.
+Adds auto-pickup, with BL3 Auto-Loot as an option.
+
+Credits:
+RedxYeti (https://github.com/RedxYeti/) for the auto-loot function.
