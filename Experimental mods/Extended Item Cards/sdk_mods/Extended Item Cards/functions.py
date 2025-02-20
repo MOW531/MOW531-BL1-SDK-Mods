@@ -29,7 +29,10 @@ def GetElementIconForItem(Item):
         TechUILevel = str(Item.StaticCalculateWeaponTechLevelForUI(Item.DefinitionData)[0])
         DmgType = Item.StaticGetWeaponDamageType(Item.definitiondata)[0]
 
-        if DmgType == obj("WillowDamageTypeDefinition","gd_Corrosive.DamageType.DmgType_Corrosive_Impact"):
+        if DmgType is None:
+            return "none"
+
+        elif DmgType == obj("WillowDamageTypeDefinition","gd_Corrosive.DamageType.DmgType_Corrosive_Impact"):
             DmgTypeIcon = "corr"
 
         elif DmgType == obj("WillowDamageTypeDefinition","gd_Explosive.DamageType.DmgType_Explosive"):
