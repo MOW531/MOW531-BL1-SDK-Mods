@@ -44,7 +44,7 @@
 
 [project]
 name = "Small Name Generation Fix"
-version = "1.0.0"
+version = "1.0.1"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Adds the missing barrel number for grenade launchers."
 

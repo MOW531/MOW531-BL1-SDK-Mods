@@ -1,4 +1,5 @@
 import unrealsdk #type: ignore
+import re
 from unrealsdk import logging, find_class, construct_object #type: ignore
 from unrealsdk.hooks import Type, add_hook, remove_hook, Block #type: ignore
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction, UScriptStruct #type: ignore
@@ -135,6 +136,7 @@ def GenWeaponName(DefData, bIncludeManufacturer, bIncludeModelName, bIncludePref
         WeaponName = DefData.WeaponTypeDefinition.TypeName
 
     WeaponName = WeaponName.strip()
+    WeaponName = re.sub(' {2,}', ' ', WeaponName)
     return WeaponName
 
 @hook(
@@ -250,7 +252,7 @@ def GenItemName(DefData, bIncludeManufacturer, bIncludeModelName, bIncludePrefix
             # End:0x2A4
             if(Rarity):
             
-                X *= float(10)
+                X *= 10
             
             # End:0x2C2
             if(bIncludeManufacturer):
@@ -302,6 +304,7 @@ def GenItemName(DefData, bIncludeManufacturer, bIncludeModelName, bIncludePrefix
         GeneratedItemName = DefData.ItemDefinition.ItemName
 
     GeneratedItemName = GeneratedItemName.strip()
+    GeneratedItemName = re.sub(' {2,}', ' ', GeneratedItemName)
     return GeneratedItemName
     #return ReturnValue    
 
