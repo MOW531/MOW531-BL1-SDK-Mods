@@ -14,7 +14,6 @@ def obj (definition:str, object:str):
     return unrealsdk.find_object(definition, object)
 
 def GetElementIconForItem(Item):
-
     SlagDef = None
     CryoDef = None
     RadiationDef = None
@@ -23,13 +22,14 @@ def GetElementIconForItem(Item):
     DmgTypeIcon = ""
     TechUILevel = ""
     
-
-
     if "WillowWeapon" in str(Item.Class.Name):
         TechUILevel = str(Item.StaticCalculateWeaponTechLevelForUI(Item.DefinitionData)[0])
         DmgType = Item.StaticGetWeaponDamageType(Item.definitiondata)[0]
 
         if DmgType is None:
+            return "none"
+
+        elif DmgType == obj("WillowDamageTypeDefinition","gd_Impact.DamageType.DmgType_Normal"):
             return "none"
 
         elif DmgType == obj("WillowDamageTypeDefinition","gd_Corrosive.DamageType.DmgType_Corrosive_Impact"):

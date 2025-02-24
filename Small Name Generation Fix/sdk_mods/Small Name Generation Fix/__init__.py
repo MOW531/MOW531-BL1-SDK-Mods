@@ -5,13 +5,14 @@ from unrealsdk.hooks import Type, add_hook, remove_hook, Block #type: ignore
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction, UScriptStruct #type: ignore
 from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent, keybind
 from pathlib import Path
-from mods_base.options import BaseOption, BoolOption
+from mods_base.options import BaseOption, BoolOption, SliderOption
 
 pickup_Weapon = None
 pickup_Item = None
 
 bDisplayFullName = BoolOption("Display full name:", False)
 
+#fFontSize = SliderOption("Font Size:", 135, 0, 160, 1, True)
 
 #Guns
 
@@ -137,6 +138,9 @@ def GenWeaponName(DefData, bIncludeManufacturer, bIncludeModelName, bIncludePref
 
     WeaponName = WeaponName.strip()
     WeaponName = re.sub(' {2,}', ' ', WeaponName)
+
+    #WeaponName = ("<font size=\"" + str(fFontSize.value) + "\">" + WeaponName + "</font>\n\n")
+    
     return WeaponName
 
 @hook(
@@ -305,6 +309,9 @@ def GenItemName(DefData, bIncludeManufacturer, bIncludeModelName, bIncludePrefix
 
     GeneratedItemName = GeneratedItemName.strip()
     GeneratedItemName = re.sub(' {2,}', ' ', GeneratedItemName)
+    
+    #GeneratedItemName = ("<font size=\"" + str(fFontSize.value) + "\">" + GeneratedItemName + "</font>\n\n")
+    
     return GeneratedItemName
     #return ReturnValue    
 

@@ -44,7 +44,7 @@
 
 [project]
 name = "Extended Item Cards"
-version = "1.0.0"
+version = "1.0.1"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Adds Recharge Delay and Reload Time to item cards."
 

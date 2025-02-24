@@ -42,9 +42,16 @@ def GetEffectCount(emitter):
 
 
     num = 0
-    ActiveStatusEffects = str(emitter.Instigator.GetStatusEffectsComponent().ActiveStatusEffects)
+    ActiveStatusEffects = None
 
-    if "gd_Incendiary.StatusEffect.Incendiary_Status" in ActiveStatusEffects:
+    
+    if emitter.owner is not None and emitter.owner.GetStatusEffectsComponent() is not None:
+        ActiveStatusEffects = str(emitter.owner.GetStatusEffectsComponent().ActiveStatusEffects)
+    
+    if ActiveStatusEffects is None:
+        return num
+
+    if "gd_Incendiary.StatusEffect.Incendiary_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Phoenix" in ActiveStatusEffects:
         bIgnite = True
         num += 1
     else:
@@ -56,7 +63,7 @@ def GetEffectCount(emitter):
     else:
         bDecay = False
 
-    if "gd_Shock.StatusEffect.Shock_Status" in ActiveStatusEffects:
+    if "gd_Shock.StatusEffect.Shock_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_EtherealLightning" in ActiveStatusEffects:
         bShock = True
         num += 1
     else:
