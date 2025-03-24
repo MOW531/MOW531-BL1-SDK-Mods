@@ -1,6 +1,7 @@
 Adds a resettable playthrough 3 that scales to your level.
 
 Changes from other playthroughs:
+	You start at Skags At The Gate.
 	Fast-Travel in playthrough 3 is unlocked after Skags At The Gate.
 
 Known Issues:
@@ -9,4 +10,4 @@ Known Issues:
 	Playthrough 3 is unlocked by beating playthrough 2. To unlock Playthrough 3 on a save that has already beaten playthrough 2, set 'Playthrough 2 Unlocked' to '2' in WillowTree.
 	
 Credits:
-	RedxYeti  for most of the work.
+	RedxYeti (https://github.com/RedxYeti/Yeti-BL1-SDK-Mods) for most of the work.
