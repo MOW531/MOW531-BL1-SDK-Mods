@@ -23,24 +23,49 @@ GameStage: SliderOption = SliderOption("Playthrough 3 Base Level",
 
 
 GlobalsDef = None
-DLC1Globals = None
-DLC2Globals = None
-DLC3Globals = None
-DLC4Globals = None
 GlobalGameStage = None
 GlobalGameStageSetting = None
-ResetPlaythrough = None
-BadlandsLoaded = None
+ResetPlaythrough = False
+BadlandsLoaded = False
 WillowGFxLobbySinglePlayer = None
-Intro = None
-DocIsIn = None
 SkagsAtGate = None
-IntroStruct = None
-DocIsInStruct = None
-PT3ResetData = None
 
 
+def ResetPlaythrough3(PC:UObject):
 
+    Intro = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_IntroStateSaver")
+    DocIsIn = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_AccessStores")
+    SkagsAtGate = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
+
+    IntroStruct =unrealsdk.make_struct("MissionStatus",
+                                        MissionDef=Intro,
+                                        Status=4,
+                                        Objectives=[],
+                                        )
+    DocIsInStruct =unrealsdk.make_struct("MissionStatus",
+                                        MissionDef=DocIsIn,
+                                        Status=4,
+                                        Objectives=[],
+                                        )
+
+    PT3ResetData = unrealsdk.make_struct("MissionPlaythroughInfo",
+                                        MissionList=[IntroStruct, DocIsInStruct],
+                                        UnloadableDlcMissionList=[],
+                                        ActiveMission=SkagsAtGate,
+                                        PlayThroughNumber=2)
+
+
+    if len(PC.MissionPlaythroughData) < 3:
+        PC.AddPlaythrough(3)
+    unrealsdk.find_all("MissionTracker")[1].MissionList.clear()
+    PC.MissionPlaythroughData[2] = PT3ResetData
+    KillSkags = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
+    PC.AddMissionToTrack(KillSkags)
+    PC.SetMissionStatus(PC.GetMissionIndexForMission(KillSkags), 1)
+    PC.EchoPlaythroughData[2].echolist.clear()
+    unrealsdk.find_all("EchoTracker")[1].EchoCallList.clear()
+
+    print("Reset ran!")
 
 @hook(
     hook_func="WillowGame.WillowGFxMoviePressStart:extContinue",
@@ -50,21 +75,11 @@ def PressStart(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction)
     global bPrepWorkDone
 
     global GlobalsDef
-    global DLC1Globals
-    global DLC2Globals
-    global DLC3Globals
-    global DLC4Globals
     global GlobalGameStage
     global GlobalGameStageSetting
     global ResetPlaythrough
     global BadlandsLoaded
-    global WillowGFxLobbySinglePlayer
-    global Intro
-    global DocIsIn
     global SkagsAtGate
-    global IntroStruct
-    global DocIsInStruct
-    global PT3ResetData
 
     if bPrepWorkDone is False:
         bPrepWorkDone = True
@@ -166,36 +181,72 @@ def PressStart(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction)
         Elites = find_object("AIPawnBalanceDefinition","gd_Balance_Enemies_Humans.Bandits.Common.Pawn_Balance_Elite_00_Intro")
         Elites.ObjectFlags |= 0x4000
         Elites.Grades[2].GameStageRequirement.MaxGameStage = 100
-
-        ResetPlaythrough = False
-        BadlandsLoaded = False
-
-        WillowGFxLobbySinglePlayer = None
-
-        Intro = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_IntroStateSaver")
-        DocIsIn = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_AccessStores")
-        SkagsAtGate = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
-
-        IntroStruct =unrealsdk.make_struct("MissionStatus",
-                                            MissionDef=Intro,
-                                            Status=4,
-                                            Objectives=[],
-                                            )
-        DocIsInStruct =unrealsdk.make_struct("MissionStatus",
-                                            MissionDef=DocIsIn,
-                                            Status=4,
-                                            Objectives=[],
-                                            )
-
-        PT3ResetData = unrealsdk.make_struct("MissionPlaythroughInfo",
-                                            MissionList=[IntroStruct, DocIsInStruct],
-                                            UnloadableDlcMissionList=[],
-                                            ActiveMission=SkagsAtGate,
-                                            PlayThroughNumber=2)
         
 
         FastTravelList.OutpostLookupList[3].MissionDependencies[0].MissionDefinition = find_object("MissionDefinition","Z0_Missions.Missions.M_BuyGrenades")
         FastTravelList.OutpostLookupList[26].MissionDependencies[0].MissionDefinition = find_object("MissionDefinition","Z0_Missions.Missions.M_JumpTheGap")
+
+
+        #Ammo drop fixes
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_CombatRifle")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Grenades")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Launcher")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Repeater")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Revolver")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Shotgun")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_SMG")
+        unrealsdk.load_package("gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_SniperRifle")
+
+        CombatRifle_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_CombatRifle")
+        Grenade_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Grenades")
+        Launcher_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Launcher")
+        Repeater_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Repeater")
+        Revolver_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Revolver")
+        Shotgun_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_Shotgun")
+        SMG_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_SMG")
+        SniperRifle_Ammo = unrealsdk.find_object("InventoryAttributeDefinition","gd_ammodrops.AmmoPickup_Amounts.AmmoAmount_SniperRifle")
+
+
+        CombatRifle_Ammo.ObjectFlags |= 0x4000
+        Grenade_Ammo.ObjectFlags |= 0x4000
+        Launcher_Ammo.ObjectFlags |= 0x4000
+        Repeater_Ammo.ObjectFlags |= 0x4000
+        Revolver_Ammo.ObjectFlags |= 0x4000
+        Shotgun_Ammo.ObjectFlags |= 0x4000
+        SMG_Ammo.ObjectFlags |= 0x4000
+        SniperRifle_Ammo.ObjectFlags |= 0x4000
+
+        CombatRifle_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 36
+        CombatRifle_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 18
+        CombatRifle_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        Grenade_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 1
+        Grenade_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 1
+        Grenade_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        Launcher_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 8
+        Launcher_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 4
+        Launcher_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        Repeater_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 36
+        Repeater_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 18
+        Repeater_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        Revolver_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 12
+        Revolver_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 6
+        Revolver_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        Shotgun_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 16
+        Shotgun_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 8
+        Shotgun_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        SMG_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 48
+        SMG_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 24
+        SMG_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
+
+        SniperRifle_Ammo.ValueResolverChain[0].ValueExpressions.DefaultBaseValue.BaseValueConstant = 12
+        SniperRifle_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].BaseValueIfTrue.BaseValueConstant = 6
+        SniperRifle_Ammo.ValueResolverChain[0].ValueExpressions.ConditionalExpressionList[0].Expressions[0].ConstantOperand2 = 1
 
 
         get_pc().WorldInfo.ForceGarbageCollection()
@@ -285,6 +336,7 @@ def OnButtonClicked(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunc
     if obj.DialogResult == 'Dif3':
         PlayerLevel = get_pc().GetWillowGlobals().GetWillowSaveGameManager().GetCachedPlayerProfile(obj.GetControllerId()).ExpLevel
         GlobalGameStage.ValueResolverChain[0].ConstantValue = PlayerLevel + GlobalGameStageSetting
+        add_hook("WillowGame.WillowPlayerController:ClientSetProfileLoaded", Type.POST, "FirstLoad", FirstLoadPT3)
         GlobalsDef.FastTravelMission = SkagsAtGate
         WillowGFxLobbySinglePlayer.LaunchSaveGame(2)
 
@@ -292,7 +344,7 @@ def OnButtonClicked(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunc
         ResetPlaythrough = True
         PlayerLevel =  get_pc().GetWillowGlobals().GetWillowSaveGameManager().GetCachedPlayerProfile(obj.GetControllerId()).ExpLevel
         GlobalGameStage.ValueResolverChain[0].ConstantValue = PlayerLevel + GlobalGameStageSetting
-        add_hook("WillowGame.WillowPlayerController:TeleportPlayerToHoldingCell", Type.POST, "ResetLoad", on_player_loaded)
+        add_hook("WillowGame.WillowPlayerController:TeleportPlayerToHoldingCell", Type.POST, "ResetLoad", ResetPT3)
         GlobalsDef.FastTravelMission = SkagsAtGate
         WillowGFxLobbySinglePlayer.LaunchSaveGame(2)
 
@@ -311,24 +363,18 @@ def HandleInputKey(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunct
             BuildResetMenu()
 
 
-def on_player_loaded(
+def ResetPT3(
     obj: UObject,
     __args: WrappedStruct,
     __ret: any,
     __func: BoundFunction,
 ) -> None:
-    global ResetPlaythrough, BadlandsLoaded, PT3ResetData
-    PC = obj
+    global ResetPlaythrough, BadlandsLoaded
+    PC = get_pc()
     if ResetPlaythrough is True and BadlandsLoaded is True:
         ResetPlaythrough = False
         BadlandsLoaded = False
-        unrealsdk.find_all("MissionTracker")[1].MissionList.clear()
-        PC.MissionPlaythroughData[2] = PT3ResetData
-        KillSkags = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
-        PC.AddMissionToTrack(KillSkags)
-        PC.SetMissionStatus(PC.GetMissionIndexForMission(KillSkags), 1)
-        PC.EchoPlaythroughData[2].echolist.clear()
-        unrealsdk.find_all("EchoTracker")[1].EchoCallList.clear()
+        ResetPlaythrough3(PC)
         PC.ServerTeleportPlayerToOutpost("Fyrestone")
         remove_hook("WillowGame.WillowPlayerController:TeleportPlayerToHoldingCell", Type.POST, "ResetLoad")
     
@@ -337,7 +383,22 @@ def on_player_loaded(
             PC.ServerTeleportPlayerToOutpost("PitArena")
         else:
             PC.ServerTeleportPlayerToOutpost("RuinsArena")
-        BadlandsLoaded = True    
+        BadlandsLoaded = True
+
+
+def FirstLoadPT3(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
+    global ResetPlaythrough
+    PC = get_pc()
+    if ResetPlaythrough is False and PC.IsMissionInStatus(unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_IntroStateSaver"), 4) is False:
+        ResetPlaythrough3(PC)
+        PC.ServerTeleportPlayerToOutpost("Fyrestone")
+    remove_hook("WillowGame.WillowPlayerController:ClientSetProfileLoaded", Type.POST, "FirstLoad")
+
 
 __version__: str
 __version_info__: tuple[int, ...]

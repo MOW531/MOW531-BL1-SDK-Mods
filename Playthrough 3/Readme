@@ -1,5 +1,9 @@
 Adds a resettable playthrough 3 that scales to your level.
 
+Changes in 1.1.0:
+	Now playthrough 3 starts at Skags At The Gate when you first enter it (I forgot about it when I was testing).
+	The amount of ammo received from pickups is now the playthrough 2 amount (thanks EvanDeadlySins!).
+
 Changes from other playthroughs:
 	You start at Skags At The Gate.
 	Fast-Travel in playthrough 3 is unlocked after Skags At The Gate.
