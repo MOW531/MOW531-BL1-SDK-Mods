@@ -1,1 +1,6 @@
-Adds Recharge Delay and Reload Time to item cards.
+Adds recharge delay/reload time to weapon cards for Eridian and non-Eridian weapons, adds recharge delay to shield cards, and removes the five-line limit on cards.
+
+1.1.0 changes:
+	Removed the five-line limit on cards and added a font size option.
+	Added support for EWO.
+	Added support for Jakobs Vendor Fix.

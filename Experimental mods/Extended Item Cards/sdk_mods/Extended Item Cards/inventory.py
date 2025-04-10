@@ -6,7 +6,7 @@ from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent
 from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
-from .functions import GetElementIconForItem
+from .functions import GetElementIconForItem, GetFunStats
 
 flash_path = "topLevel_mc.card"
 flash_element_main = "rls.text"
@@ -16,6 +16,8 @@ flash_element_number = "reloadspeed.text"
 flash_element_arrow3 = "arrow3.gotoAndStop"
 flash_element_arrow4 = "arrow4.gotoAndStop"
 flash_element_techicon = "chemical.gotoAndStop"
+flash_element_funstats = "funstats.htmlText"
+
 
 ComparingItem = None
 LeftCard = 0
@@ -29,10 +31,21 @@ def INV_NormalView(obj):
             # Set Element Icon
             obj.SingleArgInvokeS(flash_path + "1." + flash_element_techicon, GetElementIconForItem(SelectedItem))
 
+            # Set FunStats
+            obj.SetVariableString(flash_path + "1." + flash_element_funstats, GetFunStats(SelectedItem))
+
+            #if "WillowEquipAbleItem" in str(SelectedItem.Class):
+                #if SelectedItem.DefinitionData.ItemDefinition == unrealsdk.find_object("ItemDefinition","gd_tunercuffs.A_Item.Item_GrenadeModulator"):
+                    #print(SelectedItem)
+                    #obj.SetVariableString("topLevel_mc.card1.rof.text","Firerate")
+                    #obj.SetVariableString("topLevel_mc.card1.firerate.text","RoF")
+
+
+
             # Add reload info to card
             if "WillowWeapon" in str(SelectedItem.Class):
 
-                if SelectedItem.DefinitionData.ManufacturerDefinition == unrealsdk.find_object("ManufacturerDefinition","gd_manufacturers.Manufacturers.Eridian"):
+                if str(SelectedItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
                     obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text_eridian)
                 else:
                     obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text)
@@ -65,6 +78,11 @@ def INV_CompareView(obj):
             obj.SingleArgInvokeS(flash_path + "1." + flash_element_techicon, GetElementIconForItem(ComparingItem))
             obj.SingleArgInvokeS(flash_path + "2." + flash_element_techicon, GetElementIconForItem(SelectedItem))
 
+            # Set FunStats
+            obj.SetVariableString(flash_path + "1." + flash_element_funstats, GetFunStats(ComparingItem))
+            obj.SetVariableString(flash_path + "2." + flash_element_funstats, GetFunStats(SelectedItem))
+
+
             #Add shield delay arrow and compare
             if "WillowEquipAbleItem" in str(SelectedItem.Class):
                 if SelectedItem.DefinitionData.ItemDefinition == unrealsdk.find_object("ItemDefinition","gd_shields.A_Item.Item_Shield"):
@@ -83,14 +101,14 @@ def INV_CompareView(obj):
             # Add reload info to card
             if "WillowWeapon" in str(SelectedItem.Class):
 
-                if SelectedItem.DefinitionData.ManufacturerDefinition == unrealsdk.find_object("ManufacturerDefinition","gd_manufacturers.Manufacturers.Eridian"):
+                if str(SelectedItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
                     obj.SetVariableString(flash_path + "2." + flash_element_main, flash_element_main_text_eridian)
                 else:
                     obj.SetVariableString(flash_path + "2." + flash_element_main, flash_element_main_text)
                     
                 obj.SetVariableString(flash_path + "2." + flash_element_number, str(round(SelectedItem.ReloadTimeBaseValue, 1)))
 
-                if ComparingItem.DefinitionData.ManufacturerDefinition == unrealsdk.find_object("ManufacturerDefinition","gd_manufacturers.Manufacturers.Eridian"):
+                if str(ComparingItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
                     obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text_eridian)
                 else:
                     obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text)

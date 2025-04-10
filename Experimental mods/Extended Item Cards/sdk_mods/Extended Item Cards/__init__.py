@@ -12,6 +12,7 @@ from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChang
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
 from .statuseffects import UpdateDistributions
+from .functions import FontSize
 
 bPatched = False
 
@@ -45,6 +46,30 @@ def patch():
     obj("EchoQuestAcceptGFxMovie","menus_mission.FlashMovies.mission_interface_instance_echo").MovieInfo = obj("GFxMovieInfo","menus_mission_MOD.FlashMovies.mission_interface")
     obj("WillowHUDGFxMovie","GfxHUD.FlashInstances.hud_instance").MovieInfo = obj("GFxMovieInfo","GfxHUD_MOD.FlashMovie.HUD")
 
+    #EWO
+    try:
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield").ObjectFlags |= 0x4000
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Barrier").ObjectFlags |= 0x4000
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Fire").ObjectFlags |= 0x4000
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Flesh").ObjectFlags |= 0x4000
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield").UIStats[2].Attribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationDelay")
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Barrier").UIStats[2].Attribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationDelay")
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Fire").UIStats[2].Attribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationDelay")
+        obj("ItemDefinition","Eridian_Weapons_Overhaul_Shields.A_Item.Item_Eridian_Shield_Flesh").UIStats[2].Attribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationDelay")
+
+        obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").ObjectFlags |= 0x4000
+        obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").DefaultBehaviorSet.OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
+        print("EWO Detected!")
+    except:
+        print("EWO Not Detected!")
+
+    #Jakobs Vender Fix
+    try:
+        obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ObjectFlags |= 0x4000
+        obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ExtraBehaviorSets[1].OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
+        print("Jakobs Vender Fix Detected!")
+    except:
+        print("Jakobs Vender Fix Not Detected!")
 
 
 
@@ -72,7 +97,7 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
-    options=[],
+    options=[FontSize],
     keybinds=[],
     hooks=[on_startgame, UpdateDistributions, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage],
     commands=[],

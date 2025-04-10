@@ -6,7 +6,7 @@ from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent
 from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
-from .functions import GetElementIconForItem
+from .functions import GetElementIconForItem, GetFunStats
 
 pickup_flash_path = "inventory.card1"
 flash_element_main = "rls.text"
@@ -16,6 +16,7 @@ flash_element_number = "reloadspeed.text"
 flash_element_arrow3 = "arrow3.gotoAndStop"
 flash_element_arrow4 = "arrow4.gotoAndStop"
 flash_element_techicon = "chemicalmod.gotoAndStop"
+flash_element_funstats = "funstatsmod.htmlText"
 
 hud_flash_path = "p1.outerequip.equipcard"
 
@@ -34,6 +35,10 @@ def PickupCard_CompareView(obj, EquippedItem = None):
     if GroundItem is not None:
         obj.SingleArgInvokeS(pickup_flash_path + "." + flash_element_techicon, GetElementIconForItem(GroundItem))
 
+        # Set FunStats
+        obj.SetVariableString(pickup_flash_path + "." + flash_element_funstats, GetFunStats(GroundItem))
+
+
     if GroundItem is not None and EquippedItem is not None:
             
             if "WillowEquipAbleItem" in str(GroundItem.Class) and "WillowEquipAbleItem" in str(EquippedItem.Class):
@@ -49,7 +54,7 @@ def PickupCard_CompareView(obj, EquippedItem = None):
 
             if "WillowWeapon" in str(GroundItem.Class):
 
-                if GroundItem.DefinitionData.ManufacturerDefinition == unrealsdk.find_object("ManufacturerDefinition","gd_manufacturers.Manufacturers.Eridian"):
+                if str(GroundItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
                     obj.SetVariableString(pickup_flash_path + "." + flash_element_main, flash_element_main_text_eridian)
                 else:
                     obj.SetVariableString(pickup_flash_path + "." + flash_element_main, flash_element_main_text)
@@ -72,7 +77,7 @@ def PickupCard_CompareView(obj, EquippedItem = None):
 
     elif GroundItem is not None and EquippedItem is None and "WillowWeapon" in str(GroundItem.Class):
 
-        if GroundItem.DefinitionData.ManufacturerDefinition == unrealsdk.find_object("ManufacturerDefinition","gd_manufacturers.Manufacturers.Eridian"):
+        if str(GroundItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
             obj.SetVariableString(pickup_flash_path + "." + flash_element_main, flash_element_main_text_eridian)
         else:
             obj.SetVariableString(pickup_flash_path + "." + flash_element_main, flash_element_main_text)

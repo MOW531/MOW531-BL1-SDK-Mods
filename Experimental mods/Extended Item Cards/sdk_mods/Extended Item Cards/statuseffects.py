@@ -6,9 +6,6 @@ from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent
 from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
-#from .functions import GetEffectCount, ResetDistributionForEffect, bIgnite, bDecay, bShock, bCurse, bAmplifyEffects, bSlow, bSlag
-
-
 
 
 
@@ -51,19 +48,19 @@ def GetEffectCount(emitter):
     if ActiveStatusEffects is None:
         return num
 
-    if "gd_Incendiary.StatusEffect.Incendiary_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Phoenix" in ActiveStatusEffects:
+    if "gd_Incendiary.StatusEffect.Incendiary_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Phoenix" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Caladbolg_Incendiary_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Illuminator_Incendiary_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Incendiary_Status_Melee" in ActiveStatusEffects:
         bIgnite = True
         num += 1
     else:
         bIgnite = False
 
-    if "gd_Corrosive.StatusEffect.Corrosive_Status" in ActiveStatusEffects:
+    if "gd_Corrosive.StatusEffect.Corrosive_Status" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Caladbolg_Corrosive_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Corrosive_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Corruptor_Corrosive_Status_Melee" in ActiveStatusEffects:
         bDecay = True
         num += 1
     else:
         bDecay = False
 
-    if "gd_Shock.StatusEffect.Shock_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_EtherealLightning" in ActiveStatusEffects:
+    if "gd_Shock.StatusEffect.Shock_Status" in ActiveStatusEffects or "gd_Skills2_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_Radiance" in ActiveStatusEffects or "gd_Skills_Lilith.MiscData.Status_EtherealLightning" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Caladbolg_Shock_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Shock_Status" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Shock_Status_Melee" in ActiveStatusEffects:
         bShock = True
         num += 1
     else:
@@ -81,7 +78,7 @@ def GetEffectCount(emitter):
     else:
         bAmplifyEffects = False
 
-    if "gd_Slow.StatusEffect.Slow_Status" in ActiveStatusEffects:
+    if "gd_Slow.StatusEffect.Slow_Status" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Caladbolg_Slow_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Delirium_Slow_Status_Melee" in ActiveStatusEffects or "Eridian_Weapons_Overhaul.Shared.DamageType.StatusEffect.Slow_Status_Melee" in ActiveStatusEffects:
         bSlow = True
         num += 1
     else:
@@ -140,7 +137,7 @@ def GetParameterName(Type):
 
 
 def ResetDistributionForEffect(Emitter, Type, Distribution):
-    Emitter.SetFloatParameter(GetParameterName(Type), Distribution)
+    Emitter.SetFloatParameter(Type, Distribution)
 
 
 @hook(
@@ -171,54 +168,54 @@ def UpdateDistributions(
         TotalDistribution = 100.0000000 / TotalEffectCount
 
     if bIgnite is True:
-        ResetDistributionForEffect(obj, 1, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Incendiary_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 1, 0)
+        ResetDistributionForEffect(obj, "On_Incendiary_Character", 0)
 
     if bDecay is True:
-        ResetDistributionForEffect(obj, 2, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Corrosive_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 2, 0)
+        ResetDistributionForEffect(obj, "On_Corrosive_Character", 0)
 
     if bShock is True:
-        ResetDistributionForEffect(obj, 3, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_EMPShock_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 3, 0)
+        ResetDistributionForEffect(obj, "On_EMPShock_Character", 0)
 
     if bCurse is True:
-        ResetDistributionForEffect(obj, 4, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_AlienNegative", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 4, 0)
+        ResetDistributionForEffect(obj, "On_AlienNegative", 0)
 
     if bAmplifyEffects is True:
-        ResetDistributionForEffect(obj, 5, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_AlienPositive", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 5, 0)
+        ResetDistributionForEffect(obj, "On_AlienPositive", 0)
 
     if bSlow is True:
-        ResetDistributionForEffect(obj, 6, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Slow_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 6, 0)
+        ResetDistributionForEffect(obj, "On_Slow_Character", 0)
     
     if bSlag is True:
-        ResetDistributionForEffect(obj, 7, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Slag_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 7, 0)
+        ResetDistributionForEffect(obj, "On_Slag_Character", 0)
 
     if bCryo is True:
-        ResetDistributionForEffect(obj, 8, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Cryo_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 8, 0)
+        ResetDistributionForEffect(obj, "On_Cryo_Character", 0)
 
     if bRadiation is True:
-        ResetDistributionForEffect(obj, 9, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_Radiation_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 9, 0)
+        ResetDistributionForEffect(obj, "On_Radiation_Character", 0)
 
     if bDarkMagic is True:
-        ResetDistributionForEffect(obj, 10, TotalDistribution)
+        ResetDistributionForEffect(obj, "On_DarkMagic_Character", TotalDistribution)
     else:
-        ResetDistributionForEffect(obj, 10, 0)
+        ResetDistributionForEffect(obj, "On_DarkMagic_Character", 0)
 
 
     if obj.BaseTarget is not None and obj.BaseTarget.GetStatusEffectsComponent() is not None:
