@@ -59,6 +59,13 @@ def patch():
 
         obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").ObjectFlags |= 0x4000
         obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").DefaultBehaviorSet.OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
+        
+        obj("BehaviorCollectionDefinition","Eridian_Weapons_Overhaul_Grenades.BehaviorCollections.BC_Energy_Generic").ObjectFlags |= 0x4000
+        obj("BehaviorCollectionDefinition","Eridian_Weapons_Overhaul_Grenades.BehaviorCollections.BC_Energy_Generic").Behaviors[1].InstanceData[0].Float = 21
+
+        obj("BehaviorCollectionDefinition","Eridian_Weapons_Overhaul_Shields.Behaviors.BehaviorCol_ShieldIcon_Energy").ObjectFlags |= 0x4000
+        obj("BehaviorCollectionDefinition","Eridian_Weapons_Overhaul_Shields.Behaviors.BehaviorCol_ShieldIcon_Energy").Behaviors[0].InstanceData[0].Float = 21
+        
         print("EWO Detected!")
     except:
         print("EWO Not Detected!")
