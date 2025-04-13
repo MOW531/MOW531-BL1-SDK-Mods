@@ -44,7 +44,7 @@
 
 [project]
 name = "Find Rare Items Fix"
-version = "1.0.2"
+version = "1.1.0"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Fixes 'Team Find Rare Items'"
 
