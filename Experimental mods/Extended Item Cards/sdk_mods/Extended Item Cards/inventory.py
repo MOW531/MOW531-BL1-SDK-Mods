@@ -27,7 +27,7 @@ def INV_NormalView(obj):
     if obj.IsComparing() is False:
         SelectedItem = obj.GetCurrentHighlightedObject()
         if SelectedItem is not None:
-            
+
             # Set Element Icon
             obj.SingleArgInvokeS(flash_path + "1." + flash_element_techicon, GetElementIconForItem(SelectedItem))
 

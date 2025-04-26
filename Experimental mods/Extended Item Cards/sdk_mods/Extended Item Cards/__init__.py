@@ -12,7 +12,7 @@ from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChang
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
 from .statuseffects import UpdateDistributions
-from .functions import FontSize
+from .functions import FontSize, ShowParts, ShowElementText
 
 bPatched = False
 
@@ -25,8 +25,10 @@ def obj (definition:str, object:str):
 
 def patch():
 
+    obj("ItemDefinition","gd_shields.A_Item.Item_Shield").ObjectFlags |= 0x4000
     obj("ItemDefinition","gd_shields.A_Item.Item_Shield").UIStats[2].Attribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationDelay")
 
+    obj("AttributePresentationDefinition","gd_AttributePresentation.Shields.AttrPresent_ShieldOnIdleRegenerationDelay").ObjectFlags |= 0x4000
     obj("AttributePresentationDefinition","gd_AttributePresentation.Shields.AttrPresent_ShieldOnIdleRegenerationDelay").RoundingMode = 0
 
     # UI
@@ -70,13 +72,13 @@ def patch():
     except:
         print("EWO Not Detected!")
 
-    #Jakobs Vender Fix
+    #Jakobs Vendor Fix
     try:
         obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ObjectFlags |= 0x4000
         obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ExtraBehaviorSets[1].OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
-        print("Jakobs Vender Fix Detected!")
+        print("Jakobs Vendor Fix Detected!")
     except:
-        print("Jakobs Vender Fix Not Detected!")
+        print("Jakobs Vendor Fix Not Detected!")
 
 
 
@@ -104,7 +106,7 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
-    options=[FontSize],
+    options=[FontSize, ShowParts, ShowElementText],
     keybinds=[],
     hooks=[on_startgame, UpdateDistributions, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage],
     commands=[],
