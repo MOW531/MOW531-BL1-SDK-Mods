@@ -28,14 +28,12 @@ GlobalGameStageSetting = None
 ResetPlaythrough = False
 BadlandsLoaded = False
 WillowGFxLobbySinglePlayer = None
-SkagsAtGate = None
-
+Intro = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_IntroStateSaver")
+DocIsIn = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_AccessStores")
+SkagsAtGate = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
 
 def ResetPlaythrough3(PC:UObject):
 
-    Intro = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_IntroStateSaver")
-    DocIsIn = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_AccessStores")
-    SkagsAtGate = unrealsdk.find_object("MissionDefinition","Z0_Missions.Missions.M_KillSkags_Zed")
 
     IntroStruct =unrealsdk.make_struct("MissionStatus",
                                         MissionDef=Intro,
@@ -77,9 +75,6 @@ def PressStart(obj: UObject, args: WrappedStruct, ret: any, func: BoundFunction)
     global GlobalsDef
     global GlobalGameStage
     global GlobalGameStageSetting
-    global ResetPlaythrough
-    global BadlandsLoaded
-    global SkagsAtGate
 
     if bPrepWorkDone is False:
         bPrepWorkDone = True
