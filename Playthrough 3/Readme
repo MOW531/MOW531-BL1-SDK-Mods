@@ -1,5 +1,8 @@
 Adds a resettable playthrough 3 that scales to your level.
 
+Changes in 1.1.2:
+	Fixed DLC 3 and 4 not scaling properly.
+
 Changes in 1.1.1:
 	Fixed the Fast-Travel list not updating.
 
