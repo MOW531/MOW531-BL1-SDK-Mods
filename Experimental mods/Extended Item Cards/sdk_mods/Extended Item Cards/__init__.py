@@ -11,7 +11,6 @@ from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCur
 from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
-from .statuseffects import UpdateDistributions
 from .functions import FontSize, ShowParts, ShowElementText
 
 bPatched = False
@@ -108,7 +107,7 @@ build_mod(
     # deregister_same_settings=True,      # This is True by default
     options=[FontSize, ShowParts, ShowElementText],
     keybinds=[],
-    hooks=[on_startgame, UpdateDistributions, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage],
+    hooks=[on_startgame, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"SETTINGS_DIR/EIC.json"),

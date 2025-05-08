@@ -1,9 +1,9 @@
 import unrealsdk
 
 from pathlib import Path
-from unrealsdk.hooks import Type
+from unrealsdk.hooks import Type, Block
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc 
+from mods_base import hook, get_pc
 from mods_base.options import BaseOption, BoolOption
 from mods_base import SETTINGS_DIR
 from mods_base import build_mod
@@ -11,8 +11,6 @@ from unrealsdk import logging
 import os
 
 bPatched = False
-bPatched_volatile = False
-Count = 0
 current_obj = None
 
 struct = unrealsdk.make_struct
@@ -29,23 +27,6 @@ def obj (definition:str, object:str):
 
 def patch():
 
-    ###TESTING!!!
-    # obj("ItemDefinition","gd_shields.A_Item.Item_Shield").ExternalAttributeEffects[1].BaseModifierValue.BaseValueConstant = 999999
-    # obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").SkillEffectDefinitions[1].BaseModifierValue.BaseValueConstant = 9999
-
-
-    # Enabling the KeepAlive flag so the object stay in memory when using the Startup file for mods
-
-    obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.Title_Damage1_Driver").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Dahl1_Penetrator").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_assault_shotgun.Title.TitleM_Maliwan1_Plague").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.TitleM_Hyperion1_Executioner").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").ObjectFlags |= 0x4000
-    # obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Acc1_Jagged").ObjectFlags |= 0x4000
-
     # Titles and Prefixes
 
     obj("WeaponNamePartDefinition","gd_weap_sniper_rifle_semiauto.Title.Title_Damage1_Driver").PartName = "Driver"
@@ -61,32 +42,37 @@ def patch():
     obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Incendiary")
     obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions.append(current_obj.Expressions[0])
     obj("WeaponNamePartDefinition","gd_weap_patrol_smg.Prefix.Prefix_Barrel3_Twisted").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.WeaponDamageType.WeaponDamage_Is_Shock")
-    # obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions.append(obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").Expressions[1])
-    # obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions[(len(current_obj.Expressions)) - 1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.Weapon.WeaponDamageNormalized")
-    # obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Damage1_Terrible").Expressions[(len(current_obj.Expressions)) - 1].ConstantOperand2 = 2
     obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Firerate1_Riot").Priority = 2.3
     obj("WeaponNamePartDefinition","gd_weap_repeater_pistol.Prefix.Prefix_Nasty").Expressions[1].AttributeOperand1 = obj("AttributeDefinition","d_attributes.Weapon.WeaponDamageNormalized")
     obj("WeaponNamePartDefinition","gd_weap_combat_shotgun.Prefix.Prefix_Acc1_Jagged").PartName = "Jagged"
 
-    # KeepAlive
-
-    obj("WeaponPartDefinition","gd_weap_machine_pistol.UniqueParts.TheClipper_acc5_Incendiary").ObjectFlags |= 0x4000
-    obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_SMG_BoneShredder").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.SemiAutoSniper.acc2_KyrosPower").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").ObjectFlags |= 0x4000
-    obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_machine_pistol.Barrel.barrel5_Vladof_Vengence").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_machine_pistol.acc.acc1_Hyperion_Reaper").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_repeater_pistol.acc.acc5_Corrosive").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.TheDove_barrel4").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_rocket_launcher.acc.acc2_Evil").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_assault_shotgun.acc.acc1_Spiked").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_combat_rifle.UniqueParts.Sentinel_sight4").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_combat_rifle.Barrel.barrel5_Hyperion_Destroyer").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_sniper_rifle_semiauto.UniqueParts.ReaversEdge_sight4").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel5_AthenasWisdom").ObjectFlags |= 0x4000
 
     # Weapon parts
+
+    DestroyerPresentation = unrealsdk.construct_object("AttributePresentationDefinition",obj("WeaponPartDefinition","gd_weap_combat_rifle.Barrel.barrel5_Hyperion_Destroyer"))
+    DestroyerPresentation.Description = "Burst Fire while zoomed."
+    DestroyerPresentation.bDontDisplayNumber = True
+    DestroyerPresentation.Attribute = obj("AttributeDefinition","d_attributes.Weapon.WeaponAutomaticBurstCount")
+    DestroyerPresentation.BasePriority = 3
+
+    InvaderPresentation = unrealsdk.construct_object("AttributePresentationDefinition",obj("WeaponPartDefinition","gd_weap_repeater_pistol.Sight.sight5_Hyperion_Invader"))
+    InvaderPresentation.Description = "Burst Fire while zoomed."
+    InvaderPresentation.bDontDisplayNumber = True
+    InvaderPresentation.Attribute = obj("AttributeDefinition","d_attributes.Weapon.WeaponAutomaticBurstCount")
+    InvaderPresentation.BasePriority = 3
+
+    RevolverCritPresentation = unrealsdk.construct_object("AttributePresentationDefinition",obj("WeaponTypeDefinition","gd_weap_revolver_pistol.A_Weapon.WeaponType_revolver_pistol"))
+    RevolverCritPresentation.Description = "Critical Hit Damage"
+    RevolverCritPresentation.RoundingMode = 0
+    RevolverCritPresentation.Attribute = obj("AttributeDefinition","d_attributes.GameplayAttributes.PlayerCriticalHitBonus")
+    RevolverCritPresentation.BasePriority = 1
+    
+    AthenasWisdomCritPresentation = unrealsdk.construct_object("AttributePresentationDefinition",obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel5_AthenasWisdom"))
+    AthenasWisdomCritPresentation.Description = "Critical Hit Damage"
+    AthenasWisdomCritPresentation.RoundingMode = 0
+    AthenasWisdomCritPresentation.Attribute = obj("AttributeDefinition","d_attributes.GameplayAttributes.PlayerCriticalHitBonus")
+    AthenasWisdomCritPresentation.BasePriority = 1
+
 
     obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").TitleList.append(obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco"))
     obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.BaseValueScaleConstant = 1
@@ -102,16 +88,18 @@ def patch():
     obj("WeaponPartDefinition","gd_weap_rocket_launcher.acc.acc2_Evil").WeaponAttributeEffects.append(current_obj.ExternalAttributeEffects[1])
     obj("WeaponPartDefinition","gd_weap_assault_shotgun.acc.acc1_Spiked").ExternalAttributeEffects[0].ModifierType = 1
     obj("WeaponPartDefinition","gd_weap_combat_rifle.UniqueParts.Sentinel_sight4").WeaponCardAttributes.append(obj("WeaponPartDefinition","gd_weap_combat_rifle.Sight.sight4").WeaponCardAttributes[0])
-    obj("WeaponPartDefinition","gd_weap_combat_rifle.Barrel.barrel5_Hyperion_Destroyer").CustomPresentations.append(obj("AttributePresentationDefinition","gd_weap_sniper_rifle_semiauto.mag.mag5_Hyperion_Executioner:AttributePresentationDefinition_0"))
-    obj("WeaponTypeDefinition","gd_weap_revolver_pistol.A_Weapon.WeaponType_revolver_pistol").CustomPresentations.append(obj("AttributePresentationDefinition","gd_weap_sniper_rifle_semiauto.A_Weapon.WeaponType_sniper_rifle_semiauto:AttributePresentationDefinition_0"))
+    obj("WeaponPartDefinition","gd_weap_combat_rifle.Barrel.barrel5_Hyperion_Destroyer").CustomPresentations.append(DestroyerPresentation)
+    obj("WeaponTypeDefinition","gd_weap_revolver_pistol.A_Weapon.WeaponType_revolver_pistol").CustomPresentations.append(RevolverCritPresentation)
     obj("WeaponPartDefinition","gd_weap_sniper_rifle_semiauto.UniqueParts.ReaversEdge_sight4").WeaponCardAttributes.append(obj("WeaponPartDefinition","gd_weap_sniper_rifle.Sight.sight4").WeaponCardAttributes[0])
     obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.CombatRifle.TedioreAvenger_sight5").WeaponCardAttributes.append(obj("WeaponPartDefinition","gd_weap_combat_shotgun.Body.body3_Tediore_Defender").WeaponCardAttributes[0])
-    obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel5_AthenasWisdom").CustomPresentations.append(obj("AttributePresentationDefinition","gd_weap_sniper_rifle_semiauto.A_Weapon.WeaponType_sniper_rifle_semiauto:AttributePresentationDefinition_0"))
+    obj("WeaponPartDefinition","dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel5_AthenasWisdom").CustomPresentations.append(AthenasWisdomCritPresentation)
     obj("WeaponPartDefinition","gd_weap_revolver_pistol.Barrel.barrel5_Jakobs_Unforgiven").WeaponCardAttributes.pop(0)
-    obj("WeaponPartDefinition","gd_weap_repeater_pistol.Sight.sight5_Hyperion_Invader").CustomPresentations.append(obj("AttributePresentationDefinition","gd_weap_sniper_rifle_semiauto.mag.mag5_Hyperion_Executioner:AttributePresentationDefinition_0"))
+    obj("WeaponPartDefinition","gd_weap_repeater_pistol.Sight.sight5_Hyperion_Invader").CustomPresentations.append(InvaderPresentation)
     obj("WeaponTypeDefinition","gd_weap_combat_shotgun.A_Weapon.WeaponType_combat_shotgun").PrefixList.pop(6)
     obj("WeaponPartDefinition","gd_weap_combat_shotgun.Grip.grip2").PrefixList.pop(0)
     obj("WeaponPartDefinition","gd_weap_combat_shotgun.Grip.grip2a_Torgue").PrefixList.pop(0)
+    obj("WeaponPartListDefinition","gd_weap_revolver_pistol.Body.Body_PartList").WeightedParts[5].Manufacturers[0].DefaultWeight.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.Weighting.Weight_Awesome_6_Legendary")
+
 
     # This is to fix the crit boost that some weapons get with the main critfix
 
@@ -128,30 +116,25 @@ def patch():
     obj("WeaponPartDefinition","gd_weap_combat_rifle.acc.acc2_Intense").ExternalAttributeEffects.append(struct("AttributeEffectData", AttributeToModify=obj("AttributeDefinition","d_attributes.GameplayAttributes.PlayerCriticalHitBonus"), ModifierType=2, BaseModifierValue=struct("AttributeInitializationData", BaseValueConstant=1.0000000, BaseValueAttribute=None, InitializationDefinition=None, BaseValueScaleConstant=1.0000000)))
 
 
-    # KeepAlive
-
-    obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","UP_Assets.UniqueParts.Shield_WeeWee_Material").ObjectFlags |= 0x4000
-
     # Shields
+    
 
-    obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material").CustomPresentations.append(obj("AttributePresentationDefinition","UP_Assets.UniqueParts.Shield_WeeWee_Material:AttributePresentationDefinition_1"))
-    obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material").CustomPresentations.append(obj("AttributePresentationDefinition","UP_Assets.UniqueParts.Shield_WeeWee_Material:AttributePresentationDefinition_0"))
+    SuperBoosterLine1 = unrealsdk.construct_object("AttributePresentationDefinition",obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material"))
+    SuperBoosterLine1.NoConstraintText = "Health Boost 15%"
+    SuperBoosterLine1.bDontDisplayNumber = True
+    SuperBoosterLine1.BasePriority = 2
+    SuperBoosterLine2 = unrealsdk.construct_object("AttributePresentationDefinition",obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material"))
+    SuperBoosterLine2.NoConstraintText = "Very quick Health Regeneration!"
+    SuperBoosterLine2.bDontDisplayNumber = True
+    SuperBoosterLine2.BasePriority = 1
 
-    # KeepAlive
-
-   # obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").ObjectFlags |= 0x4000
-    obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").ObjectFlags |= 0x4000
-    obj("SkillDefinition","gd_Skills2_Brick.Tank.Unbreakable").ObjectFlags |= 0x4000
-    obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").ObjectFlags |= 0x4000
-    obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").ObjectFlags |= 0x4000
-    obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ObjectFlags |= 0x4000
+    #unrealsdk.load_package("UP_Assets.UniqueParts.Shield_WeeWee_Material")
+    obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material").CustomPresentations.append(SuperBoosterLine1)
+    obj("ItemPartDefinition","gd_shields.UniqueParts.Shield_WeeWee_Material").CustomPresentations.append(SuperBoosterLine2)
 
     # Skills
 
         # Brick
-   # obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").SkillEffectDefinitions.append(current_obj.SkillEffectDefinitions[1])
-   # obj("SkillDefinition","gd_Skills2_Brick.Blaster.Revenge").SkillEffectDefinitions[(len(current_obj.SkillEffectDefinitions)) - 1].AttributeToModify = obj("AttributeDefinition","d_attributes.DamageSourceModifiers.InstigatedGrenadeDamageModifier")
     obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").SkillEffectDefinitions[1].BaseModifierValue.BaseValueConstant = -0.06
     obj("SkillDefinition","gd_Skills2_Brick.Blaster.RapidReload").SkillEffectDefinitions[1].PerGradeUpgrade.BaseValueConstant = -0.06
     obj("SkillDefinition","gd_Skills2_Brick.Tank.Unbreakable").bAvailableBerserk = True
@@ -159,8 +142,6 @@ def patch():
 
         # Lilith
     obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").bAvailableAlways = True
-   # obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").SkillEffectDefinitions[0].BaseModifierValue.BaseValueConstant = 0.015
-   # obj("SkillDefinition","gd_Skills2_Lilith.Controller.GirlPower").SkillEffectDefinitions[0].PerGradeUpgrade.BaseValueConstant = 0.015
     obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").SkillEffectDefinitions.append(current_obj.SkillEffectDefinitions[5])
     obj("SkillDefinition","gd_Skills2_Lilith.Elemental.Resilience").SkillEffectDefinitions[(len(current_obj.SkillEffectDefinitions)) - 1].AttributeToModify = obj("AttributeDefinition","d_attributes.DamageTypeModifers.ShockPassiveDamageModifier")
     obj("AttributeInitializationDefinition","gd_Skills2_Lilith.MiscData.GirlPower_ShieldRegenRate").ValueFormula.Multiplier.BaseValueScaleConstant = 0.015
@@ -169,25 +150,7 @@ def patch():
     obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ValueFormula.Level.BaseValueAttribute = obj("AttributeDefinition","gd_skills2_Roland.SkillGradeModifiers.SkillGradeModifier_Roland_QuickCharge")
     obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ValueFormula.Multiplier.BaseValueAttribute = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldMaxValue")
     obj("AttributeInitializationDefinition","gd_skills2_Roland.MiscData.QuickCharge_Init").ValueFormula.Multiplier.BaseValueScaleConstant = 0.015
-   # obj("SkillDefinition","gd_skills2_Roland.Support.QuickCharge").SkillEffectDefinitions[1].BaseModifierValue.BaseValueConstant = 0.015
-   # obj("SkillDefinition","gd_skills2_Roland.Support.QuickCharge").SkillEffectDefinitions[1].PerGradeUpgrade.BaseValueConstant = 0.015
 
-
-
-    # KeepAlive
-
-    obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside3").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside4").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","gd_CommandDecks.RightSide.rightside5").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Mordecai_Anshin").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Hunter").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Ranger").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","gd_CommandDecks.Body_Mordecai.Mordecai_Gunslinger").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").ObjectFlags |= 0x4000
-    obj("ItemPartListDefinition","gd_CommandDecks.MaterialPartsLists.CommandDeckMaterialPartList").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","UP_Assets.ManufacturerMaterials.Material_alien_1").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","UP_Assets.ManufacturerMaterials.Material_alien_2").ObjectFlags |= 0x4000
-    obj("ItemPartDefinition","UP_Assets.ManufacturerMaterials.Material_alien_3").ObjectFlags |= 0x4000
 
     # Class mods
 
@@ -230,16 +193,6 @@ def patch():
         # Lilith
     obj("ItemPartDefinition","gd_CommandDecks.Body_Lilith.Lilith_Catalyst").AttributeSlotEffects[1].AttributeToModify = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationRate")
 
-    # KeepAlive
-
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Helix").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_Leviathan").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Mongol").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Nidhogg").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.Rocket_Medium_Rhino").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_mini").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").ObjectFlags |= 0x4000
 
     #Projectiles
 
@@ -252,7 +205,6 @@ def patch():
     obj("ProjectileDefinition","gd_weap_rocket_launcher.Rockets.rocket_mini").bUseAccurateCollision = False
     obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").bUseAccurateCollision = False
 
-   # obj("WeaponTypeDefinition","gd_weap_rocket_launcher.A_Weapon.WeaponType_rocket_launcher").InstantHitDamageType = wclass("WillowDmgSource_Grenade")
     obj("WeaponTypeDefinition","gd_weap_rocket_launcher.A_Weapon.WeaponType_rocket_launcher").InstantHitDamageType = wclass("WillowDmgSource_Rocket")
 
 
@@ -268,26 +220,6 @@ def patch():
     obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").DefaultBehaviorSet.OnExplode[0].DamageSource = wclass("WillowDmgSource_Rocket")
 
 
-
-    # KeepAlive
-
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Pistol_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Shotgun_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Sniper_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_SMG_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_RocketLauncer_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_Eridan_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","gd_Balance.LevelLimits.Proficiency_CombatRifle_LevelBonus").ObjectFlags |= 0x4000
-    obj("AttributeDefinition","d_attributes.Inventory.ShieldItemLevel").ObjectFlags |= 0x4000
-    obj("AttributePresentationDefinition","gd_AttributePresentation.Skills_Mordecai.AttrPresent_SkillGradeModifier_Mordecai_BloodRage").ObjectFlags |= 0x4000
-    obj("AttributeInitializationDefinition","dlc3_gd_Balance.GamestageCap.AmmoVending_GamestageCap_50").ObjectFlags |= 0x4000
-    obj("AttributeInitializationDefinition","dlc4_gd_items.GamestageCap.AmmoVending_GamestageCap_50").ObjectFlags |= 0x4000
-    obj("PlayerClassDefinition","gd_Roland.Character.CharacterClass_Roland").ObjectFlags |= 0x4000
-    obj("PlayerClassDefinition","gd_lilith.Character.CharacterClass_Lilith").ObjectFlags |= 0x4000
-    obj("PlayerClassDefinition","gd_Brick.Character.CharacterClass_Brick").ObjectFlags |= 0x4000
-    obj("PlayerClassDefinition","gd_mordecai.Character.CharacterClass_Mordecai").ObjectFlags |= 0x4000
-    obj("GlobalsDefinition","gd_globals.General.Globals").ObjectFlags |= 0x4000
-    obj("AttributePresentationDefinition","gd_AttributePresentation.Weapons.AttrPresent_AccuracyOnIdleRegenerationRate").ObjectFlags |= 0x4000
 
 
     # Misc
@@ -313,6 +245,19 @@ def patch():
     obj("GlobalsDefinition","gd_globals.General.Globals").AttributePresentationTranslation="<font size='13'>$NUMBER$ $CONSTRAINT$ $DESCRIPTION$</font>"
     obj("AttributePresentationDefinition","gd_AttributePresentation.Weapons.AttrPresent_AccuracyOnIdleRegenerationRate").bBiggerIsBetter = True
     obj("GlobalsDefinition","gd_globals.General.Globals").WeaponProficiencySkills.append(obj("SkillDefinition","CritFix.CritFix"))
+
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Atlas"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Dahl"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Eridian"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Gearbox"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Hyperion"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Jakobs"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Maliwan"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_SandS"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Tediore"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Torgue"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Vladof"))
+
 
     # Descriptions
 
@@ -448,15 +393,6 @@ def patch():
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.Relentless").SkillEffectPresentations[1].bUseCustomNumberPlacement = False
 
 
-
-
-
-
-
-
-
-
-def patch_volatile():
     # Itempools
 
         # Shops
@@ -465,10 +401,6 @@ def patch_volatile():
     obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_Weapons_flatChance").BalancedItems.append(current_obj.BalancedItems[5])
     obj("ItemPoolDefinition","gd_itempools_Shop.Items.shoppool_Weapons_flatChance").BalancedItems[(len(current_obj.BalancedItems)) - 1].InvBalanceDefinition = obj("InventoryBalanceDefinition","gd_itemgrades.Weapons.ItemGrade_Weapon_SupportMachineGun")
 
-        # Enemies
-    obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons").BalancedItems[1].bDropOnDeath = True
-    obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons_Badass").BalancedItems[0].bDropOnDeath = True
-    obj("ItemPoolDefinition","dlc3_gd_itempools.CrimsonLance.Infantry_Weapons_Badass_enhance").BalancedItems[0].bDropOnDeath = True
 
         # Misc
     obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[9])
@@ -478,51 +410,38 @@ def patch_volatile():
     obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Incendiary").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
     obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Shock").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
     obj("InteractiveObjectBalanceDefinition","gd_balance_objects.FuelTanks.ObjectGrade_ExplodingFuelTank").Grades.append(obj("InteractiveObjectBalanceDefinition","gd_balance_objects.Barrels.ObjectGrade_ExplodingBarrels_Corrosive").Grades[10])
+
     obj("InteractiveObjectBalanceDefinition","dlc3_gd_explosives.SeaMine.BalanceDef_SeaMine").Grades[5].GameStageRequirement.MaxGameStage = 100
 
-    # Enemies
+
+    obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons").BalancedItems[1].bDropOnDeath = True
+    obj("ItemPoolDefinition","gd_itempools.CrimsonLance.Infantry_Weapons_Badass").BalancedItems[0].bDropOnDeath = True
+    obj("ItemPoolDefinition","dlc3_gd_itempools.CrimsonLance.Infantry_Weapons_Badass_enhance").BalancedItems[0].bDropOnDeath = True
+
+
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList.append(obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_BadassDrifter").ActorArchetypeList[0])
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].Probability.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.WeightingPlayerCount.Enemy_MajorUpgrade_PerPlayer")
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].Probability.BaseValueScaleConstant = 0.08
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].MaxActiveAtOneTime.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.WeightingPlayerCount.Enemy_MajorUpgrade_PerPlayer")
 
 
-@hook(
-    hook_func="Engine.WorldInfo:CommitMapChange",
-    hook_type=Type.POST,
-)
-def on_commit_map_change(
-    obj: UObject,
-    __args: WrappedStruct,
-    __ret: any,
-    __func: BoundFunction,
-) -> None:
-    global bPatched_volatile
-    bPatched_volatile = False
+
+
+
 
 @hook(
-    hook_func="Engine.WorldInfo:PostBeginPlay",
-    hook_type=Type.POST,
+    hook_func="WillowGame.WillowPlayerReplicationInfo:AddCurrencyOnHand",
+    hook_type=Type.PRE,
 )
-def on_level_loaded(
+def AddCurrencyOnHand(
     obj: UObject,
     __args: WrappedStruct,
     __ret: any,
     __func: BoundFunction,
 ) -> None:
-    global bPatched_volatile
-    global Count
-    if Count >= 2:
-        Count = 0
-        if bPatched_volatile != True:
-            bPatched_volatile = True
-            #patch_volatile()
-            #if len(unrealsdk.find_all("WorldInfo")) > 1:
-            #        if unrealsdk.find_all("WorldInfo")[1].GetMapName() == "scrap_trashcoast_p":
-            #            unrealsdk.find_object("WillowAIPawn","scrap_trash_coast_p.TheWorld:PersistentLevel.WillowAIPawn_0").ActorSpawnCost = 0
-            #            print("Skrappy Patched!")
-    else:
-        Count = Count + 1
+    if obj.GetCurrencyOnHand() + __args.AddValue > 2147483647:
+        __args.AddValue = 2147483647 - obj.GetCurrencyOnHand()
+
 
 @hook(
     hook_func="Engine.WorldInfo:IsMenuLevel",
@@ -538,7 +457,6 @@ def on_startgame(
     if bPatched is False:
         bPatched = True
         patch()
-        patch_volatile()
 
 
 
@@ -555,7 +473,7 @@ build_mod(
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
     keybinds=[],
-    hooks=[on_level_loaded, on_commit_map_change, on_startgame],
+    hooks=[on_startgame, AddCurrencyOnHand],
     commands=[],
     # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/UnofficialPatchSDK.json"),

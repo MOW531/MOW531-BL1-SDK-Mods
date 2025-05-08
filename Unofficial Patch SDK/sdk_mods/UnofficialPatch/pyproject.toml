@@ -44,7 +44,7 @@
 
 [project]
 name = "Unofficial Patch SDK"
-version = "1.1.0"
+version = "1.2.0"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Fixes various bugs"
 

@@ -1,5 +1,9 @@
 Adds recharge delay/reload time to weapon cards for Eridian and non-Eridian weapons, adds recharge delay to shield cards, and removes the five-line limit on cards.
 
+1.2.1 changes:
+	Turned CDP into its own mod, hopefully reducing stutters.
+	Fixed "Shield" showing up on item cards when it isn't supposed to.
+
 1.2.0 changes:
 	Fixed constraint text not appearing.
 	Added an option to remove elemental text from item cards.

@@ -178,7 +178,7 @@ def GetFunStats(Item):
                     ConstraintPrefixText = ""
 
 
-                if PrefixText == "Weapon":
+                if PrefixText in ["Weapon","Shield"]:
                     PrefixText = ""
 
                 temp = ConstraintPrefixText + PrefixText + MainText + SuffixText
@@ -257,7 +257,7 @@ def GetFunStats(Item):
                 else:
                     ConstraintPrefixText = ""
 
-                if PrefixText == "Weapon":
+                if PrefixText in ["Weapon","Shield"]:
                     PrefixText = ""
 
                 temp = ConstraintPrefixText + PrefixText + MainText + SuffixText
