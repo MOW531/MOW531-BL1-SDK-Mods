@@ -110,7 +110,7 @@ build_mod(
     hooks=[on_startgame, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
-    settings_file=Path(f"SETTINGS_DIR/EIC.json"),
+    settings_file=Path(f"{SETTINGS_DIR}/EIC.json"),
 )
 
 logging.info(f"Extended Item Cards Loaded: {__version__}, {__version_info__}")

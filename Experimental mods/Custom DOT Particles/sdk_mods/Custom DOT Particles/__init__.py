@@ -23,7 +23,7 @@ build_mod(
     hooks=[UpdateDistributions],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
-    settings_file=Path(f"SETTINGS_DIR/CDP.json"),
+    settings_file=Path(f"{SETTINGS_DIR}/CDP.json"),
 )
 
 logging.info(f"Custom DOT Particles Loaded: {__version__}, {__version_info__}")
