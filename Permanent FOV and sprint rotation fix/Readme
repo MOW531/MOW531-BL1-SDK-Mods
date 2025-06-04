@@ -1,3 +1,1 @@
-Fixes diagonal sprint, Mordecai and Lilith melee zoom, FOV resetting, and the use key also being a reload key.
-
-Also lowers how much FOV increases when you sprint so that high FOVs still look good and FOV stays increased when you jump like in the rest of the series.
+Adds separate sliders for world FOV and weapon-type FOVs, jumping while sprinting doesn't lower the FOV, fixes diagonal sprint canceling when you turn in the opposite direction, and adds an option to remove the Reload function from Use.
