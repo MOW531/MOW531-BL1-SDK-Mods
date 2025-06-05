@@ -1,0 +1,14 @@
+[project]
+name = "Repeatable Missions"
+version = "1.0.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Makes the 'Circle of #' missions and the last armory mission repeatable."
+
+[tool.sdkmod]
+name = "Repeatable Missions"
+mod_type = "Standard" # or "Library"
+supported_games = "BL1"
+coop_support = "Unknown"
+auto_enable = "False"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Repeatable%20Missions/Repeatable%20Missions.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

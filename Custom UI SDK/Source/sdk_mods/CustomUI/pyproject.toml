@@ -1,0 +1,14 @@
+[project]
+name = "Custom UI SDK"
+version = "1.5.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Resource for other mods"
+
+[tool.sdkmod]
+name = "Custom UI SDK"
+mod_type = "Standard" # or "Library"
+supported_games = "BL1"
+coop_support = "Unknown"
+auto_enable = "False"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Custom%20UI%20SDK/Custom%20UI%20SDK.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

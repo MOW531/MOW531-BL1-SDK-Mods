@@ -1,0 +1,14 @@
+[project]
+name = "Scroll Wheel Fix"
+version = "2.0.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Fixes weapons being out of order when switching with the scroll wheel."
+
+[tool.sdkmod]
+name = "Scroll Wheel Fix"
+mod_type = "Standard" # or "Library"
+supported_games = "BL1"
+coop_support = "Unknown"
+auto_enable = "False"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Scroll%20Wheel%20Fix/Scroll%20Wheel%20Fix.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

@@ -1,0 +1,14 @@
+[project]
+name = "Custom DOT Particles"
+version = "1.0.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Allow for custom DOT effects for custom elements."
+
+[tool.sdkmod]
+name = "Custom DOT Particles"
+mod_type = "Standard" # or "Library"
+supported_games = "BL1"
+coop_support = "Unknown"
+auto_enable = "False"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Experimental%20mods/Custom%20DOT%20Particles/Custom%20DOT%20Particles.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

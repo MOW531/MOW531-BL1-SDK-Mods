@@ -1,0 +1,14 @@
+[project]
+name = "Playthrough 3"
+version = "1.1.2"
+authors = [{ name = "RedxYeti and Miner Of Worlds" }]
+description = "Adds a third playthrough."
+
+[tool.sdkmod]
+name = "Playthrough 3"
+mod_type = "Standard" # or "Library"
+supported_games = "BL1"
+coop_support = "Unknown"
+auto_enable = "True"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Playthrough%203/Playthrough%203.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
