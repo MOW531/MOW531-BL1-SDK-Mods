@@ -51,7 +51,7 @@ description = "Stops the use key from reloading"
 [tool.sdkmod]
 name = "Reload Fix"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
