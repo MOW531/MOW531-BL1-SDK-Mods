@@ -7,7 +7,7 @@ description = "Makes the 'Circle of #' missions and the last armory mission repe
 [tool.sdkmod]
 name = "Repeatable Missions"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Repeatable%20Missions/Repeatable%20Missions.zip"

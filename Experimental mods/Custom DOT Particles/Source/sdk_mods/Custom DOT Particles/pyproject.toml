@@ -7,7 +7,7 @@ description = "Allow for custom DOT effects for custom elements."
 [tool.sdkmod]
 name = "Custom DOT Particles"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Experimental%20mods/Custom%20DOT%20Particles/Custom%20DOT%20Particles.zip"
