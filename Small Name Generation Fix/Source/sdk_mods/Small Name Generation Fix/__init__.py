@@ -379,7 +379,7 @@ build_mod(
     hooks=[WeaponPickupMsgName, WeaponPickupMsg, WeaponCardName, ItemPickupMsgName, ItemPickupMsg, ItemCardName],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
-    settings_file=Path(f"SETTINGS_DIR/SmallNameGenerationFix.json"),
+    settings_file=Path(f"{SETTINGS_DIR}/SmallNameGenerationFix.json"),
 )
 
 logging.info(f"Small Name Generation Fix Loaded: {__version__}, {__version_info__}")
