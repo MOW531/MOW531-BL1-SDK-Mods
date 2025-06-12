@@ -7,7 +7,7 @@ description = "Adds the missing barrel number for grenade launchers."
 [tool.sdkmod]
 name = "Small Name Generation Fix"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Small%20Name%20Generation%20Fix/Small%20Name%20Generation%20Fix.zip"

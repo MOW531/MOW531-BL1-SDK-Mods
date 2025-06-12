@@ -7,7 +7,7 @@ description = "Makes SDU's guaranteed"
 [tool.sdkmod]
 name = "SDU Guaranteed"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/SDU%20Guaranteed/SDU%20Guaranteed.zip"

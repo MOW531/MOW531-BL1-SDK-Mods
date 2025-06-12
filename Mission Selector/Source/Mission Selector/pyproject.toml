@@ -7,7 +7,7 @@ description = "Adds keybinds to switch missions like in BL3."
 [tool.sdkmod]
 name = "Mission Selector"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Mission%20Selector/Mission%20Selector.zip"
