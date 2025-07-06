@@ -7,7 +7,7 @@ description = "Makes enemies always spawn with 'legit' gear and always drop what
 [tool.sdkmod]
 name = "Legit Loot SDK"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Legit%20Loot%20SDK/Legit%20Loot%20SDK.zip"

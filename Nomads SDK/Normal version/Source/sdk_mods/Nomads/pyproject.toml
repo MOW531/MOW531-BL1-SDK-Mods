@@ -43,15 +43,15 @@
 
 
 [project]
-name = "Grenade Launchers SDK"
+name = "Nomads SDK"
 version = "1.1.0"
 authors = [{ name = "Miner Of Worlds" }]
-description = "Add grenade launchers"
+description = "Adds Nomads"
 
 [tool.sdkmod]
-name = "Grenade Launchers SDK"
+name = "Nomads SDK"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

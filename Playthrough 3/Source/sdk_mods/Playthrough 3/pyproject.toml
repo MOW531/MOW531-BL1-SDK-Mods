@@ -7,7 +7,7 @@ description = "Adds a third playthrough."
 [tool.sdkmod]
 name = "Playthrough 3"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "True"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Playthrough%203/Playthrough%203.zip"

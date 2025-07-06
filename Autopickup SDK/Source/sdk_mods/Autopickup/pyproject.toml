@@ -7,7 +7,7 @@ description = "Adds Auto-Pickup to BL1."
 [tool.sdkmod]
 name = "Auto-Pickup"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Autopickup%20SDK/Autopickup%20SDK.zip"

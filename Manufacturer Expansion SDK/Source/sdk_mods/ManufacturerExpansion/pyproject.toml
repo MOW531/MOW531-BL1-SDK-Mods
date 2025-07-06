@@ -7,7 +7,7 @@ description = "Adds Corazza and Polaris into the game"
 [tool.sdkmod]
 name = "Manufacturer Expansion - Corazza and Polaris SDK"
 mod_type = "Standard" # or "Library"
-supported_games = "BL1"
+supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
 download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Manufacturer%20Expansion%20SDK/Manufacturer%20Expansion%20SDK.zip"
