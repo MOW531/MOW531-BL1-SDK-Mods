@@ -14,18 +14,17 @@ import os
 bAutoLoot = BoolOption("BL3 Auto-Loot", True)
 
 bPatched = False
-current_obj = None
-
-struct = unrealsdk.make_struct
-wclass = unrealsdk.find_class
-
 
 def obj (definition:str, object:str):
-    global current_obj
-    unrealsdk.load_package(object)
-    unrealsdk.find_object(definition, object).ObjectFlags |= 0x4000
-    current_obj = unrealsdk.find_object(definition, object)
-    return unrealsdk.find_object(definition, object)
+    try:
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
+    except:
+        unrealsdk.load_package(object)
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
 
 
 def patch():
@@ -110,7 +109,7 @@ def TouchedPickupable(obj: UObject, args: WrappedStruct, ret: any, func: BoundFu
             return
         
         ClassName = CurrentPickupable.Inventory.Class.Name
-        if ClassName == "WillowWeapon" or ClassName == "WillowEquipAbleItem":
+        if ClassName == "WillowWeapon" or ClassName == "WillowEquipAbleItem" or CurrentPickupable.Inventory.DefinitionData.ItemDefinition.bPlayerUseItemOnPickup is False:
             return
         
         obj.UpdateAmmoCounts(True)

@@ -8,12 +8,22 @@ from mods_base import hook, get_pc, EInputEvent, keybind, command
 from mods_base.options import BaseOption, SliderOption
 
 def obj (definition:str, object:str):
-    unrealsdk.load_package(object)
-    unrealsdk.find_object(definition, object).ObjectFlags |= 0x4000
-    return unrealsdk.find_object(definition, object)
+    try:
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
+    except:
+        unrealsdk.load_package(object)
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
 
 
 def Set_FOV():
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DesiredFOVBaseValue = WorldFOV.value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DesiredFOV = WorldFOV.value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DefaultFOV = WorldFOV.value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").FOVAngle = WorldFOV.value
     obj("PlayerClassDefinition","gd_Roland.Character.CharacterClass_Roland").FOV = WorldFOV.value
     obj("PlayerClassDefinition","gd_Brick.Character.CharacterClass_Brick").FOV = WorldFOV.value
     obj("PlayerClassDefinition","gd_lilith.Character.CharacterClass_Lilith").FOV = WorldFOV.value
@@ -32,6 +42,10 @@ def Set_FOV_from_slider(option:BaseOption, value:float):
         pc.DesiredFOVBaseValue = value
         pc.DesiredFOV = value
         pc.DefaultFOV = value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DesiredFOVBaseValue = value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DesiredFOV = value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").DefaultFOV = value
+    obj("WillowPlayerController","Willowgame.Default__WillowPlayerController").FOVAngle = value
     obj("PlayerClassDefinition","gd_Roland.Character.CharacterClass_Roland").FOV = value
     obj("PlayerClassDefinition","gd_Brick.Character.CharacterClass_Brick").FOV = value
     obj("PlayerClassDefinition","gd_lilith.Character.CharacterClass_Lilith").FOV = value
