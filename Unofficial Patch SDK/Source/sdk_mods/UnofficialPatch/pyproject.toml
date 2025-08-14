@@ -2,7 +2,7 @@
 name = "Unofficial Patch SDK"
 version = "1.3.0"
 authors = [{ name = "Miner Of Worlds" }]
-description = "Fixes various bugs."
+description = "Fixes various bugs. Changelog: https://raw.githubusercontent.com/MOW531/MOW531-BL1-SDK-Mods/refs/heads/main/Unofficial%20Patch%20SDK/Readme"
 
 [tool.sdkmod]
 name = "Unofficial Patch SDK"

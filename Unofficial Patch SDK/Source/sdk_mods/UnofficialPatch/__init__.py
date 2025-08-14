@@ -19,10 +19,15 @@ wclass = unrealsdk.find_class
 
 def obj (definition:str, object:str):
     global current_obj
-    unrealsdk.load_package(object)
-    unrealsdk.find_object(definition, object).ObjectFlags |= 0x4000
-    current_obj = unrealsdk.find_object(definition, object)
-    return unrealsdk.find_object(definition, object)
+    try:
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
+    except:
+        unrealsdk.load_package(object)
+        current_obj = unrealsdk.find_object(definition, object)
+        current_obj.ObjectFlags |= 0x4000
+        return current_obj
 
 
 def patch():
@@ -73,6 +78,11 @@ def patch():
     AthenasWisdomCritPresentation.Attribute = obj("AttributeDefinition","d_attributes.GameplayAttributes.PlayerCriticalHitBonus")
     AthenasWisdomCritPresentation.BasePriority = 1
 
+    KromsSidearmPresentation = unrealsdk.construct_object("AttributePresentationDefinition",obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.KromsSidearm_barrel5"))
+    KromsSidearmPresentation.Description = "Burst Fire while zoomed."
+    KromsSidearmPresentation.bDontDisplayNumber = True
+    KromsSidearmPresentation.Attribute = obj("AttributeDefinition","d_attributes.Weapon.WeaponAutomaticBurstCount")
+    KromsSidearmPresentation.BasePriority = 3
 
     obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").TitleList.append(obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco"))
     obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.BaseValueScaleConstant = 1
@@ -100,6 +110,8 @@ def patch():
     obj("WeaponPartDefinition","gd_weap_combat_shotgun.Grip.grip2a_Torgue").PrefixList.pop(0)
     obj("WeaponPartListDefinition","gd_weap_revolver_pistol.Body.Body_PartList").WeightedParts[5].Manufacturers[0].DefaultWeight.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.Weighting.Weight_Awesome_6_Legendary")
     obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.Weighting.Weight_Awesome_3_Uncommoner")
+    obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.KromsSidearm_barrel5").CustomPresentations.append(KromsSidearmPresentation)
+    obj("AttributePresentationDefinition","gd_weap_repeater_pistol.Title.TitleU_Krom_KromsSidearm:AttributePresentationDefinition_6").NoConstraintText = "A gift from Papa Krom"
 
 
     # This is to fix the crit boost that some weapons get with the main critfix
@@ -426,6 +438,15 @@ def patch():
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].MaxActiveAtOneTime.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.WeightingPlayerCount.Enemy_MajorUpgrade_PerPlayer")
 
 
+    obj("InteractiveNPCDefinition","gd_MissionNPCs.Taylor_Kobb").Mesh.Materials.append(obj("MaterialInstanceConstant","gd_Kobb_Brothers.Material.Mat_Janis_Body"))
+    obj("InteractiveNPCDefinition","gd_MissionNPCs.Taylor_Kobb").Mesh.Materials.append(obj("MaterialInstanceConstant","gd_Kobb_Brothers.Material.Mat_Janis_Head"))
+    obj("ItemDefinition","dlc1_MissionData.ItemDefs.ID_WereSkagSample").NonCompositeStaticMesh = obj("StaticMesh","Health_items.Mesh.HealthOil_01")
+    obj("ItemDefinition","Z1_MissionData.ItemDefs.ID_JackProof").NonCompositeStaticMesh = obj("StaticMesh","UP_Assets.Mesh.mesh_jack_eyeball")
+    obj("ItemDefinition","dlc1_MissionData.ItemDefs.ID_Eggs").NonCompositeStaticMesh = obj("StaticMesh","UP_Assets.Mesh.mesh_bloodwing_egg")
+
+    obj("InteractiveObjectDefinition","Z0_MissionData.MissionDirectors.MD_SubstationNote").ExtraBehaviorSets[0].OnUsedBy.clear()
+
+
     #Code by EvanDeadlySins
         # Fixed typos
     obj("AttributePresentationDefinition","gd_tunercuffs.ManufacturerMaterials.Material_Anshin_1.AttributePresentationDefinition_1").Description = "Equip to throw Transfusion Grenades." # "thow" to "throw"
@@ -456,6 +477,15 @@ def AddCurrencyOnHand(
 ) -> None:
     if obj.GetCurrencyOnHand() + __args.AddValue > 2147483647:
         __args.AddValue = 2147483647 - obj.GetCurrencyOnHand()
+
+@hook("Engine.PlayerController:StartFire", Type.POST)
+def ReloadFix(obj:UObject, *_) -> None:
+    if not obj or not obj.Pawn or not obj.Pawn.Weapon:
+        return
+    weapon = obj.Pawn.Weapon
+    
+    if weapon and weapon.NeedToReload():
+        weapon.BeginReload(0)
 
 
 @hook(
@@ -488,7 +518,7 @@ build_mod(
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
     keybinds=[],
-    hooks=[on_startgame, AddCurrencyOnHand],
+    hooks=[on_startgame, AddCurrencyOnHand, ReloadFix],
     commands=[],
      # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/UnofficialPatchSDK.json"),

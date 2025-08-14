@@ -7,7 +7,7 @@ from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
 from .inventory import InvStartCompare, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvPrepCompare
-from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars
+from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars, ArmorCheck
 from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
@@ -108,7 +108,7 @@ build_mod(
     # deregister_same_settings=True,      # This is True by default
     options=[FontSize, bPlotIcon, ShowParts, ShowElementText],
     keybinds=[],
-    hooks=[on_startgame, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage, UpdateMissionDetails],
+    hooks=[ArmorCheck, on_startgame, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage, UpdateMissionDetails],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/EIC.json"),

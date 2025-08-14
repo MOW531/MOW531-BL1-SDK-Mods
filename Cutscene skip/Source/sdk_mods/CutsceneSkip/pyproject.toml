@@ -1,0 +1,13 @@
+[project]
+name = "Cutscene Skip"
+version = "1.0.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Skips most cutscenes."
+
+[tool.sdkmod]
+name = "Cutscene Skip"
+mod_type = "Standard" # or "Library"
+supported_games = ["BL1"]
+coop_support = "Unknown"
+auto_enable = "False"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }

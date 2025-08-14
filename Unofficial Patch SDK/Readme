@@ -1,9 +1,9 @@
-Requires Custom UI SDK (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Custom%20UI%20SDK)
+Requires Custom UI SDK (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Custom%20UI%20SDK) or Extended Item Cards (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Experimental%20mods/Extended%20Item%20Cards)
 
 
 Difference between the UPK and SDK versions:
 
-The SDK version has some more fixes (see the changes after 1.0.0) and has better compatibility with other mods, but it currently lacks the animation fixes that the UPK version has.
+The SDK version has more fixes (see the changes after 1.0.0) and has better compatibility with other mods, but it currently lacks the animation fixes that the UPK version has.
 
 
 
@@ -14,6 +14,11 @@ Changes in 1.3.0:
 	Fixed more typos (Credit to EvanDeadlySins)
 	EnemyLevel_GameStage_plus2 now adds the correct amount (Credit to EvanDeadlySins)
 	Fixed Pup Skags Min/Max level requirement on playthrough 2 (Credit to EvanDeadlySins)
+	Krom's Sidearm now shows burst fire on the item card (Credit to dannyscorps)
+	Corpse Eaters drop actual eggs instead of skag pearls (Credit to SleepMaster)
+	The antidote from 'There May Be Some Side Effects...' now has a bottle model (Credit to SleepMaster)
+	One Eyed Jack drops eye instead of Skag pearl (Credit to SleepMaster)
+	Friendly Taylor Kobb uses his proper skin (Credit to SleepMaster)
 
 Changes in 1.2.0:
 

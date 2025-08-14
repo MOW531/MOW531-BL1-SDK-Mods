@@ -113,12 +113,16 @@ def EquippedCardWhileNotComparing_Text():
     global EquippedCard_obj
     global PickupCard_obj
     global DesiredWeapon
+
+    #print("Change Color")
+    #EquippedCard_obj.SingleArgInvokeS("p1.shield.color.gotoAndStop","yellow")
+    #EquippedCard_obj.SingleArgInvokeS("p1.ring.shield.color.gotoAndStop","yellow")
+
+
     if PickupCard_obj is None or PickupCard_obj is not None and PickupCard_obj.MyHUDOwner.ItemComparison[0] is None:
         if EquippedCard_obj is not None and DesiredWeapon is not None:
             EquippedCard_obj.SetVariableString(hud_flash_path + "." + flash_element_number, str(round(DesiredWeapon.ReloadTimeBaseValue, 1)))
             EquippedCard_obj.SingleArgInvokeS(hud_flash_path + "." + flash_element_techicon, GetElementIconForItem(DesiredWeapon))
-
-
 
 
 
@@ -199,3 +203,43 @@ def HUDClearVars(
     PickupCard_obj = None
     EquippedCard_obj = None
     DesiredWeapon = None
+
+
+
+
+@hook(
+    hook_func="WillowGame.WillowHUDGFxMovie:extEnemyRingFadeInFinished",
+    hook_type=Type.POST,
+)
+def ArmorCheck(
+    obj: UObject,
+    __args: WrappedStruct,
+    __ret: any,
+    __func: BoundFunction,
+) -> None:
+    Armored = 2
+    pc = get_pc()
+    if pc is not None:
+        if pc.AutoAimStrategy.InstantaneousTarget is not None:
+
+            if str(pc.AutoAimStrategy.InstantaneousTarget.Class.name) in "WillowVehicle_WheeledVehicle":
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
+
+            elif pc.AutoAimStrategy.InstantaneousTarget.BodyClass.DefaultHitRegion.DefaultDamageSurfaceType == Armored:
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
+
+        elif pc.AutoAimStrategy.LastInstantaneousTarget is not None:
+
+            if str(pc.AutoAimStrategy.LastInstantaneousTarget.Class.name) in "WillowVehicle_WheeledVehicle":
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
+
+            elif pc.AutoAimStrategy.LastInstantaneousTarget.BodyClass.DefaultHitRegion.DefaultDamageSurfaceType == Armored:
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
+
+        elif str(pc.pawn.Class.name) in "WillowVehicle_WheeledVehicle" and pc.pawn.lockedpawn is not None:
+
+            if str(pc.pawn.lockedpawn.Class.name) in "WillowVehicle_WheeledVehicle":
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
+
+            elif pc.pawn.lockedpawn.BodyClass.DefaultHitRegion.DefaultDamageSurfaceType == Armored:
+                obj.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
