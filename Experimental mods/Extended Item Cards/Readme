@@ -1,7 +1,11 @@
 Adds recharge delay/reload time to weapon cards for Eridian and non-Eridian weapons, adds recharge delay to shield cards, and removes the five-line limit on cards.
 
+1.3.0 changes:
+	Added yellow health bars for armored enemies.
+
 1.2.2 changes:
 	Added an optional story mission indicator.
+
 1.2.1 changes:
 	Turned CDP into its own mod, hopefully reducing stutters.
 	Fixed "Shield" showing up on item cards when it isn't supposed to.
