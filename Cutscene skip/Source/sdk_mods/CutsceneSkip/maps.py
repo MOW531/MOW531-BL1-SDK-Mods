@@ -30,10 +30,16 @@ class Intro(Map):
     name = "arid_intro_p"
 
     def on_map_loaded(self):
+        #Skips Marcus intro
         LoadingMovie = find_object("SeqAct_LoadingMovie", "arid_intro_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_LoadingMovie_0")
         ToggleHidden = find_object("SeqAct_ToggleHidden", "arid_intro_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_ToggleHidden_16")
         MarcusAudio = find_object("SeqAct_Interp", "arid_intro_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_Interp_14")
         LoadingMovie.OutputLinks[0].Links = [make_new_link(ToggleHidden, 1), make_new_link(MarcusAudio)]
+
+        #Skips Angel cutscene
+        SwitchByPlatform = find_object("WillowSeqCond_SwitchByPlatform", "arid_intro_p.TheWorld:PersistentLevel.Main_Sequence.WillowSeqCond_SwitchByPlatform_0")
+        MapChange = find_object("WillowSeqAct_PrepareMapChangeFromDefinition", "arid_intro_p.TheWorld:PersistentLevel.Main_Sequence.WillowSeqAct_PrepareMapChangeFromDefinition_1")
+        SwitchByPlatform.OutputLinks[0].Links = [make_new_link(MapChange)]
 
 class AridBadlands(Map):
     name = "arid_p"
