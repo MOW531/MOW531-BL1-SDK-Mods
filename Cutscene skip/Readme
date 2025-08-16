@@ -1,3 +1,6 @@
 Skips all cutscenes except the MINAC and INAC intros.
 
+Changes in 1.0.1:
+	Skips the Marcus intro.
+
 Credit to RedxYeti for letting me use Dedicated Drops SDK as a base.
