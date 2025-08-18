@@ -187,7 +187,7 @@ class TheMill(Map):
         DLC1_UndeadNed_starttrigger = find_object("Object","dlc1_mill_boss_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_SetBool_0")
         DLC1_UndeadNed_end_1 = find_object("Object","dlc1_mill_boss_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_Interp_2")
         DLC1_UndeadNed_end_2 = find_object("Object","dlc1_mill_boss_p.TheWorld:PersistentLevel.Main_Sequence.SeqAct_ToggleHidden_3")
-        DLC1_UndeadNed_starttrigger.OutputLinks[0].Links = [make_new_link(DLC1_UndeadNed_end_1), make_new_link(DLC1_UndeadNed_end_2)]
+        DLC1_UndeadNed_starttrigger.OutputLinks[0].Links = [make_new_link(DLC1_UndeadNed_end_1), make_new_link(DLC1_UndeadNed_end_2, 1)]
 
         #Credits
         Credits_starttrigger = find_object("Object","dlc1_mill_boss_p.TheWorld:PersistentLevel.Main_Sequence.WillowSeqAct_CompleteMission_0")
