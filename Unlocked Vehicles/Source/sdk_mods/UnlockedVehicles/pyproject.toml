@@ -1,0 +1,14 @@
+[project]
+name = "Unlocked Vehicles"
+version = "1.0.0"
+authors = [{ name = "Miner Of Worlds" }]
+description = "Lets you use DLC vehicles in the base game and vice versa."
+
+[tool.sdkmod]
+name = "Unlocked Vehicles"
+mod_type = "Standard" # or "Library"
+supported_games = ["BL1"]
+coop_support = "Unknown"
+auto_enable = "False"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Unlocked%20Vehicles/Unlocked%20Vehicles.zip"
+license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
