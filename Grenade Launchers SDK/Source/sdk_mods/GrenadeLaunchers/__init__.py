@@ -3,10 +3,8 @@ import unrealsdk
 from pathlib import Path
 from unrealsdk.hooks import Type
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc 
+from mods_base import hook, get_pc, ENGINE, build_mod, SETTINGS_DIR
 from mods_base.options import BaseOption, BoolOption
-from mods_base import SETTINGS_DIR
-from mods_base import build_mod
 from unrealsdk import logging
 import os
 
@@ -21,27 +19,21 @@ wclass = unrealsdk.find_class
 
 def obj (definition:str, object:str):
     global current_obj
-    unrealsdk.load_package(object)
-    unrealsdk.find_object(definition, object).ObjectFlags |= 0x4000
-    current_obj = unrealsdk.find_object(definition, object)
-    return unrealsdk.find_object(definition, object)
+    object_class = unrealsdk.find_class(definition)
+    current_obj = ENGINE.DynamicLoadObject(object, object_class, False)
+    current_obj.ObjectFlags |= 0x4000
+    return current_obj
 
 
 def patch():
 
     # Titles & Prefixes
-    obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").ObjectFlags |= 0x4000
-    obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Barrel_Sticky").ObjectFlags |= 0x4000
-
     obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").PartName = "Mad"
     obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Acc4_Mad").Priority = 3
     obj("WeaponNamePartDefinition","gd_weap_grenade_launcher.Prefix.Prefix_Barrel_Sticky").PartName = "Sticky"
 
 
     #Parts
-    obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").ObjectFlags |= 0x4000
-    obj("WeaponPartDefinition","gd_weap_grenade_launcher.acc.acc2_Blitz").ObjectFlags |= 0x4000
-
     obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts.append(current_obj.WeightedParts[10])
     obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts[(len(current_obj.WeightedParts)) - 1].Part = obj("WeaponPartDefinition","gd_weap_grenade_launcher.Barrel.barrel3_Dahl_Onslaught")
     obj("WeaponPartListDefinition","gd_weap_grenade_launcher.Barrel.Barrel_PartList").WeightedParts[(len(current_obj.WeightedParts)) - 1].Manufacturers[1].Manufacturer = obj("ManufacturerDefinition","gd_manufacturers.Manufacturers.Dahl")
@@ -59,15 +51,6 @@ def patch():
 
     # Projectiles
 
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Impact").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Leviathan").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Impact").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium_Rebounder").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Rainmaker_Children").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_SandS_Rainmaker").ObjectFlags |= 0x4000
-    obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Sticky").ObjectFlags |= 0x4000
-
     obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Impact").bUseAccurateCollision = False
     obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Large_Leviathan").bUseAccurateCollision = False
     obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_Medium").bUseAccurateCollision = False
@@ -80,7 +63,6 @@ def patch():
     obj("ProjectileDefinition","gd_weap_grenade_launcher.Grenades.Grenade_SandS_Rainmaker").DefaultBehaviorSet.OnExplode[1].ChildProjectileBaseValues.append(obj("ProjectileDefinition","gd_grenades.Longbow.HandGrenade_LongBow").DefaultBehaviorSet.OnExplode[2].ChildProjectileBaseValues[0])
 
     # Misc
-    obj("AttributeDefinition","d_attributes.WeaponType.Weapon_Is_RocketLauncher").ObjectFlags |= 0x4000
 
     obj("AttributeDefinition","d_attributes.WeaponType.Weapon_Is_RocketLauncher").ValueResolverChain.append(obj("AttributeDefinition","GL_Assets.WeaponType.Weapon_Is_RocketLauncher").ValueResolverChain[0])
 

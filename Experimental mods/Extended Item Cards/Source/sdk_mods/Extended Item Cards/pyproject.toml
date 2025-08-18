@@ -1,11 +1,11 @@
 [project]
-name = "Extended Item Cards"
-version = "1.3.0"
+name = "Extended UI"
+version = "1.3.1"
 authors = [{ name = "Miner Of Worlds" }]
-description = "Adds Recharge Delay and Reload Time to item cards."
+description = "Adds Recharge Delay and Reload Time/Speed to item cards, removes the 5-line limit on card descriptions, adds a story mission indiactor, and yellow health bars for armored enemies."
 
 [tool.sdkmod]
-name = "Extended Item Cards"
+name = "Extended UI"
 mod_type = "Standard" # or "Library"
 supported_games = ["BL1"]
 coop_support = "Unknown"

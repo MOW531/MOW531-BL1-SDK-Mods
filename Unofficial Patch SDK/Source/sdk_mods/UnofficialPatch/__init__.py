@@ -3,12 +3,9 @@ import unrealsdk
 from pathlib import Path
 from unrealsdk.hooks import Type, Block
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc
+from mods_base import hook, get_pc, SETTINGS_DIR, build_mod, ENGINE
 from mods_base.options import BaseOption, BoolOption
-from mods_base import SETTINGS_DIR
-from mods_base import build_mod
 from unrealsdk import logging
-import os
 
 bPatched = False
 current_obj = None
@@ -19,15 +16,11 @@ wclass = unrealsdk.find_class
 
 def obj (definition:str, object:str):
     global current_obj
-    try:
-        current_obj = unrealsdk.find_object(definition, object)
-        current_obj.ObjectFlags |= 0x4000
-        return current_obj
-    except:
-        unrealsdk.load_package(object)
-        current_obj = unrealsdk.find_object(definition, object)
-        current_obj.ObjectFlags |= 0x4000
-        return current_obj
+    object_class = unrealsdk.find_class(definition)
+    current_obj = ENGINE.DynamicLoadObject(object, object_class, False)
+    current_obj.ObjectFlags |= 0x4000
+    return current_obj
+
 
 
 def patch():
@@ -449,7 +442,7 @@ def patch():
 
     #Code by EvanDeadlySins
         # Fixed typos
-    obj("AttributePresentationDefinition","gd_tunercuffs.ManufacturerMaterials.Material_Anshin_1.AttributePresentationDefinition_1").Description = "Equip to throw Transfusion Grenades." # "thow" to "throw"
+    obj("AttributePresentationDefinition","gd_tunercuffs.ManufacturerMaterials.Material_Anshin_1:AttributePresentationDefinition_1").Description = "Equip to throw Transfusion Grenades." # "thow" to "throw"
     obj("AIPawnBalanceDefinition","gd_Balance_Enemies_Creatures.Rakk.Pawn_Balance_Rakk_ShockChampion").Grades[1].GradeModifiers.DisplayName = "BadMutha Shock Rakk" # removes extra space
     obj("AIPawnBalanceDefinition","gd_Balance_Enemies_Creatures.Scythids.Pawn_Balance_Scythid_Giant").Grades[1].GradeModifiers.DisplayName = "Mammoth Scythid" # "Mommoth" to "Mammoth"
     obj("AIPawnBalanceDefinition","dlc4_gd_Balance_Enemies.SteeleTrap.Pawn_Balance_SteeleTrap").Grades[0].GradeModifiers.DisplayName = "Commandant Steele-Trap" # "Comandant" to "Commandant"
@@ -518,7 +511,7 @@ build_mod(
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
     keybinds=[],
-    hooks=[on_startgame, AddCurrencyOnHand, ReloadFix],
+    hooks=[on_startgame, AddCurrencyOnHand],
     commands=[],
      # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
     settings_file=Path(f"{SETTINGS_DIR}/UnofficialPatchSDK.json"),

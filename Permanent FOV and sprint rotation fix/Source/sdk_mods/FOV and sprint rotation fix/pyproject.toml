@@ -1,6 +1,6 @@
 [project]
 name = "FOV and sprint rotation fix"
-version = "2.4.0"
+version = "2.3.0"
 authors = [{ name = "Miner Of Worlds" }]
 description = "Adds separate sliders for world FOV and weapon-type FOVs, jumping while sprinting doesn't lower the FOV, fixes diagonal sprint canceling when you turn in the opposite direction, and adds an option to remove the Reload function from Use."
 

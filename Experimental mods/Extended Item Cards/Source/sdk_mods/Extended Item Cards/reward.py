@@ -6,15 +6,10 @@ from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent
 from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
-from .functions import GetElementIconForItem, GetFunStats
+from .functions import GetElementIconForItem, GetFunStats, single_item, default_card
 
 
 flash_path = "reward.card1"
-flash_element_main = "rls.text"
-flash_element_main_text = "Reload Time"
-flash_element_main_text_eridian = "Recharge Delay"
-flash_element_number = "reloadspeed.text"
-flash_element_arrow4 = "arrow4.gotoAndStop"
 flash_element_techicon = "chemical.gotoAndStop"
 flash_element_funstats = "funstats.htmlText"
 
@@ -28,27 +23,14 @@ def Reward_NormalView(obj):
         obj.SetVariableString(flash_path + "." + flash_element_funstats, GetFunStats(SelectedItem))
 
         if "WillowWeapon" in str(SelectedItem.Class):
-
-            if str(SelectedItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
-                obj.SetVariableString(flash_path + "." + flash_element_main, flash_element_main_text_eridian)
-            else:
-                obj.SetVariableString(flash_path + "." + flash_element_main, flash_element_main_text)
-
-            obj.SetVariableString(flash_path + "." + flash_element_number, str(round(SelectedItem.ReloadTimeBaseValue, 1)))
-            obj.SingleArgInvokeS(flash_path + "." + flash_element_arrow4, "Blank")
+            single_item(obj, SelectedItem, flash_path)
 
         else:
-            
-            obj.SetVariableString(flash_path + "." + flash_element_main, "")
-            obj.SetVariableString(flash_path + "." + flash_element_number, "")
-            obj.SingleArgInvokeS(flash_path + "." + flash_element_arrow4, "Blank")
+            default_card(obj, flash_path)
 
     else:
+        default_card(obj, flash_path)
         obj.SingleArgInvokeS(flash_path + "." + flash_element_techicon, "none")
-
-        obj.SetVariableString(flash_path + "." + flash_element_main, "")
-        obj.SetVariableString(flash_path + "." + flash_element_number, "")
-        obj.SingleArgInvokeS(flash_path + "." + flash_element_arrow4, "Blank")
 
 
 

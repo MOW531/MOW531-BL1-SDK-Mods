@@ -4,15 +4,18 @@ from unrealsdk.hooks import Type, add_hook, remove_hook, Block #type: ignore
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction, UScriptStruct #type: ignore
 from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent, keybind
 from pathlib import Path
-from mods_base.options import BaseOption, BoolOption
+from mods_base.options import BaseOption, BoolOption, NestedOption
 
 from .inventory import InvStartCompare, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvPrepCompare
-from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars, ArmorCheck
+from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars, ArmorCheck, bBL2ArmoredList
 from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
 from.missionlog import UpdateMissionDetails, bPlotIcon
-from .functions import FontSize, ShowParts, ShowElementText
+from .functions import FontSize, ShowParts, ShowElementText, reload_text
+
+item_card_options = NestedOption("Item card", [FontSize, reload_text, ShowElementText, ShowParts])
+hud_options = NestedOption("HUD", [bBL2ArmoredList])
 
 bPatched = False
 
@@ -106,12 +109,12 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
-    options=[FontSize, bPlotIcon, ShowParts, ShowElementText],
+    options=[item_card_options, hud_options, bPlotIcon],
     keybinds=[],
     hooks=[ArmorCheck, on_startgame, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvStartCompare, InvPrepCompare, HUDClearVars, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, DisplayRewardsPage, UpdateMissionDetails],
     commands=[],
     # Defaults to f"SETTINGS_DIR/dir_name.json" i.e., ./Settings/bl1_commander.json
-    settings_file=Path(f"{SETTINGS_DIR}/EIC.json"),
+    settings_file=Path(f"{SETTINGS_DIR}/EUI.json"),
 )
 
-logging.info(f"Extended Item Cards Loaded: {__version__}, {__version_info__}")
+logging.info(f"Extended UI Loaded: {__version__}, {__version_info__}")

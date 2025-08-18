@@ -6,15 +6,9 @@ from mods_base import hook, get_pc, ENGINE, SETTINGS_DIR, build_mod, EInputEvent
 from pathlib import Path
 from mods_base.options import BaseOption, BoolOption
 
-from .functions import GetElementIconForItem, GetFunStats
+from .functions import GetElementIconForItem, GetFunStats, single_item, default_card, inv_default_cards, inv_compare_items
 
 flash_path = "topLevel_mc.card"
-flash_element_main = "rls.text"
-flash_element_main_text = "Reload Time"
-flash_element_main_text_eridian = "Recharge Delay"
-flash_element_number = "reloadspeed.text"
-flash_element_arrow3 = "arrow3.gotoAndStop"
-flash_element_arrow4 = "arrow4.gotoAndStop"
 flash_element_techicon = "chemical.gotoAndStop"
 flash_element_funstats = "funstats.htmlText"
 
@@ -44,27 +38,12 @@ def INV_NormalView(obj):
 
             # Add reload info to card
             if "WillowWeapon" in str(SelectedItem.Class):
-
-                if str(SelectedItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
-                    obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text_eridian)
-                else:
-                    obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text)
-
-                obj.SetVariableString(flash_path + "1." + flash_element_number, str(round(SelectedItem.ReloadTimeBaseValue, 1)))
-                obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Blank")
-
-            # Clear reload info card
-            else:
-                obj.SetVariableString(flash_path + "1." + flash_element_main, "")
-                obj.SetVariableString(flash_path + "1." + flash_element_number, "")
-                obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Blank")
+                single_item(obj, SelectedItem, flash_path, flash_joiner="1.")
 
         # Clear reload info card
         else:
+            default_card(obj, flash_path, flash_joiner="1.")
             obj.SingleArgInvokeS(flash_path + "1." + flash_element_techicon, "none")
-            obj.SetVariableString(flash_path + "1." + flash_element_main, "")
-            obj.SetVariableString(flash_path + "1." + flash_element_number, "")
-            obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Blank")
 
 # Comparing view
 def INV_CompareView(obj):
@@ -84,80 +63,11 @@ def INV_CompareView(obj):
 
 
             #Add shield delay arrow and compare
-            if "WillowEquipAbleItem" in str(SelectedItem.Class):
-                if SelectedItem.DefinitionData.ItemDefinition == unrealsdk.find_object("ItemDefinition","gd_shields.A_Item.Item_Shield"):
-                    RightCard = SelectedItem.UIStatModifiers[2].ModifierTotal
-                    if RightCard < LeftCard:
-                        obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow3,"Up")
-                        obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow3,"Down")
-                    if RightCard > LeftCard:
-                        obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow3,"Down")
-                        obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow3,"Up")
-                    if RightCard == LeftCard:
-                        obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow3,"Same")
-                        obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow3,"Same")
-
-
-            # Add reload info to card
-            if "WillowWeapon" in str(SelectedItem.Class):
-
-                if str(SelectedItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
-                    obj.SetVariableString(flash_path + "2." + flash_element_main, flash_element_main_text_eridian)
-                else:
-                    obj.SetVariableString(flash_path + "2." + flash_element_main, flash_element_main_text)
-                    
-                obj.SetVariableString(flash_path + "2." + flash_element_number, str(round(SelectedItem.ReloadTimeBaseValue, 1)))
-
-                if str(ComparingItem.DefinitionData.ManufacturerDefinition) in ["ManufacturerDefinition'gd_manufacturers.Manufacturers.Eridian'","ManufacturerDefinition'Eridian_Weapons_Overhaul.Shared.Manufacturers.Eridian'"]:
-                    obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text_eridian)
-                else:
-                    obj.SetVariableString(flash_path + "1." + flash_element_main, flash_element_main_text)
-
-                obj.SetVariableString(flash_path + "1." + flash_element_number, str(round(ComparingItem.ReloadTimeBaseValue, 1)))
-
-
-                if round(ComparingItem.ReloadTimeBaseValue, 1) < round(SelectedItem.ReloadTimeBaseValue, 1):
-
-                    obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow4,"Down")
-
-                    obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Up")
-
-
-                elif round(ComparingItem.ReloadTimeBaseValue, 1) > round(SelectedItem.ReloadTimeBaseValue, 1):
-
-
-                    obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow4,"Up")
-
-                    obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Down")
-
-
-                elif round(ComparingItem.ReloadTimeBaseValue, 1) == round(SelectedItem.ReloadTimeBaseValue, 1):
-
-
-                    obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow4,"Same")
-
-                    obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Same")
-
-            else:
-                obj.SetVariableString(flash_path + "1." + flash_element_main, "")
-                obj.SetVariableString(flash_path + "1." + flash_element_number, "")
-                obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Blank")
-
-                obj.SetVariableString(flash_path + "2." + flash_element_main, "")
-                obj.SetVariableString(flash_path + "2." + flash_element_number, "")
-                obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow4,"Blank")
+            inv_compare_items(obj, SelectedItem, ComparingItem, flash_path, LeftCard)
 
         else:
-
+            inv_default_cards(obj, flash_path)
             obj.SingleArgInvokeS(flash_path + "2." + flash_element_techicon, "none")
-
-            obj.SetVariableString(flash_path + "1." + flash_element_main, "")
-            obj.SetVariableString(flash_path + "1." + flash_element_number, "")
-            obj.SingleArgInvokeS(flash_path + "1." + flash_element_arrow4,"Blank")
-
-            obj.SetVariableString(flash_path + "2." + flash_element_main, "")
-            obj.SetVariableString(flash_path + "2." + flash_element_number, "")
-            obj.SingleArgInvokeS(flash_path + "2." + flash_element_arrow4,"Blank")
 
 
 

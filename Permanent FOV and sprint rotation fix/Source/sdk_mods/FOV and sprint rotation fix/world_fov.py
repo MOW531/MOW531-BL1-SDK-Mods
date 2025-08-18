@@ -7,6 +7,7 @@ from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
 from mods_base import hook, get_pc, EInputEvent, keybind, command
 from mods_base.options import BaseOption, SliderOption
 
+
 def obj (definition:str, object:str):
     try:
         current_obj = unrealsdk.find_object(definition, object)

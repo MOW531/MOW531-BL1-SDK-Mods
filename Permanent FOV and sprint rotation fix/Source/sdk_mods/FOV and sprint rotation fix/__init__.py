@@ -1,27 +1,25 @@
 import unrealsdk
 from pathlib import Path
-from mods_base import SETTINGS_DIR, build_mod, EInputEvent, keybind, hook
+from mods_base import SETTINGS_DIR, build_mod, EInputEvent, keybind, hook, get_pc, ENGINE
 from unrealsdk import logging
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
 from unrealsdk.hooks import Type, Block
-from mods_base.options import BaseOption, SliderOption
+from mods_base.options import BaseOption, SliderOption, NestedOption
 
 from .world_fov import on_startgame, WorldFOV
 from .weapon_fov import on_startgame_weapon, RevolverFOV, RepeaterFOV, MachinePistolFOV, AssaultShotgunFOV, CombatShotgunFOV, CombatRifleFOV, GrenadeLauncherFOV, RocketLauncherFOV, SniperRifleFOV, SniperRifleSemiAutoFOV, SupportMachinegunFOV, PatrolSMGFOV, AlienFOV
 from .input import bReloadFix
 
+weapon_fovs = NestedOption("Weapon FOV", [RevolverFOV, RepeaterFOV, MachinePistolFOV, AssaultShotgunFOV, CombatShotgunFOV, CombatRifleFOV, GrenadeLauncherFOV, RocketLauncherFOV, SniperRifleFOV, SniperRifleSemiAutoFOV, SupportMachinegunFOV, PatrolSMGFOV, AlienFOV])
+
 bPatched = False
 
+
 def obj (definition:str, object:str):
-    try:
-        current_obj = unrealsdk.find_object(definition, object)
-        current_obj.ObjectFlags |= 0x4000
-        return current_obj
-    except:
-        unrealsdk.load_package(object)
-        current_obj = unrealsdk.find_object(definition, object)
-        current_obj.ObjectFlags |= 0x4000
-        return current_obj
+    object_class = unrealsdk.find_class(definition)
+    current_obj = ENGINE.DynamicLoadObject(object, object_class, False)
+    current_obj.ObjectFlags |= 0x4000
+    return current_obj
 
 
 
@@ -79,7 +77,7 @@ build_mod(
     # inject_version_from_pyproject=True, # This is True by default
     # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
     # deregister_same_settings=True,      # This is True by default
-    options=[WorldFOV, RevolverFOV, RepeaterFOV, MachinePistolFOV, AssaultShotgunFOV, CombatShotgunFOV, CombatRifleFOV, GrenadeLauncherFOV, RocketLauncherFOV, SniperRifleFOV, SniperRifleSemiAutoFOV, SupportMachinegunFOV, PatrolSMGFOV, AlienFOV, bReloadFix],
+    options=[WorldFOV, weapon_fovs, bReloadFix],
     keybinds=[],
     hooks=[on_startgame, on_startgame_weapon],
     commands=[],

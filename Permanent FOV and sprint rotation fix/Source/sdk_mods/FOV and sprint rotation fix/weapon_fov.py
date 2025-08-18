@@ -4,15 +4,16 @@ import unrealsdk
 from unrealsdk import logging
 from unrealsdk.hooks import Type, Block
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc, EInputEvent, keybind, command
+from mods_base import hook, get_pc, EInputEvent, keybind, command, ENGINE
 from mods_base.options import BaseOption, SliderOption
 
 
-
 def obj (definition:str, object:str):
-    unrealsdk.load_package(object)
-    unrealsdk.find_object(definition, object).ObjectFlags |= 0x4000
-    return unrealsdk.find_object(definition, object)
+    object_class = unrealsdk.find_class(definition)
+    current_obj = ENGINE.DynamicLoadObject(object, object_class, False)
+    current_obj.ObjectFlags |= 0x4000
+    return current_obj
+
 
 
 
