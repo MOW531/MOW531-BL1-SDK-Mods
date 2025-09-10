@@ -39,6 +39,8 @@ BL2ArmoredList = ["AIPawnBalanceDefinition'gd_Balance_Enemies_Humans.CrimsonLanc
                   "AIPawnBalanceDefinition'gd_Balance_Enemies_Humans.Turret.Pawn_Balance_Turret_Gatling'",
                   "AIPawnBalanceDefinition'gd_Balance_Enemies_Humans.Turret.Pawn_Balance_Turret_Grenade'",
                   "AIPawnBalanceDefinition'gd_Balance_Enemies_Humans.Turret.Pawn_Balance_Turret_Rocket'",
+
+                  "AIPawnBalanceDefinition'dlc1_gd_balance_skillactors.Turret.Pawn_Balance_Scorpio_ZombieLance'",
                   
                   "AIPawnBalanceDefinition'dlc3_gd_balance_enemies.CrabWorms.Pawn_Balance_dlc3_GreenWorm'",
                   
@@ -132,21 +134,28 @@ BL2ArmoredList = ["AIPawnBalanceDefinition'gd_Balance_Enemies_Humans.CrimsonLanc
 
 
 
+def Change_HUD_TickRate(option:BaseOption, value:bool):
+    if get_pc() is not None and get_pc().myhud is not None:
+        if value is True:
+            get_pc().myhud.hudmovie.TickRateSeconds = 0.001
+        else:
+            get_pc().myhud.hudmovie.TickRateSeconds = 0.05
+
+bSmoothHUD = BoolOption("Smooth HUD", False, description="Updates the HUD more often, making the compass animation smoother.", on_change=Change_HUD_TickRate)
 
 
 def ArmorHealth (hud, enemy):
     Armored = 2
+    if str(enemy.Class.name) in "WillowInteractiveObject":
+        return
 
-    if str(enemy.Class.name) in "WillowVehicle_WheeledVehicle":
-
+    elif str(enemy.Class.name) in "WillowVehicle_WheeledVehicle":
         hud.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
     
     elif bBL2ArmoredList.value is True and str(enemy.BalanceDefinitionState.BalanceDefinition) in BL2ArmoredList:
-        
         hud.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
 
     elif bBL2ArmoredList.value is False and enemy.BodyClass.DefaultHitRegion.DefaultDamageSurfaceType == Armored:
-
         hud.SingleArgInvokeS("p1.ring.health.bar.gotoAndStop","armored")
 
 
