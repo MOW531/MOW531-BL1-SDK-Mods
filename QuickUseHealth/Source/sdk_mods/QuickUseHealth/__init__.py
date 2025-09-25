@@ -18,7 +18,6 @@ def gethealthregenamount(healthpack):
 
 @keybind(identifier="Use Medkit", key="T", event_filter=EInputEvent.IE_Pressed)
 def usehealthpack():
-    print("usehealthpack ran!")
     if get_pc() is None:
          return
     
@@ -32,6 +31,9 @@ def usehealthpack():
     
     invmanager = get_pc().GetPawnInventoryManager()
     for items in invmanager.Backpack:
+        if str(items.Class) not in "Class'WillowGame.WillowUsableItem'":
+            continue
+        
         if str(items.definitiondata.itemdefinition) in healthpacklist:
             healthpacksininventory.append([items, gethealthregenamount(items)])
 
