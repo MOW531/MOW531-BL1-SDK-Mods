@@ -10,5 +10,5 @@ mod_type = "Standard" # or "Library"
 supported_games = ["BL1"]
 coop_support = "Unknown"
 auto_enable = "False"
-download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Unofficial%20Patch%20SDK/Unofficial%20Patch%20SDK.zip"
+download = "https://github.com/MOW531/MOW531-BL1-SDK-Mods/raw/refs/heads/main/Experimental%20mods/Randomizer/Randomizer.zip"
 license = {name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
