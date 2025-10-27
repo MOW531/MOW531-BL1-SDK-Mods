@@ -100,6 +100,17 @@ def patch():
     SetSkeletalMesh("gd_weap_alien_rifle.Stock.stock6","weap_alien_rifle.Stock.stock6")
 
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.Cannon.barrel5_MegaCannon","weap_alien_rifle.Barrel.barrel5")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_Fireball","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_Firebomb","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_Flaregun","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_GlobGun","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_RollingSpattergun","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_Splatgun","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel2_StampedingSpattergun","weap_alien_rifle.Barrel.barrel2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.EridanRifle.ElementalRifle.barrel3_Rifle","weap_alien_rifle.Barrel.barrel3")
+
+
 
 
 
@@ -179,6 +190,7 @@ def patch():
         # UniqueParts
     SetSkeletalMesh("gd_weap_combat_rifle.UniqueParts.Sentinel_sight4","weap_combat_rifle.Sight.sight4")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.CombatRifle.TedioreAvenger_sight5","weap_combat_rifle.Sight.sight5")
 
 
 
@@ -244,6 +256,7 @@ def patch():
     SetSkeletalMesh("gd_weap_combat_shotgun.UniqueParts.SledgesShotgun_barrel2","weap_combat_shotgun.Barrel.barrel2")
     SetSkeletalMesh("gd_weap_combat_shotgun.UniqueParts.TKsWave_barrel2","weap_combat_shotgun.Barrel.barrel2")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.CombatShotgun.barrel3_DahlJackal","weap_combat_shotgun.Barrel.barrel3")
 
 
 
@@ -309,6 +322,7 @@ def patch():
         # UniqueParts
     SetSkeletalMesh("gd_weap_machine_pistol.UniqueParts.TheClipper_acc5_Incendiary","weap_repeater_pistol.acc.acc5")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.MachinePistol.barrel4_VladofStalker","weap_repeater_pistol.Barrel.barrel4")
 
 
 
@@ -374,6 +388,8 @@ def patch():
     SetSkeletalMesh("gd_weap_patrol_smg.UniqueParts.BoneShredder_mag5","weap_patrol_smg.mag.mag5")
     SetSkeletalMesh("gd_weap_patrol_smg.UniqueParts.TheSpy_sight4","weap_patrol_smg.Sight.sight4")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SMG.acc2_Typhoon","weap_patrol_smg.acc.acc2")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SMG.acc3_Maliwan_Tsunami","weap_patrol_smg.acc.acc3")
 
 
 
@@ -451,6 +467,11 @@ def patch():
     SetSkeletalMesh("gd_weap_repeater_pistol.UniqueParts.LadyFinger_barrel1","weap_repeater_pistol.Barrel.barrel1")
     SetSkeletalMesh("gd_weap_repeater_pistol.UniqueParts.TheDove_barrel4","weap_repeater_pistol.Barrel.barrel4")
 
+    SetSkeletalMesh("gd_weap_machine_pistol.UniqueParts.TheClipper_acc5_Incendiary","weap_repeater_pistol.acc.acc1")
+
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.RepeaterPistol.acc5_Shock_HyperionNemesis","weap_repeater_pistol.acc.acc5")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel0_ChiquitoAmigo","weap_repeater_pistol.Barrel.barrel0")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.RepeaterPistol.barrel5_AthenasWisdom","weap_repeater_pistol.Barrel.barrel5")
 
 
 
@@ -511,6 +532,7 @@ def patch():
     SetSkeletalMesh("gd_weap_revolver_pistol.UniqueParts.MadJack_barrel3","weap_revolver_pistol.Barrel.barrel3")
     SetSkeletalMesh("gd_weap_revolver_pistol.UniqueParts.Patton_grip5","weap_revolver_pistol.Grip.grip5")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.RevolverPistol.acc5_Heal_AtlasAries","weap_revolver_pistol.acc.acc5")
 
 
 
@@ -578,6 +600,7 @@ def patch():
     SetSkeletalMesh("gd_weap_rocket_launcher.UniqueParts.Leviathan_barrel1_3shot","weap_rocket_launcher.Barrel.barrel1")
     SetSkeletalMesh("gd_weap_rocket_launcher.UniqueParts.TheRoaster_acc5_Incendiary","weap_rocket_launcher.acc.acc5")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.RocketLauncher.barrel2_TorgueUndertaker","weap_rocket_launcher.Barrel.barrel2")
 
 
 
@@ -641,6 +664,7 @@ def patch():
         # UniqueParts
     SetSkeletalMesh("gd_weap_sniper_rifle.UniqueParts.Nailer_barrel3","weap_sniper_rifle.Barrel.barrel3")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SniperRifle.sight4_Jakobs_Bessie","weap_sniper_rifle.Sight.sight4")
 
 
 
@@ -666,6 +690,7 @@ def patch():
     SetSkeletalMesh("gd_weap_sniper_rifle_semiauto.UniqueParts.ReaversEdge_sight4","weap_sniper_rifle.Sight.sight4")
     SetSkeletalMesh("gd_weap_sniper_rifle_semiauto.UniqueParts.Ryder_mag5","weap_sniper_rifle.mag.mag5")
 
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SemiAutoSniper.acc2_KyrosPower","weap_sniper_rifle.acc.acc2")
 
 
     # Support Machine Gun 
@@ -688,6 +713,10 @@ def patch():
     SetSkeletalMesh("gd_weap_support_machinegun.Sight.sight3","weap_combat_rifle.Sight.sight3")
         # UniqueParts
     SetSkeletalMesh("gd_weap_support_machinegun.UniqueParts.TheMeatGringer_mag5","weap_combat_rifle.mag.mag5")
+
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SupportMachineGun.acc4_SandS_Serpens","weap_combat_rifle.acc.acc4")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SupportMachineGun.acc4_TheChopper","weap_combat_rifle.acc.acc4")
+    SetSkeletalMesh("dlc3_gd_weap_UniqueParts.SupportMachineGun.barrel5_AjaxSpear","weap_combat_rifle.Barrel.barrel5")
 
 
     # DLC Weapons
@@ -760,6 +789,8 @@ def InitMeshes(
     __func: BoundFunction,
 ) -> None:
     count = 0
+    if obj.firstpersonmesh is None or obj.firstpersonmesh.skeletalmesh is None:
+        return
     for mat in obj.firstpersonmesh.skeletalmesh.materials:
         count = count + 1
 
