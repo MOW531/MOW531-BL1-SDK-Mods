@@ -1,0 +1,5 @@
+Allows the use of BLCMM text mods.
+
+Automatically runs patch.txt in \Borderlands\Binaries\.
+
+You can dump an object as a set command by running "dump_prop <object> <property>" e.g., "dump_prop gd_weap_assault_shotgun.acc.Acc_PartList WeightedParts", which will print the command to "dump property output.txt" in \Borderlands\Binaries\.
