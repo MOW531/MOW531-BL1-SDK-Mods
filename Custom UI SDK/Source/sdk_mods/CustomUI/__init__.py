@@ -3,7 +3,7 @@ import unrealsdk
 from pathlib import Path
 from unrealsdk.hooks import Type
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc 
+from mods_base import hook, get_pc, ENGINE
 from mods_base.options import BaseOption, BoolOption
 from mods_base import SETTINGS_DIR
 from mods_base import build_mod
@@ -11,16 +11,11 @@ from unrealsdk import logging
 import os
 
 bPatched = False
-current_obj = None
-
-struct = unrealsdk.make_struct
 
 
 def obj (definition:str, object:str):
-    global current_obj
-    unrealsdk.load_package(object)
-    current_obj = unrealsdk.find_object(definition, object)
-    return unrealsdk.find_object(definition, object)
+    object_class = unrealsdk.find_class(definition)
+    return ENGINE.DynamicLoadObject(object, object_class, False)
 
 # Gets applied when a game starts
 def patch():
@@ -41,6 +36,21 @@ def patch():
     obj("EchoQuestAcceptGFxMovie","menus_mission.FlashMovies.mission_interface_instance_echo").MovieInfo = obj("GFxMovieInfo","menus_mission_MOD.FlashMovies.mission_interface")
     obj("WillowHUDGFxMovie","GfxHUD.FlashInstances.hud_instance").MovieInfo = obj("GFxMovieInfo","GfxHUD_MOD.FlashMovie.HUD")
 
+    #EWO
+    try:
+        obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").ObjectFlags |= 0x4000
+        obj("InteractiveObjectDefinition","gd_Forgotten_Eridian_Ruins_Assets.VendingMachine.InteractiveObject.InteractiveObj_VendingMachine_EridianWeapons").DefaultBehaviorSet.OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
+        print("EWO Detected!")    
+    except:
+        print("EWO not Detected!")
+        
+    #Jakobs Vendor Fix
+    try:
+        obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ObjectFlags |= 0x4000
+        obj("InteractiveObjectDefinition","ugy_fjv_itemgrades.VendingMachine.dlc1_InteractiveObj_VendingMachine_Jakobs").ExtraBehaviorSets[1].OnUsedBy[0].MovieDefinition = obj("VendingMachineGFxDefinition","menus_vending_MOD.Definitions.VendingMachineDefinition2")
+        print("Jakobs Vendor Fix Detected!")
+    except:
+        print("Jakobs Vendor Fix Not Detected!")
 
 @hook(
     hook_func="Engine.WorldInfo:IsMenuLevel",
@@ -62,20 +72,12 @@ def on_startgame(
 
 
 
-# Gets populated from `build_mod` below
 __version__: str
 __version_info__: tuple[int, ...]
 
 build_mod(
-    # These are defaulted
-    # inject_version_from_pyproject=True, # This is True by default
-    # version_info_parser=lambda v: tuple(int(x) for x in v.split(".")),
-    # deregister_same_settings=True,      # This is True by default
     keybinds=[],
     hooks=[on_startgame],
     commands=[],
-    # Defaults to f"{SETTINGS_DIR}/dir_name.json" i.e., ./Settings/bl1_commander.json
-    settings_file=Path(f"{SETTINGS_DIR}/CustomUI.json"),
 )
 
-logging.info(f"Custom UI SDK Loaded: {__version__}, {__version_info__}")
