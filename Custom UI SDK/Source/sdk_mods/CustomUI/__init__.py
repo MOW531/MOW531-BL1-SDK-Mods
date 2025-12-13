@@ -10,6 +10,14 @@ from mods_base import build_mod
 from unrealsdk import logging
 import os
 
+from .inventory import InvStartCompare, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvPrepCompare
+from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare
+from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
+from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars
+from .reward import DisplayRewardsPage
+
+
+
 bPatched = False
 
 
@@ -77,7 +85,7 @@ __version_info__: tuple[int, ...]
 
 build_mod(
     keybinds=[],
-    hooks=[on_startgame],
+    hooks=[on_startgame, InvStartCompare, InvChangeSelectedItemKey, InvChangeSelectedItemMouse, InvPrepCompare, VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare, bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare, PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCurrentWeapon, HUDClearVars, DisplayRewardsPage],
     commands=[],
 )
 
