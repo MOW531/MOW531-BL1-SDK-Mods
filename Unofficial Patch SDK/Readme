@@ -1,17 +1,21 @@
-Requires Custom UI SDK (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Custom%20UI%20SDK) or Extended Item Cards (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Experimental%20mods/Extended%20Item%20Cards)
+Custom UI SDK (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Custom%20UI%20SDK) or Extended Item Cards (https://github.com/MOW531/MOW531-BL1-SDK-Mods/tree/main/Experimental%20mods/Extended%20Item%20Cards) are recommended for additional fixes.
 
 
-Difference between the UPK and SDK versions:
+What the this fixes/changes:
 
-The SDK version has more fixes (see the changes after 1.0.0) and has better compatibility with other mods, but it currently lacks the animation fixes that the UPK version has.
+Changes in 1.3.2:
 
-
-
-What the SDK version fixes:
+	Updated artifact descriptions to fix typos and to be more consistent with each other
+	Powering The Fast Travel Network is now set as plot critical
+    Fixed a typo in Circle of Duty: Corporal's mission description
 
 Changes in 1.3.1:
-	Should load faster (Credit to Ry- for finding DynamicLoadObject)
+
 	Fixed Sledge's note opening two menus
+
+    Fixes to the UP:
+
+        Should load faster (Credit to Ry- for finding DynamicLoadObject)
 
 Changes in 1.3.0:
 	
@@ -26,8 +30,8 @@ Changes in 1.3.0:
 
 Changes in 1.2.0:
 
-    You shouldn't be able to go beyond the integer limit for money (Credit to RedxYeti).
-    Fixed the Equalizer body weight.
+    You shouldn't be able to go beyond the integer limit for money (Credit to RedxYeti)
+    Fixed the Equalizer body weight
 
 Changes in 1.1.1:
 
@@ -45,8 +49,10 @@ Changes in 1.1.0:
     Quick Charge now regens at 1.5% per point (The listed amount is off due to rounding)
     Badass Drifters spawn rates are now balanced like other Badass enemies
 
-    Unforgiven no longer shows the crit bonus twice
-    Revenge no longer increases grenade damage
+    Fixes to the UP:
+
+        Unforgiven no longer shows the crit bonus twice
+        Revenge no longer increases grenade damage
 
 Changes in 1.0.0:
 
@@ -92,8 +98,6 @@ Changes in 1.0.0:
     Terrible prefix on combat shotguns no longer prevents other prefixes from rolling
     Jagged prefix on combat shotguns is now called Jagged instead of Fanged
     Wee Wee's Super Booster now displays it's health boost and health regen effects on the card
-    Fixed misaligned inventory UI
-    Fixed sniper proficiency not selecting when you hover over it
     Fixed infantry Lance not dropping their assault shotgun
     The melee acc for Assault Shotguns now increases melee damage
     Explosive barrels and fuel tanks now spawn after gamestage 52 (Credit to RedxYeti who made the fix and allowed me to add it)

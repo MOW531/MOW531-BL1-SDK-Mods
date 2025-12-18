@@ -3,7 +3,7 @@ import unrealsdk
 from pathlib import Path
 from unrealsdk.hooks import Type
 from unrealsdk.unreal import UObject, WrappedStruct, BoundFunction
-from mods_base import hook, get_pc 
+from mods_base import hook, get_pc, ENGINE
 from mods_base.options import BaseOption, BoolOption
 from mods_base import SETTINGS_DIR
 from mods_base import build_mod
@@ -17,10 +17,10 @@ blacklist = ["InventoryBalanceDefinition'gd_itemgrades.Weapons.ItemGrade_Weapon_
 
 
 def obj (definition:str, object:str):
-    global current_obj
-    unrealsdk.load_package(object)
-    current_obj = unrealsdk.find_object(definition, object)
-    return unrealsdk.find_object(definition, object)
+    object_class = unrealsdk.find_class(definition)
+    current_obj = ENGINE.DynamicLoadObject(object, object_class, False)
+    current_obj.ObjectFlags |= 0x4000
+    return current_obj
 
 def ReplaceStock(StockBalance):
 

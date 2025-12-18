@@ -21,6 +21,17 @@ def obj (definition:str, object:str):
     current_obj.ObjectFlags |= 0x4000
     return current_obj
 
+def make_weightdata(part, BaseValueConstant, BaseValueAttribute, InitializationDefinition, BaseValueScaleConstant):
+    WeightData = struct("PartGradeWeightData", Part=part)
+    WeightData.MinGameStage.BaseValueConstant = 1
+    WeightData.MinGameStage.BaseValueScaleConstant = 1
+    WeightData.MaxGameStage.BaseValueConstant = 100
+    WeightData.MaxGameStage.BaseValueScaleConstant = 1
+    WeightData.DefaultWeight.BaseValueConstant = BaseValueConstant
+    WeightData.DefaultWeight.BaseValueAttribute = BaseValueAttribute
+    WeightData.DefaultWeight.InitializationDefinition = InitializationDefinition
+    WeightData.DefaultWeight.BaseValueScaleConstant = BaseValueScaleConstant
+    return WeightData
 
 
 def patch():
@@ -77,6 +88,13 @@ def patch():
     KromsSidearmPresentation.Attribute = obj("AttributeDefinition","d_attributes.Weapon.WeaponAutomaticBurstCount")
     KromsSidearmPresentation.BasePriority = 3
 
+
+    FangedWeightData = struct("PartGradeWeightData", Part=obj("WeaponPartDefinition","gd_weap_repeater_pistol.acc.acc1_Fanged"))
+    FangedWeightData.MinGameStage.BaseValueConstant = 1
+    FangedWeightData.MinGameStage.BaseValueScaleConstant = 1
+    FangedWeightData.MaxGameStage.BaseValueConstant = 100
+    FangedWeightData.MaxGameStage.BaseValueScaleConstant = 1
+
     obj("WeaponPartDefinition","gd_weap_support_machinegun.acc.acc4_SandS_Draco_Incendiary").TitleList.append(obj("WeaponNamePartDefinition","gd_weap_support_machinegun.Title.TitleM_SandS_Draco"))
     obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.BaseValueScaleConstant = 1
     obj("WeaponPartDefinition","gd_weap_machine_pistol.Barrel.barrel5_Vladof_Vengence").ExternalAttributeEffects.append(current_obj.WeaponAttributeEffects[4])
@@ -105,6 +123,12 @@ def patch():
     obj("WeaponPartListDefinition","gd_weap_assault_shotgun.acc.Acc_PartList").WeightedParts[7].DefaultWeight.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.Weighting.Weight_Awesome_3_Uncommoner")
     obj("WeaponPartDefinition","gd_weap_repeater_pistol.UniqueParts.KromsSidearm_barrel5").CustomPresentations.append(KromsSidearmPresentation)
     obj("AttributePresentationDefinition","gd_weap_repeater_pistol.Title.TitleU_Krom_KromsSidearm:AttributePresentationDefinition_6").NoConstraintText = "A gift from Papa Krom"
+    obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_EridanCannon_MegaCannon").PartReplacementMode = 1
+    obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_EridanCannon_MegaCannon").BarrelPartData.bEnabled = True
+    obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_EridanCannon_MegaCannon").BarrelPartData.WeightedParts.append(make_weightdata(obj("WeaponPartDefinition","gd_weap_alien_rifle.Barrel.barrel5_MegaCannon"), 0, None, None, 1))
+    #obj("ItemPoolDefinition","gd_itempools.Level50Pools.Slither_TheDove").BalancedItems[0].InvBalanceDefinition = obj("InventoryBalanceDefinition","UP_Assets.Retail_Weapons.CustomWeap_repeater_TheDove")
+    #obj("ItemPoolDefinition","gd_itempools.WeaponPools.Weapons_Retail").BalancedItems[2].InvBalanceDefinition = obj("InventoryBalanceDefinition","UP_Assets.Retail_Weapons.CustomWeap_repeater_TheDove")
+
 
 
     # This is to fix the crit boost that some weapons get with the main critfix
@@ -195,6 +219,7 @@ def patch():
         # Brick
     obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").AttributeSlotEffects[1].BaseModifierValue.BaseValueConstant = 0.2
     obj("ItemPartDefinition","dlc3_gd_CommandDecks.Body_Loyalty.Loyalty_Brick_Pangolin").AttributeSlotEffects[1].PerGradeUpgrade.BaseValueConstant = 0.04
+    obj("ItemPartDefinition","gd_CommandDecks.Body_Brick.Brick_Warmonger").AttributeSlotEffects[0].ConstraintAttribute = obj("AttributeDefinition","UP_Assets.Presentations.ATT_TeamConstraint_Weapon")
 
         # Lilith
     obj("ItemPartDefinition","gd_CommandDecks.Body_Lilith.Lilith_Catalyst").AttributeSlotEffects[1].AttributeToModify = obj("ResourcePoolAttributeDefinition","d_attributes.ShieldResourcePool.ShieldOnIdleRegenerationRate")
@@ -226,7 +251,10 @@ def patch():
     obj("ProjectileDefinition","gd_weap_combat_shotgun.Rockets.rocket_mini").DefaultBehaviorSet.OnExplode[0].DamageSource = wclass("WillowDmgSource_Rocket")
 
 
-
+    # Missions
+    #obj("MissionDefinition","Z1_Missions.Missions.M_HeathensGodlessMonsters").ItemRewards = (obj("InventoryBalanceDefinition","UP_Assets.Retail_Weapons.CustomWeap_repeater_TheDove"), None, None, None, None)
+    obj("MissionDefinition","I1_Missions.Missions.M_Powerlines").bPlotCritical = True
+    obj("MissionDefinition","dlc3_CircleMissions.MainMissions.M_dlc3_Circle_Wave3").MissionDescription = "You're moving up the ranks. Time to really put you to the test. When you are ready, enter the center of the red Crimson Lance logo. I hope you've been training."
 
     # Misc
 
@@ -263,6 +291,7 @@ def patch():
     obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Tediore"))
     obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Torgue"))
     obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_Weapon_Is_Vladof"))
+    obj("AttributePresentationListDefinition","gd_AttributePresentation._AttributeList.DefaultPresentationList").Attributes.append(obj("AttributePresentationDefinition","UP_Assets.Presentations.AttrPresent_ATT_TeamConstraint_Weapon"))
 
 
     # Descriptions
@@ -366,6 +395,7 @@ def patch():
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.SwiftStrike").SkillEffectPresentations[0].Description = "Bloodwing Damage."
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.SwiftStrike").SkillEffectPresentations[1].Description = "Bloodwing Speed."
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.Swipe").SkillDescription = "Bloodwing causes enemies to drop additional money, ammo, and healing items when he attacks."
+    obj("SkillDefinition","gd_skills2_Mordecai.Rogue.Swipe").SkillEffectPresentations[0].Description = "Maximum number of additional items dropped: $NUMBER$."
     obj("SkillDefinition","gd_skills2_Mordecai.Sniper.Killer").SkillEffectPresentations[0].Description = "Damage."
     obj("SkillDefinition","gd_skills2_Mordecai.Sniper.Killer").SkillEffectPresentations[0].bUseCustomNumberPlacement = False
     obj("SkillDefinition","gd_skills2_Mordecai.Sniper.Killer").SkillEffectPresentations[1].Description = "Reload Speed."
@@ -373,6 +403,7 @@ def patch():
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.FastHands").SkillEffectPresentations[0].Description = "Reload Speed."
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.FastHands").SkillEffectPresentations[0].bUseCustomNumberPlacement = False
     obj("SkillDefinition","gd_skills2_Mordecai.Rogue.OutForBlood").SkillDescription = "When Bloodwing strikes an enemy, you gain health based on the amount of damage done."
+    obj("SkillDefinition","gd_skills2_Mordecai.Rogue.OutForBlood").SkillEffectPresentations[0].Description = "Percentage of damage converted to health: $NUMBER$."
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.LethalStrike").SkillDescription = "Increases Melee Damage.  Also, every melee attack has a 35% chance to be a Lethal Strike and deal extremely high damage."
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.LethalStrike").SkillEffectPresentations[0].Description = "Melee Damage."
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.LethalStrike").SkillEffectPresentations[0].bUseCustomNumberPlacement = False
@@ -397,6 +428,50 @@ def patch():
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.Relentless").SkillEffectPresentations[0].bUseCustomNumberPlacement = False
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.Relentless").SkillEffectPresentations[1].Description = "Killer Shot damage."
     obj("SkillDefinition","gd_skills2_Mordecai.Gunslinger.Relentless").SkillEffectPresentations[1].bUseCustomNumberPlacement = False
+
+        # Artifacts
+
+            # Lilith
+    obj("SkillDefinition","gd_Skills_Lilith.ActionElemental.IncendiaryReturn").SkillDescription = "Phasewalk deals Incendiary Damage."
+    obj("SkillDefinition","gd_Skills2_Lilith.ActionElemental.IncendiaryReturn").SkillDescription = "Phasewalk deals Incendiary Damage."
+    obj("SkillDefinition","gd_Skills_Lilith.ActionElemental.ShockingReturn").SkillDescription = "Phasewalk deals Shock Damage."
+    obj("SkillDefinition","gd_Skills2_Lilith.ActionElemental.ShockingReturn").SkillDescription = "Phasewalk deals Shock Damage."  
+    obj("SkillDefinition","gd_Skills_Lilith.ActionElemental.CorrosiveReturn").SkillDescription = "Phasewalk deals Corrosive Damage."
+    obj("SkillDefinition","gd_Skills2_Lilith.ActionElemental.CorrosiveReturn").SkillDescription = "Phasewalk deals Corrosive Damage."  
+    obj("SkillDefinition","gd_Skills_Lilith.ActionElemental.ExplosiveReturn").SkillDescription = "Phasewalk deals Explosive Damage."
+    obj("SkillDefinition","gd_Skills2_Lilith.ActionElemental.ExplosiveReturn").SkillDescription = "Phasewalk deals Explosive Damage."  
+
+            # Brick
+    obj("SkillDefinition","gd_Skills_Brick.ActionElemental.IncendiaryPunch").SkillDescription = "Brick's punch deals Incendiary Damage."
+    obj("SkillDefinition","gd_Skills2_Brick.ActionElemental.IncendiaryPunch").SkillDescription = "Brick's punch deals Incendiary Damage."
+    obj("SkillDefinition","gd_Skills_Brick.ActionElemental.ShockingPunch").SkillDescription = "Brick's punch deals Shock Damage."
+    obj("SkillDefinition","gd_Skills2_Brick.ActionElemental.ShockingPunch").SkillDescription = "Brick's punch deals Shock Damage."
+    obj("SkillDefinition","gd_Skills_Brick.ActionElemental.CorrosivePunch").SkillDescription = "Brick's punch deals Corrosive Damage."
+    obj("SkillDefinition","gd_Skills2_Brick.ActionElemental.CorrosivePunch").SkillDescription = "Brick's punch deals Corrosive Damage."
+    obj("SkillDefinition","gd_Skills_Brick.ActionElemental.ExplosivePunch").SkillDescription = "Brick's punch deals Explosive Damage."
+    obj("SkillDefinition","gd_Skills2_Brick.ActionElemental.ExplosivePunch").SkillDescription = "Brick's punch deals Explosive Damage."
+
+            # Mordecai
+    obj("SkillDefinition","gd_skills_Mordecai.ActionElemental.FireWing").SkillDescription = "The Bloodwing deals Incendiary damage."
+    obj("SkillDefinition","gd_skills2_Mordecai.ActionElemental.FireWing").SkillDescription = "The Bloodwing deals Incendiary damage."
+    obj("SkillDefinition","gd_skills_Mordecai.ActionElemental.ShockWing").SkillDescription = "The Bloodwing deals Shock damage."
+    obj("SkillDefinition","gd_skills2_Mordecai.ActionElemental.ShockWing").SkillDescription = "The Bloodwing deals Shock damage."
+    obj("SkillDefinition","gd_skills_Mordecai.ActionElemental.AcidWing").SkillDescription = "The Bloodwing deals Corrosive Damage."
+    obj("SkillDefinition","gd_skills2_Mordecai.ActionElemental.AcidWing").SkillDescription = "The Bloodwing deals Corrosive Damage."
+    obj("SkillDefinition","gd_skills_Mordecai.ActionElemental.ExplosiveWing").SkillDescription = "The Bloodwing deals Explosive damage."
+    obj("SkillDefinition","gd_skills2_Mordecai.ActionElemental.ExplosiveWing").SkillDescription = "The Bloodwing deals Explosive damage."
+
+            # Roland
+    obj("SkillDefinition","gd_skills_Roland.ActionElemental.Scorpio_FireBolt").SkillDescription = "The Scorpio deals Incendiary Damage."
+    obj("SkillDefinition","gd_skills2_Roland.ActionElemental.Scorpio_FireBolt").SkillDescription = "The Scorpio deals Incendiary Damage."
+    obj("SkillDefinition","gd_skills_Roland.ActionElemental.Scorpio_ShockBolt").SkillDescription = "The Scorpio deals Shock damage."
+    obj("SkillDefinition","gd_skills2_Roland.ActionElemental.Scorpio_ShockBolt").SkillDescription = "The Scorpio deals Shock damage."
+    obj("SkillDefinition","gd_skills_Roland.ActionElemental.Scorpio_CorrosiveBolt").SkillDescription = "The Scorpio deals Corrosive damage."
+    obj("SkillDefinition","gd_skills2_Roland.ActionElemental.Scorpio_CorrosiveBolt").SkillDescription = "The Scorpio deals Corrosive damage."
+    obj("SkillDefinition","gd_skills_Roland.ActionElemental.Scorpio_ExplosiveBolt").SkillDescription = "The Scorpio deals Explosive Damage."
+    obj("SkillDefinition","gd_skills2_Roland.ActionElemental.Scorpio_ExplosiveBolt").SkillDescription = "The Scorpio deals Explosive Damage."
+
+
 
 
     # Itempools
@@ -429,7 +504,6 @@ def patch():
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].Probability.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.WeightingPlayerCount.Enemy_MajorUpgrade_PerPlayer")
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].Probability.BaseValueScaleConstant = 0.08
     obj("PopulationDefinition","dlc3_gd_population_enemies.Drifters.DrifterSquad_Drifter").ActorArchetypeList[(len(current_obj.ActorArchetypeList)) - 1].MaxActiveAtOneTime.InitializationDefinition = obj("AttributeInitializationDefinition","gd_Balance.WeightingPlayerCount.Enemy_MajorUpgrade_PerPlayer")
-
 
     obj("InteractiveNPCDefinition","gd_MissionNPCs.Taylor_Kobb").Mesh.Materials.append(obj("MaterialInstanceConstant","gd_Kobb_Brothers.Material.Mat_Janis_Body"))
     obj("InteractiveNPCDefinition","gd_MissionNPCs.Taylor_Kobb").Mesh.Materials.append(obj("MaterialInstanceConstant","gd_Kobb_Brothers.Material.Mat_Janis_Head"))
@@ -471,6 +545,8 @@ def AddCurrencyOnHand(
     if obj.GetCurrencyOnHand() + __args.AddValue > 2147483647:
         __args.AddValue = 2147483647 - obj.GetCurrencyOnHand()
 
+
+# This was made by RedxYeti
 @hook("Engine.PlayerController:StartFire", Type.POST)
 def ReloadFix(obj:UObject, *_) -> None:
     if not obj or not obj.Pawn or not obj.Pawn.Weapon:

@@ -1,0 +1,7 @@
+Restores Baron Flynt's echo calls.
+Clap-Trap no longer waits for the player at the start of the game.
+Fixes missing collision in the Arid Badlands, Dahl Headlands, and Road's End.
+Missions given at the end of echos are automatically accepted.
+Removes the invisible wall stopping you from continuing while Clap-Trap talks at the start of Zombie Island.
+
+Credit to RedxYeti for letting me use Dedicated Drops SDK as a base.
