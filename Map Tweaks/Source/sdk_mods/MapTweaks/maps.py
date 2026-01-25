@@ -173,7 +173,7 @@ class KromsCanyon(Map):
     name = "Scrap_Canyon_P"
 
     def on_map_loaded(self):
-        add_echocall("SeqAct_ApplyBehavior_1", "Z1_Echos.Flynt.Z1E_YouMustBePunished", "Scrap_Canyon_P.TheWorld:PersistentLevel.Main_Sequence.Echos")
+        add_echocall("SeqAct_ApplyBehavior_1", "Z1_Echos.Flynt.Z1E_YouMustBePunished", "Scrap_Canyon_P.TheWorld:PersistentLevel.Main_Sequence.Echos", 0, 7)
 
 class RustCommonsWest(Map):
     name = "scrap_p"
@@ -354,6 +354,16 @@ class JakobsCove(Map):
         remove_collision = find_object("Object","dlc1_island_p.TheWorld:PersistentLevel.Main_Sequence.Claptrap_Setup_Based_On_Missions.SeqAct_ChangeCollision_0")
         defendtown_status_changed.Outputlinks[0].Links.append(make_new_link(remove_collision))
 
+
+class tbonejunction(Map):
+    name = "dlc3_HUB_p"
+
+    def on_map_loaded(self):
+        add_complete_and_give_mission("SeqAct_ApplyBehavior_0", "dlc3_HUB_Dynamic.TheWorld:PersistentLevel.Main_Sequence.MeetScooter", "dlc3_MainMissions.MainMissions.M_dlc3_MeetScooter")
+        ENGINE.DynamicLoadObject("dlc3_echos.Athena.dlc3E_Athena_MeetScooter", find_class("EchoCallDefinition"), False).Mission = None
+
+
+
 class RoadsEnd(Map):
     name = "dlc3_gondola_p"
 
@@ -442,3 +452,11 @@ class DeepFathoms(Map):
         old_turn_in.InteractiveObjectDefinition = None
 
         add_complete_and_give_mission("SeqAct_ActivateRemoteEvent_0", "dlc3_SOUTHLAKE_dynamic.TheWorld:PersistentLevel.Main_Sequence.ACtivateBridge", "dlc3_MainMissions.MainMissions.M_dlc3_DestroyDepot", "dlc3_MainMissions.MainMissions.M_dlc3_ActivateBridge")
+
+
+class tartarusStation(Map):
+    name = "DLC4_Tartarus_Station_p"
+
+    def on_map_loaded(self):
+        add_complete_and_give_mission("SeqAct_ApplyBehavior_18", "DLC4_Tartarus_Station_p.TheWorld:PersistentLevel.Main_Sequence", "DLC4_Tartarus_Stat_Missions.MainMissions.M_dlc4_New_Contact")
+        find_object("EchoCallDefinition", "dlc4_Echoes.Blake.01_Introduction_Summoning").Mission = None

@@ -128,6 +128,7 @@ def patch():
     obj("WeaponPartListCollectionDefinition","gd_customweapons.PartCollections.PartCollection_EridanCannon_MegaCannon").BarrelPartData.WeightedParts.append(make_weightdata(obj("WeaponPartDefinition","gd_weap_alien_rifle.Barrel.barrel5_MegaCannon"), 0, None, None, 1))
     #obj("ItemPoolDefinition","gd_itempools.Level50Pools.Slither_TheDove").BalancedItems[0].InvBalanceDefinition = obj("InventoryBalanceDefinition","UP_Assets.Retail_Weapons.CustomWeap_repeater_TheDove")
     #obj("ItemPoolDefinition","gd_itempools.WeaponPools.Weapons_Retail").BalancedItems[2].InvBalanceDefinition = obj("InventoryBalanceDefinition","UP_Assets.Retail_Weapons.CustomWeap_repeater_TheDove")
+    obj("WeaponPartDefinition","gd_weap_repeater_pistol.acc.acc4_SandS_Gemini").WeaponCardAttributes.append(obj("WeaponPartDefinition","gd_weap_repeater_pistol.Barrel.barrel4_Torgue_Violator").WeaponCardAttributes[0])
 
 
 
