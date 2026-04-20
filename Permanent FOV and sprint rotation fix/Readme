@@ -1,1 +1,6 @@
-Adds separate sliders for world FOV and weapon-type FOVs, jumping while sprinting doesn't lower the FOV, fixes diagonal sprint canceling when you turn in the opposite direction, and adds an option to remove the Reload function from Use.
+• Adds separate sliders for world FOV, weapon-type FOVs, FOV offset when taking damage, and FOV offset when sprinting
+• Jumping while sprinting doesn't lower the FOV
+• Scales zoomed FOV
+• Adds a slider for the eye height offset when sprinting
+• Fixes diagonal sprint canceling when you turn in the opposite direction
+• Adds an option to remove the Reload function from Use

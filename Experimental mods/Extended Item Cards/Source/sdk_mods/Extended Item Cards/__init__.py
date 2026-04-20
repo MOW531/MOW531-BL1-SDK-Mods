@@ -11,7 +11,7 @@ from .hud import PickupcardCompare, WeaponChanged, extEquippedCardOpened, SetCur
 from .vendor import VendorStartCompare, VendorChangeSelectedItemKey, VendorChangeSelectedItemMouse, VendorPrepCompare
 from .bank import bankStartCompare, bankChangeSelectedItemMouse, bankPrepCompare, bankStopCompare
 from .reward import DisplayRewardsPage
-from.missionlog import UpdateMissionDetails, bPlotIcon
+from .missionlog import UpdateMissionDetails, bPlotIcon
 from .functions import FontSize, ShowParts, ShowElementText, reload_text
 
 item_card_options = NestedOption("Item card", [FontSize, reload_text, ShowElementText, ShowParts])
