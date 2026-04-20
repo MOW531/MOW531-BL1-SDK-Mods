@@ -58,7 +58,6 @@ def _on_enable():
         DoubleTimeSkill.EventResponses.append(DoubleTimeEventResponses)
 
 
-
         obj("InterpTrackFloatProp", "weap_camera_animations.Melee.melee_mordacai:InterpGroup_2.InterpTrackFloatProp_0").PropertyName = ""
         obj("InterpTrackFloatProp", "weap_camera_animations.Melee.melee_lilith:InterpGroup_3.InterpTrackFloatProp_0").PropertyName = ""
         obj("BerserkDefinition","gd_Brick.Berserk.BerserkDef").FOVIncrease = 0

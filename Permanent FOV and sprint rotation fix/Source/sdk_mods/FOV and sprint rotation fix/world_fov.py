@@ -44,7 +44,9 @@ def Set_FOV_from_slider(option:BaseOption, value:float):
     obj("WillowVehicle_WheeledVehicle","gd_DLC3_Cheetah_Paw.VehicleArchetype.DLC3_Cheetah_Paw").AfterburnerMaxFOV = (value + 10)
 
 def Set_EyeHeight_from_slider(option:BaseOption, value:float):
-    obj("SkillDefinition","gd_skills_common.Basic.DoubleTime").SkillEffectDefinitions[0].BaseModifierValue.BaseValueConstant = value * 0.01
+    for SkillEffectDefinition in obj("SkillDefinition","gd_skills_common.Basic.DoubleTime").SkillEffectDefinitions:
+        if str(SkillEffectDefinition.AttributeToModify) in "AttributeDefinition'd_attributes.GameplayAttributes.EyeHeightModifier'":
+            SkillEffectDefinition.BaseModifierValue.BaseValueConstant = value * 0.01
 def Set_PainFOV_from_slider(option:BaseOption, value:float):
     get_pc().myhud.huddef.MaximumPainFOV = value
 
